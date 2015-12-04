@@ -1,21 +1,20 @@
 package minusxl_data_management;
 
-public class BooleanCell extends Cell{
+public class BooleanCell extends Cell<Boolean>{
 
-	float value;
+	boolean value;
 	final String cellType = "Boolean";
 	
-	@Override
-	public Object getCell() {
+	public Boolean getCell() {
 		return value;
 	}
-	@Override
+	
 	public String getCellType() {
 		return cellType;
 	}
-	@Override
+	
 	public void setCell(Object input) {
-		value = (float) input;
+		value = (boolean)input;
 	}
 	
 }

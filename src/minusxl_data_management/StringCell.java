@@ -1,12 +1,12 @@
 package minusxl_data_management;
 
-public class StringCell extends Cell{
+public class StringCell extends Cell<String>{
 
-	float value;
+	String value;
 	final String cellType = "String";
 	
 	@Override
-	public Object getCell() {
+	public String getCell() {
 		return value;
 	}
 	@Override
@@ -15,7 +15,7 @@ public class StringCell extends Cell{
 	}
 	@Override
 	public void setCell(Object input) {
-		value = (float) input;
+		value = input.toString();
 	}
 	
 	

@@ -1,24 +1,25 @@
 package minusxl_data_management;
 
-public class NumberCell extends Cell{
+public class NumberCell extends Cell<Integer>{
 
-	float value;
-	int intvalue;
+	Integer value;
 	final String cellType = "Number";
 	
-	@Override
-	public Object getCell() {
-		return value;
+	NumberCell(){
+		// Constructor
 	}
-	@Override
+	
 	public String getCellType() {
 		return cellType;
 	}
-	@Override
-	public void setCell(Object input) {
-		value = (float) input;
-		intvalue = (int) value;
+	
+	public Integer getCell() {
+		return value;
 	}
 	
+	public void setCell(Object input) {
+		value = (Integer)input;
+	}
+
 	
 }

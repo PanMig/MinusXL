@@ -27,6 +27,7 @@ public class Workbook {
 	// The constructor creates a Workbook with a Name, and one attached spreadsheet with x rows and y columns
 		spreadsheets = new ArrayList<Spreadsheet>();
 		spreadsheets.add( new Spreadsheet(rows, columns) );
+		this.name = name;
 	}
 	
 	public Workbook(int rows, int columns){
@@ -34,6 +35,10 @@ public class Workbook {
 	// and creates a Workbook with one attached spreadsheet with x rows and y columns
 		spreadsheets = new ArrayList<Spreadsheet>();
 		spreadsheets.add( new Spreadsheet(rows, columns) );
+		
+		//TESTING:
+		System.out.println("Workbook Object Inititalized (Constructor)");
+		
 	}
 	
 	public void addSpreadsheet(int rows, int columns){
@@ -53,7 +58,12 @@ public class Workbook {
 	
 	public Spreadsheet getSpreadsheet(int spreadsheetNumber){
 		// Returns the spreadsheet in a specific position
-		return( spreadsheets.get(spreadsheetNumber) );
+		return spreadsheets.get(spreadsheetNumber);
+	}
+	
+	public int getAttachedSpreadsheets(){
+		// Returns how many spreadsheets are currently attached
+		return spreadsheets.size();
 	}
 	
 	public void saveWorkbook(){
