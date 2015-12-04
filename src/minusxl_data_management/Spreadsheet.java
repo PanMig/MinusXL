@@ -1,39 +1,51 @@
 package minusxl_data_management;
 
 import java.lang.reflect.Array;
+import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings("serial")
 public class Spreadsheet extends AbstractTableModel {
 	
-	private String[] columnNames;
-	private Object[][] cells;
+	private Cell[][] data;
+	
+	// The data is a two-dimensional array: An Object array of Object arrays.
 
-	public void Spreadsheet(int rows, int columns){
+	public Spreadsheet(int rows, int columns){
+		// Constructor for a new Array of Arrays of Cells.
+		// Currently makes them all NumberCells.
 		
-		cells = new Cell[rows][columns];
+		data = new Cell[rows][columns];
 		
+		for(int i=0; i<rows; i++){
+			for(int y=0; y<columns; y++){
+				data[i][y]= new NumberCell();
+			}
+		}	
 	}
 	
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		// Returns the size of the "row" array (containing the other arrays)
+		return(0);
 	}
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		// Returns the size of the "row" array (containing the other arrays)
+		return(0);
 	}
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object getValueAt(int row, int column) {
+        return data[row][column].getCell();
 	}
-
+	
+	public void setValueAt(Cell value, int row, int column){
+		data[row][column].setCell(value);
+        fireTableCellUpdated(row, column);
+	}
 	
 	
 }
