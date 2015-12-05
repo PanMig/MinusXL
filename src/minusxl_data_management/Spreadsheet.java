@@ -51,6 +51,17 @@ public class Spreadsheet extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object value, int row, int column){
 		
+		// Check the type of the incoming input.
+		// We're going to create the respective type of Cell
+		// depending on the input that we take (eg. for Boolean input we're creating a BooleanCell)
+		if( value.getClass() == Integer.class ){
+				data[row][column] = new NumberCell();
+			} else if ( value.getClass() == Boolean.class ) {
+				data[row][column] = new BooleanCell();
+			} else if ( value.getClass() == String.class) {
+				data[row][column] = new StringCell();
+			}
+		
 		data[row][column].setCell(value);
         fireTableCellUpdated(row, column);
 	}
