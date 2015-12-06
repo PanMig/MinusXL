@@ -18,7 +18,7 @@ public class NumberCell extends Cell<Integer>{
 	}
 	
 	public void setCell(Object input) {
-		value = (Integer)input;
+		value = (int)input;
 	}
 
 	

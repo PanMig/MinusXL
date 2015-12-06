@@ -62,9 +62,16 @@ public class Spreadsheet extends AbstractTableModel {
 				data[row][column] = new StringCell();
 			}
 		
+		// To be implemented: We can add an exception on the previous block
+		// if an incoming "value" is not of any compatible (with the Cells) type
+		
 		data[row][column].setCell(value);
         fireTableCellUpdated(row, column);
 	}
 	
+	public void createChart(){
+		// This method will call the Charts Manager package
+		// -- To be implemented --
+	}
 	
 }
