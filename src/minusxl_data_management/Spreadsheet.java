@@ -25,7 +25,7 @@ public class Spreadsheet extends AbstractTableModel {
 		
 		for(int i=0; i<rows; i++){
 			for(int y=0; y<columns; y++){
-				data[i][y]= new NumberCell();
+				data[i][y]= new NumberCell(i, y);
 			}
 		}	
 	}
@@ -54,23 +54,36 @@ public class Spreadsheet extends AbstractTableModel {
 		// Check the type of the incoming input.
 		// We're going to create the respective type of Cell
 		// depending on the input that we take (eg. for Boolean input we're creating a BooleanCell)
+		// Also, we pass the position of the Cell instances to the instances themselves.
 		if( value.getClass() == Integer.class ){
-				data[row][column] = new NumberCell();
+				data[row][column] = new NumberCell(row, column);
 			} else if ( value.getClass() == Boolean.class ) {
-				data[row][column] = new BooleanCell();
+				data[row][column] = new BooleanCell(row, column);
 			} else if ( value.getClass() == String.class) {
-				data[row][column] = new StringCell();
+				data[row][column] = new StringCell(row, column);
 			}
 		
-		// To be implemented: We can add an exception on the previous block
+		// TODO To be implemented: We can add an exception on the previous block
 		// if an incoming "value" is not of any compatible (with the Cells) type
 		
 		data[row][column].setCell(value);
         fireTableCellUpdated(row, column);
 	}
 	
+	public void useFunction(Cell[] input_cells, String function, Cell output_cell){
+		
+		// TODO: output "cell" must be different from input "cell"
+		
+		data[output_cell.getRow()][output_cell.getColumn()] = new FunctionCell(output_cell.getRow(),output_cell.getColumn(), input_cells, function);
+		// So, what does the big line here do? Simple. When we want to use a function on a Cell
+		// it creates a new FunctionCell at the position of the previous Cell (the "output")
+		// and passes the "input_cells" (the data for the function's input) and the name of the function
+		// that we want to use.
+
+	}
+	
 	public void createChart(){
-		// This method will call the Charts Manager package
+		// TODO This method will call the Charts Manager package
 		// -- To be implemented --
 	}
 	
