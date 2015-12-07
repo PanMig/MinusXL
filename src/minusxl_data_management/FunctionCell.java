@@ -4,6 +4,7 @@ public class FunctionCell extends Cell<Object>{
 
 	Object value;
 	final String cellType = "Function";
+	Function function;
 	
 	@Override
 	public Object getCell() {
@@ -23,6 +24,5 @@ public class FunctionCell extends Cell<Object>{
 	public void setCell(Object input) {
 		value = input.toString();
 	}
-	
 	
 }
