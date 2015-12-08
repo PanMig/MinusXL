@@ -72,6 +72,12 @@ public class Spreadsheet extends AbstractTableModel {
         fireTableCellUpdated(row, column);
 	}
 	
+	// TODO: Is there a reason for this to exist?
+	// Currently, it's used for giving Cells to Functions (through the UI call)
+	public Cell getCell(int row, int column){
+		return data[row][column];
+	}
+	
 	public void useFunction(Cell[] input_cells, String function, Cell output_cell){
 		
 		// TODO: output "cell" must be different from input "cell"
@@ -85,7 +91,7 @@ public class Spreadsheet extends AbstractTableModel {
 	}
 	
 	public void createChart(){
-		// TODO This method will call the Charts Manager package
+		// TODO: This method will call the Charts Manager package
 		// -- To be implemented --
 	}
 	

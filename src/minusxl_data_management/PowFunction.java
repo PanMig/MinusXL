@@ -15,7 +15,7 @@ public class PowFunction extends MathFunction {
 	
 	@Override
 	public Object calculateValue() {
-		return Math.pow((float)input[0].getCell(), (float)input[1].getCell());
+		return Math.pow((Integer)input[0].getCell(), (Integer)input[1].getCell());
 	}
 
 }
