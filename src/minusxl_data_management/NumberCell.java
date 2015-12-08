@@ -5,8 +5,9 @@ public class NumberCell extends Cell<Integer>{
 	Integer value;
 	final String cellType = "Number";
 	
-	NumberCell(){
-		// Constructor
+	// This constructor takes in consideration the constructor of the super-class (Cell)
+	NumberCell(int row, int column) {
+		super(row, column);
 	}
 	
 	public String getCellType() {

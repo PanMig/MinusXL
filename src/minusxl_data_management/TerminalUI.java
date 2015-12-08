@@ -19,6 +19,9 @@ public class TerminalUI {
 		System.out.println("Setting a value: 43");
 		workbook.getSpreadsheet(0).setValueAt(43, 5, 4);
 		
+		System.out.println("Setting a value: Barbamitsos");
+		workbook.getSpreadsheet(0).setValueAt("Barbamitsoooos!", 5, 4);
+		
 		System.out.println("Must print 43:");
 		System.out.println(workbook.getSpreadsheet(0).getValueAt(5, 4));
 		
