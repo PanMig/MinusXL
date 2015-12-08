@@ -29,7 +29,7 @@ public class TerminalUI {
 		workbook.addSpreadsheet(13,13);
 		workbook.getSpreadsheet(1).setValueAt(888, 5, 4);
 		
-		workbook.getSpreadsheet(0).setValueAt(2, 0, 0);
+		workbook.getSpreadsheet(0).setValueAt(3, 0, 0);
 		workbook.getSpreadsheet(0).setValueAt(4, 0, 1);
 		
 		Cell[] testarray = new Cell[2];
