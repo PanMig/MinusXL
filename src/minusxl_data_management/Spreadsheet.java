@@ -57,16 +57,18 @@ public class Spreadsheet extends AbstractTableModel {
 		// Also, we pass the position of the Cell instances to the instances themselves.
 		if( value.getClass() == Integer.class ){
 				data[row][column] = new NumberCell(row, column);
+				data[row][column].setCell((Integer)value);
 			} else if ( value.getClass() == Boolean.class ) {
 				data[row][column] = new BooleanCell(row, column);
+				data[row][column].setCell((Boolean)value);
 			} else if ( value.getClass() == String.class) {
 				data[row][column] = new StringCell(row, column);
+				data[row][column].setCell((String)value);
 			}
 		
 		// TODO To be implemented: We can add an exception on the previous block
 		// if an incoming "value" is not of any compatible (with the Cells) type
 		
-		data[row][column].setCell(value);
         fireTableCellUpdated(row, column);
 	}
 	

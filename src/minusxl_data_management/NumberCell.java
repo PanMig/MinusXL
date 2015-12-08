@@ -1,8 +1,8 @@
 package minusxl_data_management;
 
-public class NumberCell extends Cell<Float>{
+public class NumberCell extends Cell<Integer>{
 
-	Float value;
+	Integer value;
 	final String cellType = "Number";
 	
 	// This constructor takes in consideration the constructor of the super-class (Cell)
@@ -14,13 +14,12 @@ public class NumberCell extends Cell<Float>{
 		return cellType;
 	}
 	
-	public Float getCell() {
+	public Integer getCell() {
 		return value;
 	}
 	
 	public void setCell(Object input) {
-		Double temp = (double)input;
-		value = temp.floatValue();
+		value = (Integer)input;
 	}
 
 	
