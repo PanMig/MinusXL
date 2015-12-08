@@ -208,7 +208,7 @@ private  void createMenuBar(){
 	btnSave.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 			//JOptionPane.showInputDialog("Enter a name for the workbook");
-			fileChooser.showSaveDialog(btnSave);
+			fileChooser.showSaveDialog(null);
 		}
 	});
 	menuBar.add(btnSave);
