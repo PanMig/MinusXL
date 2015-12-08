@@ -29,6 +29,15 @@ public class TerminalUI {
 		workbook.addSpreadsheet(13,13);
 		workbook.getSpreadsheet(1).setValueAt(888, 5, 4);
 		
+		workbook.getSpreadsheet(0).setValueAt(3, 0, 0);
+		workbook.getSpreadsheet(0).setValueAt(4, 0, 1);
+		
+		Cell[] testarray = new Cell[2];
+		testarray[0]= workbook.getSpreadsheet(0).getCell(0, 0);
+		testarray[1]= workbook.getSpreadsheet(0).getCell(0, 1);
+		
+		workbook.getSpreadsheet(0).useFunction(testarray, "Pow", workbook.getSpreadsheet(0).getCell(0, 2));
+		
 		System.out.println("And now we'll print everything:");
 		
 		// Testing: Print all spreadsheets and their data
