@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -201,9 +202,12 @@ private  void createMenuBar(){
 	});
 	menuBar.add(btnSave);
 	
+	JLabel functionLabel =new JLabel(" Function : ");
+	menuBar.add(functionLabel);
+	
 	//Function and charts button
 	JComboBox funcBox = new JComboBox();
-	funcBox.setModel(new DefaultComboBoxModel(new String[] {"Function", "abs", "cos", "sin", "tan", "pow", "sum", "mult", "log", "log10", "and", "or", "not", "xor", "max", "min", "Mean", "Median", "Stddev", "Concat", "includes", "Trim", "Remove"}));
+	funcBox.setModel(new DefaultComboBoxModel(new String[] {"abs", "cos", "sin", "tan", "pow", "sum", "mult", "log", "log10", "and", "or", "not", "xor", "max", "min", "Mean", "Median", "Stddev", "Concat", "includes", "Trim", "Remove"}));
 	menuBar.add(funcBox);
 	
 	JComboBox chartBox = new JComboBox();
@@ -212,7 +216,9 @@ private  void createMenuBar(){
 			
 		}
 	});
-	chartBox.setModel(new DefaultComboBoxModel(new String[] {"Charts", "Line chart", "Bar chart"}));
+	JLabel chartLabel =new JLabel(" Chart : ");
+	menuBar.add(chartLabel);
+	chartBox.setModel(new DefaultComboBoxModel(new String[] {"Line chart", "Bar chart"}));
 	menuBar.add(chartBox);
 	
 	//help button
