@@ -11,7 +11,7 @@ public class Workbook {
 	// the contained methods.
 
 	private final int DEFAULT_ROWS = 100;
-	private final int DEFAULT_COLUMNS = 100;
+	private final int DEFAULT_COLUMNS =26;
 
 	private String name = "MinusXL_Workbook";
 	// The name of the Workbook. Default name given here. Optionally initialized
@@ -24,6 +24,8 @@ public class Workbook {
 		spreadsheets = new ArrayList<Spreadsheet>();
 		spreadsheets.add(new Spreadsheet(DEFAULT_ROWS, DEFAULT_COLUMNS));
 		// Constructor without parameters, creates a default valued spreadsheet.
+		
+		System.out.println("Workbook Object Inititalized (Constructor)");
 	}
 
 	public Workbook(String name, int rows, int columns) {
@@ -32,6 +34,8 @@ public class Workbook {
 		spreadsheets = new ArrayList<Spreadsheet>();
 		spreadsheets.add(new Spreadsheet(rows, columns));
 		this.name = name;
+		
+		System.out.println("Workbook Object Inititalized (Constructor)");
 	}
 
 	public Workbook(int rows, int columns) {
@@ -51,6 +55,10 @@ public class Workbook {
 		// Creating a new spreadsheet and attaching it to the last position in
 		// our list
 		spreadsheets.add(new Spreadsheet(rows, columns));
+	}
+	public void getListLength(){
+		
+		System.out.println(spreadsheets.size());
 	}
 
 	public void addSpreadsheet(Spreadsheet spreadsheet) {
