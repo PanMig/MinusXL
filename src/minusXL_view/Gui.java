@@ -35,7 +35,7 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
 
-public class Gui {
+public class GUI {
 	
 	private JFrame frame;
 	private String sheetName;
@@ -51,7 +51,7 @@ public class Gui {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Gui window = new Gui();
+					GUI window = new GUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +63,7 @@ public class Gui {
 	/**
 	 * Create the application.
 	 */
-	public Gui() {
+	public GUI() {
 		
 		initialize();
 	}
