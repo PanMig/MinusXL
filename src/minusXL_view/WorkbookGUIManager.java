@@ -18,7 +18,7 @@ public class WorkbookGUIManager {
 		this.setSheetColumns(sheetColumns);
 	} 
 	
-   //creates a workbook instace with name,rows and columns for the first sheet	
+   //creates a workbook instance with name,rows and columns for the first sheet	
    public void CreateWorkbook(String workBookName,int rows,int columns){
 		Workbook wb=new Workbook(workBookName,rows,columns);
 		wbManager=wb;
@@ -33,7 +33,7 @@ public class WorkbookGUIManager {
 		Workbook wb=new Workbook();
 		wbManager=wb;
 	}
-	//it adds a spreadsheet to the worbook,the new spreadsheet is being added to the list of spreadsheets
+	//it adds a spreadsheet to the workbook,the new spreadsheet is being added to the list of spreadsheets
 	public void addSpreadsheet(int rows ,int columns){
 		wbManager.addSpreadsheet(rows,columns);
 	}
