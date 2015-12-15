@@ -22,10 +22,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 
-
-
-public class GUI {
-	
+public class Gui {
 
 	private JFrame frame;
 	private String sheetName;
