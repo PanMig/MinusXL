@@ -1,5 +1,8 @@
 package minusXL_view;
-//test
+
+import minusxl_data_management.Spreadsheet;
+import minusxl_data_management.Workbook;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -22,12 +25,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-
-import minusxl_data_management.Cell;
-import minusxl_data_management.Spreadsheet;
-import minusxl_data_management.Workbook;
-
-
 
 public class MinusXLGUI {
 
