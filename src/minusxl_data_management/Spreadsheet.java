@@ -7,6 +7,7 @@ public class Spreadsheet extends AbstractTableModel {
 
 	private Cell[][] data;
 	private int rows, columns;
+	
 
 	// The data is a two-dimensional array: An Object array of Object arrays.
 
@@ -19,21 +20,29 @@ public class Spreadsheet extends AbstractTableModel {
 		this.columns = columns;
 
 		data = new Cell[rows][columns];
+		
 
 		// TESTING:
 		System.out.println("Spreadsheet Inititalized (Constructor)");
-
 		for (int i = 0; i < rows; i++) {
 			for (int y = 0; y < columns; y++) {
 				data[i][y] = new NumberCell(i, y);
+				
 			}
 		}
 	}
-
+	
+	
 	@Override
 	public int getRowCount() {
 		// Returns the size of the "row" array (containing the other arrays)
 		return rows;
+	}
+	
+	@Override
+	//override this method so all the jtable cells to become edible
+	public boolean isCellEditable(int rowIndex,int columnIndex) {
+		return  true;
 	}
 
 	@Override
