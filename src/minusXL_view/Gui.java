@@ -1,41 +1,31 @@
 package minusXL_view;
 
-import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import java.awt.ScrollPane;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JScrollBar;
-import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JInternalFrame;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTextField;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
-import javax.swing.JTabbedPane;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
-import java.awt.SystemColor;
 
-public class Gui {
+
+
+public class GUI {
+	
 
 	private JFrame frame;
 	private String sheetName;
@@ -51,7 +41,7 @@ public class Gui {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Gui window = new Gui();
+					GUI window = new GUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +53,7 @@ public class Gui {
 	/**
 	 * Create the application.
 	 */
-	public Gui() {
+	public GUI() {
 		
 		initialize();
 	}
@@ -208,7 +198,7 @@ private  void createMenuBar(){
 	btnSave.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 			//JOptionPane.showInputDialog("Enter a name for the workbook");
-			fileChooser.showSaveDialog(btnSave);
+			fileChooser.showSaveDialog(null);
 		}
 	});
 	menuBar.add(btnSave);
