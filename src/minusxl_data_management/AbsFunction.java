@@ -3,8 +3,6 @@ package minusxl_data_management;
 public class AbsFunction extends MathFunction {
 
 	private Cell[] input;
-	
-	//TEST comment
 
 	public AbsFunction(Cell[] input) {
 		// The constructor creates a instance of AbsFunction Object
