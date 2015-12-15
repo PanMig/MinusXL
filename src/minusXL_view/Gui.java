@@ -35,9 +35,13 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
 
+<<<<<<< HEAD
 
 public class GUI {
 	
+=======
+public class Gui {
+>>>>>>> parent of 3b6f6c3... test
 
 	private JFrame frame;
 	private String sheetName;
