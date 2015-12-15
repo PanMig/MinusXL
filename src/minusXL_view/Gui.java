@@ -23,6 +23,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 
+import minusxl_data_management.Workbook;
+
 
 
 public class GUI {
@@ -34,9 +36,7 @@ public class GUI {
     private int sheetRows;
 	private int sheetColumns;
 	private int sheetNumber=1;
-	//reference to class workbookGUIManager
-	private WorkbookGUIManager wbGUIManager=null;
-	
+	private Workbook wbManager;
 	JFileChooser fileChooser = new JFileChooser();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
 
@@ -86,9 +86,9 @@ public class GUI {
 		createMenuBar();
 		
 		//add a new workbook and a sheet in the workbook when the program opens for the first time
-		WorkbookGUIManager initManager = new WorkbookGUIManager(/*default name */"Workbook",/*default rows */100,/*default columns */26);
-		initManager.CreateWorkbook();
-		wbGUIManager=initManager;
+		
+		Workbook wb=new Workbook();
+		wbManager=wb;
 		addSheet();
 }
 
@@ -153,7 +153,7 @@ private void spreadsheetActionPanel(){
 			option=JOptionPane.showConfirmDialog(tabbedPane,"Do you want to delete the choosen spreadsheet?");
 			if(option==0){
 				tabbedPane.remove(tabIndex);//remove tab from the tabbed pane
-				wbGUIManager.deleteSpreadsheet(tabIndex);//delete spreadsheet from the list of spreadsheets
+				wbManager.deleteSpreadsheet(tabIndex);//delete spreadsheet from the list of spreadsheets
 				sheetNumber-=1;
 			}
 		}
@@ -180,7 +180,7 @@ private void spreadsheetActionPanel(){
 			else	sheetColumns=Integer.parseInt(StringsheetColumns);
 			
 			addSheet(sheetName,sheetRows,sheetColumns);//add tab to the tabbed pane
-			wbGUIManager.addSpreadsheet(sheetRows, sheetColumns);//add spreadsheet to the list
+			wbManager.addSpreadsheet(sheetRows, sheetColumns);//add spreadsheet to the list
 			
 		}
 	});
@@ -237,24 +237,23 @@ private  void createMenuBar(){
 				
 			//multiple cases where the user either insert a value at the input dialog and presses "ok" or just presses "ok"
 			if(workBookName.length()==0 && StringsheetRows.length()==0 && StringsheetColumns.length()==0 ){
-				WorkbookGUIManager wbManager =new WorkbookGUIManager(workBookName,sheetRows,sheetColumns);
-				wbManager.CreateWorkbook();
-				wbGUIManager=wbManager;//the reference now points to that specific object
+				Workbook wb =new Workbook();
+				wbManager=wb;//the reference now points to that specific object
 				tabbedPane.removeAll();
 				addSheet();
 
 			}
 			else if(workBookName.length()==0 && StringsheetRows.length()!=0 && StringsheetColumns.length()!=0 ){
-				WorkbookGUIManager wbManager =new WorkbookGUIManager(workBookName,sheetRows,sheetColumns);
-				wbManager.CreateWorkbook(sheetRows,sheetColumns);
-				wbGUIManager=wbManager;
+				Workbook wb =new Workbook(sheetRows,sheetColumns);
+				wbManager=wb;
 				tabbedPane.removeAll();
 				addSheet(sheetRows,sheetColumns);
 			}
 			else{
-				WorkbookGUIManager wbManager =new WorkbookGUIManager(workBookName,sheetRows,sheetColumns);
-				wbManager.CreateWorkbook(workBookName,sheetRows,sheetColumns);
-				wbGUIManager=wbManager;
+				Workbook wb =new Workbook(workBookName,sheetRows,sheetColumns);
+				wbManager=wb;
+				tabbedPane.removeAll();
+				addSheet(sheetRows,sheetColumns);
 				tabbedPane.removeAll();
 				addSheet(sheetRows,sheetColumns);
 			}
