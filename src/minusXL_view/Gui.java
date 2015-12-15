@@ -22,11 +22,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 
-
-
-public class GUI {
+public class Gui {
 	
-
 	private JFrame frame;
 	private String sheetName;
 	private String workBookName;
@@ -41,7 +38,7 @@ public class GUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI window = new GUI();
+					Gui window = new Gui();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +50,7 @@ public class GUI {
 	/**
 	 * Create the application.
 	 */
-	public GUI() {
+	public Gui() {
 		
 		initialize();
 	}
