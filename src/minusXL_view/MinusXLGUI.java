@@ -1,5 +1,5 @@
 package minusXL_view;
-//test
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -21,11 +21,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 
-import minusxl_data_management.Cell;
 import minusxl_data_management.Spreadsheet;
 import minusxl_data_management.Workbook;
+import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
 
 
 
@@ -80,9 +85,21 @@ public class MinusXLGUI {
 		//initialize the frame,select Layout
 		sheetNumber=0;
 		frame = new JFrame();
+		frame.getContentPane().setBackground(UIManager.getColor("Button.background"));
+		frame.setForeground(Color.DARK_GRAY);
 		frame.setBounds(100, 100, 571, 412);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		//when mouse clicked on the tabbed pane make the spreadsheet reference to look
+		//at the correct spreadsheet
+		tabbedPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				spManager=wbManager.getSpreadsheet(tabbedPane.getSelectedIndex());
+				
+			}
+		});
 		
 		//add tabbed pane to the center of the borderLayout
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -103,8 +120,9 @@ public class MinusXLGUI {
 		Workbook wb=new Workbook();
 		wbManager=wb;
 		spManager=wbManager.getSpreadsheet(wb.getAttachedSpreadsheets()-1);
-		spManager.setValueAt(5,0,0);
+		//add values
 		spManager.setValueAt(true,2,2);
+		
 		addSheet();
 	}
 
@@ -119,26 +137,32 @@ public class MinusXLGUI {
 		tabbedPane.addTab("sheet", null, scrollPane, null);
 		
 		JTable table=new JTable();
+		
 		//attach jtable to the spreadsheet instance that we create in the above line
 		table.setModel(spManager);
+		table.setRowSelectionAllowed(false);
+		table.setCellSelectionEnabled(true);
 		////attach to the scrool pane the Jtable
 		scrollPane.setViewportView(table);
 		table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
-		
 		sheetNumber+=1;		
 	}
 
-
+	
 	public void addSheet(String sheetName,int rows,int columns){
 		//create scroll and tabbed panes
 		JScrollPane scrollPane = new JScrollPane();
 		tabbedPane.addTab(sheetName, null, scrollPane, null);
+		//when tab is added make the tabbed pane selection to the last added tab
+		tabbedPane.setSelectedIndex(wbManager.getAttachedSpreadsheets()-1);
 		
 		spManager=wbManager.getSpreadsheet(wbManager.getAttachedSpreadsheets()-1);
 		JTable table=new JTable();
 		
 		//attach jtable to the spreadsheet instance that we create in the above line
 		table.setModel(spManager);
+		table.setRowSelectionAllowed(false);
+		table.setCellSelectionEnabled(true);
 		
 		//attach to the scrool pane the Jtable
 		scrollPane.setViewportView(table);
@@ -156,7 +180,7 @@ public class MinusXLGUI {
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{41, 8, 95, 83, 0};
+		gbl_panel.columnWidths = new int[]{28, 8, 95, 83, 0};
 		gbl_panel.rowHeights = new int[]{23, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
@@ -164,6 +188,8 @@ public class MinusXLGUI {
 		
 		//delete button,deletes a spreadsheet from the tabbed pane
 		JButton btnDeleteSpreadsheet = new JButton("Delete spreadsheet");
+		btnDeleteSpreadsheet.setToolTipText("press to delete a spreadsheet");
+		
 		//select color for the button
 		btnDeleteSpreadsheet.setBackground(UIManager.getColor("Button.light"));
 		btnDeleteSpreadsheet.addActionListener(new ActionListener() {
@@ -182,6 +208,9 @@ public class MinusXLGUI {
 		
 		//button that adds a spreadsheet
 		JButton addButton = new JButton("+");
+		//when mouse mouse above the button shows a message
+		addButton.setToolTipText("Press to add spreadsheet");
+		
 		addButton.setBackground(UIManager.getColor("Button.light"));
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -207,7 +236,7 @@ public class MinusXLGUI {
 		});
 		addButton.setForeground(Color.RED);
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
-		gbc_addButton.anchor = GridBagConstraints.NORTHWEST;
+		gbc_addButton.anchor = GridBagConstraints.NORTHEAST;
 		gbc_addButton.insets = new Insets(0, 0, 0, 5);
 		gbc_addButton.gridx = 0;
 		gbc_addButton.gridy = 0;
@@ -298,6 +327,7 @@ public class MinusXLGUI {
 		
 		//Save button
 		JButton btnSave = new JButton("Save");
+		btnSave.setIcon(new ImageIcon(MinusXLGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//JOptionPane.showInputDialog("Enter a name for the workbook");
@@ -310,16 +340,25 @@ public class MinusXLGUI {
 		menuBar.add(functionLabel);
 		
 		//Function and charts button
-		JComboBox funcBox = new JComboBox();
+		final JComboBox funcBox = new JComboBox();
+		funcBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//holds the selected function string
+				String funcOption=(String)funcBox.getSelectedItem();
+				
+				//System.out.println(funcOption);
+			}
+		});
 		funcBox.setModel(new DefaultComboBoxModel(new String[] {"abs", "cos", "sin", "tan", "pow", "sum", "mult", "log", "log10", "and", "or", "not", "xor", "max", "min", "Mean", "Median", "Stddev", "Concat", "includes", "Trim", "Remove"}));
 		menuBar.add(funcBox);
+		
 		
 		final JComboBox chartBox = new JComboBox();
 		chartBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-			
-			
+				//holds the selected chart string
+				String chartOption=(String)chartBox.getSelectedItem();
 			}
 		});
 		JLabel chartLabel =new JLabel("   Chart : ");
@@ -328,7 +367,8 @@ public class MinusXLGUI {
 		menuBar.add(chartBox);
 		
 		//help button
-		JButton btnHelp = new JButton("?");
+		JButton btnHelp = new JButton();
+		btnHelp.setIcon(new ImageIcon(MinusXLGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Question.gif")));
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HelpBtnGui helpWindow=new HelpBtnGui();

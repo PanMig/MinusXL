@@ -25,6 +25,7 @@ public class HelpBtnGui extends JFrame {
 				try {
 					HelpBtnGui frame = new HelpBtnGui();
 					frame.setVisible(true);
+					frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
