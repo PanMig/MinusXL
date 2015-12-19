@@ -249,9 +249,11 @@ public class MinusXLGUI {
 		gbc_btnDeleteSpreadsheet.gridy = 0;
 		panel.add(btnDeleteSpreadsheet, gbc_btnDeleteSpreadsheet);
 		
+		//TODO make import sheet button work
 		JButton btnImportSheet = new JButton("Import Sheet");
 		btnImportSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				fileChooser.showOpenDialog(null);
 			}
 		});
 		GridBagConstraints gbc_ImportSheet = new GridBagConstraints();
@@ -336,13 +338,24 @@ public class MinusXLGUI {
 		});
 		menuBar.add(btnSave);
 		
-		JLabel functionLabel =new JLabel("   Function : ");
-		menuBar.add(functionLabel);
+		JButton btnUseFunction = new JButton("Use Function :");
+		btnUseFunction.setForeground(Color.RED);
+		menuBar.add(btnUseFunction);
+		
+		//JLabel functionLabel =new JLabel("   Function : ");
+		//menuBar.add(functionLabel);
 		
 		//Function and charts button
 		final JComboBox funcBox = new JComboBox();
 		funcBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				/*TODO function calling
+				*	- choose cells
+				*	- choose function
+				*	- press use function button
+				*	- message to choose the output cell
+				*	- call use function from spreadsheet 
+				*/
 				
 				//holds the selected function string
 				String funcOption=(String)funcBox.getSelectedItem();
@@ -355,6 +368,8 @@ public class MinusXLGUI {
 		
 		
 		final JComboBox chartBox = new JComboBox();
+		
+		//TODO make chart button work
 		chartBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//holds the selected chart string
