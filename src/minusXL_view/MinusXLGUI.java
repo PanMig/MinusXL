@@ -31,6 +31,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
 
 
@@ -43,7 +45,8 @@ public class MinusXLGUI {
 	private String sheetName;//name of the spreadsheet
     private int sheetRows;
 	private int sheetColumns;
-	private int sheetNumber=0;
+	private int sheetNumber=0;//keeps the number of the spreadsheet,becomes zero
+	//when new workbook is created
 	
 	private Workbook wbManager;
 	
@@ -137,6 +140,13 @@ public class MinusXLGUI {
 		tabbedPane.addTab("sheet", null, scrollPane, null);
 		
 		JTable table=new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.out.println(spManager.getValueAt(0,0));
+			}
+		});
+		
 		
 		//attach jtable to the spreadsheet instance that we create in the above line
 		table.setModel(spManager);
@@ -158,6 +168,12 @@ public class MinusXLGUI {
 		
 		spManager=wbManager.getSpreadsheet(wbManager.getAttachedSpreadsheets()-1);
 		JTable table=new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.out.println(spManager.getValueAt(0,0));
+			}
+		});
 		
 		//attach jtable to the spreadsheet instance that we create in the above line
 		table.setModel(spManager);
