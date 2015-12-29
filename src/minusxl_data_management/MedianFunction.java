@@ -1,10 +1,10 @@
 package minusxl_data_management;
 
-public class CosFunction extends MathFunction {
+public class MedianFunction extends StatisticalFunction {
 
 	private Object[] input;
 
-	public CosFunction(Object[] input) {
+	public MedianFunction(Object[] input) {
 		// The constructor creates a instance of AbsFunction Object
 		// and holds the Cells in the input data.
 		// DON'T FORGET: The "input" is CELL DATA!!!
@@ -13,9 +13,13 @@ public class CosFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-		// Takes the first object of the input, casts to a double value
-		// converts to radians and then applies the Math.cos function
-		return Math.cos((Math.toRadians((double) input[0])));
+		
+		// TODO: First we have to sort the array:
+		
+		// TODO: Then use the MEDIAN value algorithm:
+		
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

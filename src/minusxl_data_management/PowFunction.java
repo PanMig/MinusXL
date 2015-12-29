@@ -15,6 +15,7 @@ public class PowFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
+		// Applies the value of the second object as power to the first:
 		return Math.pow((Integer) input[0].getCell(), (Integer) input[1].getCell());
 	}
 

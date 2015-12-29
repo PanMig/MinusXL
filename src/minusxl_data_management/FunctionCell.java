@@ -48,10 +48,62 @@ public class FunctionCell extends Cell<Object> {
 			break;
 
 		// 2. Logical Functions:
+			
+		case "And":
+			this.function = new AndFunction(input_cells);
+			break;
+
+		case "Or":
+			this.function = new OrFunction(input_cells);
+			break;
+
+		case "Not":
+			this.function = new NotFunction(input_cells);
+			break;
+
+		case "Xor":
+			this.function = new XorFunction(input_cells);
+			break;
 
 		// 3. Statistical Functions:
+			
+		case "Max":
+			this.function = new MaxFunction(input_cells);
+			break;
+
+		case "Min":
+			this.function = new MinFunction(input_cells);
+			break;
+
+		case "Mean":
+			this.function = new MeanFunction(input_cells);
+			break;
+
+		case "Median":
+			this.function = new MedianFunction(input_cells);
+			break;
+			
+		case "StdDev":
+			this.function = new StdDevFunction(input_cells);
+			break;
 
 		// 4. Alpharithmetic Functions:
+			
+		case "Concat":
+			this.function = new ConcatFunction(input_cells);
+			break;
+
+		case "Trim":
+			this.function = new TrimFunction(input_cells);
+			break;
+
+		case "Includes":
+			this.function = new IncludesFunction(input_cells);
+			break;
+			
+		case "Remove":
+			this.function = new RemoveFunction(input_cells);
+			break;
 
 		default:
 			// TODO: Right now, using the console - later maybe using the GUI,
