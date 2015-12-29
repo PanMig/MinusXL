@@ -2,9 +2,9 @@ package minusxl_data_management;
 
 public class StdDevFunction extends StatisticalFunction {
 
-	private Object[] input;
+	private Cell[] input;
 
-	public StdDevFunction(Object[] input) {
+	public StdDevFunction(Cell[] input) {
 		// The constructor creates a instance of AbsFunction Object
 		// and holds the Cells in the input data.
 		// DON'T FORGET: The "input" is CELL DATA!!!
@@ -13,7 +13,7 @@ public class StdDevFunction extends StatisticalFunction {
 
 	@Override
 	public Object calculateValue() {
-		// TODO Auto-generated method stub
+		// TODO Implement the Standard Deviation algorithm:
 		return null;
 	}
 
