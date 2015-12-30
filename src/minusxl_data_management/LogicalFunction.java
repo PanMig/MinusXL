@@ -8,7 +8,8 @@ public abstract class LogicalFunction extends Function {
 
 		for (int i = 0; i < inputs.length; i++) {
 			// Checking if the values of the input cells are boolean values
-			if ((inputs[i] instanceof Boolean) == false) {
+			if ((inputs[i] instanceof BooleanCell) == false) {
+				System.out.println("Error: The input data are not boolean values.");
 				return (false);
 			}
 		}

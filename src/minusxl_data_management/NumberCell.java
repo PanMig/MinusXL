@@ -1,8 +1,8 @@
 package minusxl_data_management;
 
-public class NumberCell extends Cell<Integer> {
+public class NumberCell extends Cell<Double> {
 
-	Integer value;
+	Double value;
 	final String cellType = "Number";
 
 	// This constructor takes in consideration the constructor of the
@@ -15,12 +15,12 @@ public class NumberCell extends Cell<Integer> {
 		return cellType;
 	}
 
-	public Integer getCell() {
+	public Double getCell() {
 		return value;
 	}
 
 	public void setCell(Object input) {
-		value = (Integer) input;
+		value = (Double) input;
 	}
 
 }

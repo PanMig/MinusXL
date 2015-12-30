@@ -10,7 +10,8 @@ public abstract class StatisticalFunction extends Function {
 			// TODO: Checking if the values of the input are integers
 			// Probably will have to change this later, to include double, float
 			// etc.
-			if ((inputs[i] instanceof Integer) == false || (inputs[i] instanceof Double) == false) {
+			if ((inputs[i] instanceof NumberCell) == false) {
+				System.out.println("Error: The input data are not number values.");
 				return (false);
 			}
 		}

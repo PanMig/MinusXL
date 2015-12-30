@@ -7,7 +7,6 @@ public class Spreadsheet extends AbstractTableModel {
 
 	private Cell[][] data;
 	private int rows, columns;
-	
 
 	// The data is a two-dimensional array: An Object array of Object arrays.
 
@@ -68,7 +67,13 @@ public class Spreadsheet extends AbstractTableModel {
 		// themselves.
 		if (value.getClass() == Integer.class) {
 			data[row][column] = new NumberCell(row, column);
-			data[row][column].setCell((Integer) value);
+			// Here is a stupid hack to definitely get a double value
+			// from a possible integer input value:
+			Integer temp_integer = (Integer)value;
+			data[row][column].setCell(temp_integer.doubleValue());
+		} else if (value.getClass() == Double.class) {
+			data[row][column] = new NumberCell(row, column);
+			data[row][column].setCell(value);
 		} else if (value.getClass() == Boolean.class) {
 			data[row][column] = new BooleanCell(row, column);
 			data[row][column].setCell((Boolean) value);
@@ -93,6 +98,9 @@ public class Spreadsheet extends AbstractTableModel {
 
 		// TODO: output "cell" must be different from input "cell"
 
+		// To explain the data[output_cell.getRow] etc: To initialize the function Cell
+		// we use the output_cell data to get the location with the getRow and getColumn
+		
 		data[output_cell.getRow()][output_cell.getColumn()] = new FunctionCell(output_cell.getRow(),
 				output_cell.getColumn(), input_cells, function);
 		// So, what does the big line here do? Simple. When we want to use a

@@ -14,10 +14,10 @@ public class MultFunction extends MathFunction {
 	@Override
 	public Object calculateValue() {
 		// Multiplies the values of all the inputed objects together and returns the multiplication value:
-		Float mult = 0f;
+		Double mult = 1d;
 		int i = 0;
 		while (i < input.length) {
-			mult = mult * (float) input[i].getCell();
+			mult = mult * (double) input[i].getCell();
 			i++;
 		}
 		return mult;

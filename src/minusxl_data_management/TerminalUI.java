@@ -31,12 +31,18 @@ public class TerminalUI {
 
 		workbook.getSpreadsheet(0).setValueAt(3, 0, 0);
 		workbook.getSpreadsheet(0).setValueAt(4, 0, 1);
+		workbook.getSpreadsheet(0).setValueAt(6, 0, 2);
 
-		Cell[] testarray = new Cell[2];
-		testarray[0] = workbook.getSpreadsheet(0).getCell(0, 0);
-		testarray[1] = workbook.getSpreadsheet(0).getCell(0, 1);
-
-		workbook.getSpreadsheet(0).useFunction(testarray, "Pow", workbook.getSpreadsheet(0).getCell(0, 2));
+		Cell[] inputsforfunction = new Cell[3];
+		inputsforfunction[0] = workbook.getSpreadsheet(0).getCell(0, 0);
+		inputsforfunction[1] = workbook.getSpreadsheet(0).getCell(0, 1);
+		inputsforfunction[2] = workbook.getSpreadsheet(0).getCell(0, 2);
+		
+		workbook.getSpreadsheet(0).useFunction(inputsforfunction, "Mult", workbook.getSpreadsheet(0).getCell(0, 3));
+		
+		inputsforfunction[0] = workbook.getSpreadsheet(0).getCell(0, 3);
+		
+		workbook.getSpreadsheet(0).useFunction(inputsforfunction, "Trim", workbook.getSpreadsheet(0).getCell(1,0));
 
 		System.out.println("And now we'll print everything:");
 
