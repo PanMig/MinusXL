@@ -1,11 +1,8 @@
 package minusXL_view;
 
-<<<<<<< HEAD
-=======
 import minusxl_data_management.Spreadsheet;
 import minusxl_data_management.Workbook;
 
->>>>>>> refs/remotes/origin/Alex-Working-Branch
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -32,8 +29,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-
-<<<<<<< HEAD
 import minusXl_charts_managment.ChartManager;
 import minusxl_data_management.Cell;
 import minusxl_data_management.FunctionCell;
@@ -46,8 +41,7 @@ import java.awt.event.KeyEvent;
 
 
 
-=======
->>>>>>> refs/remotes/origin/Alex-Working-Branch
+
 public class MinusXLGUI {
 
 	private JFrame frame;//the window
