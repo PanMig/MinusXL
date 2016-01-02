@@ -1,20 +1,22 @@
 package minusxl_data_management;
 
-public class LogFunction extends MathFunction {
+public class TrimFunction extends AlpharithmeticFunction {
 
 	private Cell[] input;
 
-	public LogFunction(Cell[] input) {
+	public TrimFunction(Cell[] input) {
 		// The constructor creates a instance of AbsFunction Object
 		// and holds the Cells in the input data.
 		// DON'T FORGET: The "input" is CELL DATA!!!
-		this.input = input;
+		if(checkValidity(input) == true){
+			this.input = input;
+		}
 	}
 
 	@Override
 	public Object calculateValue() {
-		// Gets the value of the first Cell object as double and applies the Math.log function to it:
-		return Math.log((double)input[0].getCell());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,10 +1,10 @@
 package minusxl_data_management;
 
-public class LogFunction extends MathFunction {
+public class StdDevFunction extends StatisticalFunction {
 
 	private Cell[] input;
 
-	public LogFunction(Cell[] input) {
+	public StdDevFunction(Cell[] input) {
 		// The constructor creates a instance of AbsFunction Object
 		// and holds the Cells in the input data.
 		// DON'T FORGET: The "input" is CELL DATA!!!
@@ -13,8 +13,8 @@ public class LogFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-		// Gets the value of the first Cell object as double and applies the Math.log function to it:
-		return Math.log((double)input[0].getCell());
+		// TODO Implement the Standard Deviation algorithm:
+		return null;
 	}
 
 }

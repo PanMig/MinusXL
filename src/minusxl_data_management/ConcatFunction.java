@@ -1,10 +1,10 @@
 package minusxl_data_management;
 
-public class SumFunction extends MathFunction {
+public class ConcatFunction extends AlpharithmeticFunction {
 
 	private Cell[] input;
 
-	public SumFunction(Cell[] input) {
+	public ConcatFunction(Cell[] input) {
 		// The constructor creates a instance of AbsFunction Object
 		// and holds the Cells in the input data.
 		// DON'T FORGET: The "input" is CELL DATA!!!
@@ -13,14 +13,14 @@ public class SumFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-	// Adds the value of all the inputed objects and returns their sum:
-		Float sum = 0f;
+		// Combines a series of strings into one:
+		String concatenated = null;
 		int i = 0;
 		while (i < input.length) {
-			sum = sum + (float) input[i].getCell();
+			concatenated = concatenated + (String) input[i].getCell();
 			i++;
 		}
-		return sum;
+		return concatenated;
 	}
 
 }

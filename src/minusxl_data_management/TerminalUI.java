@@ -1,5 +1,10 @@
 package minusxl_data_management;
 
+import java.io.IOException;
+
+import minusxl_file_management.CsvFileCreator;
+import minusxl_file_management.CsvFileReader;
+
 public class TerminalUI {
 
 	public static void main(String[] args) {
@@ -31,12 +36,18 @@ public class TerminalUI {
 
 		workbook.getSpreadsheet(0).setValueAt(3, 0, 0);
 		workbook.getSpreadsheet(0).setValueAt(4, 0, 1);
+		workbook.getSpreadsheet(0).setValueAt(6, 0, 2);
 
-		Cell[] testarray = new Cell[2];
-		testarray[0] = workbook.getSpreadsheet(0).getCell(0, 0);
-		testarray[1] = workbook.getSpreadsheet(0).getCell(0, 1);
-
-		workbook.getSpreadsheet(0).useFunction(testarray, "Pow", workbook.getSpreadsheet(0).getCell(0, 2));
+		Cell[] inputsforfunction = new Cell[3];
+		inputsforfunction[0] = workbook.getSpreadsheet(0).getCell(0, 0);
+		inputsforfunction[1] = workbook.getSpreadsheet(0).getCell(0, 1);
+		inputsforfunction[2] = workbook.getSpreadsheet(0).getCell(0, 2);
+		
+		workbook.getSpreadsheet(0).useFunction(inputsforfunction, "Mult", workbook.getSpreadsheet(0).getCell(0, 3));
+		
+		inputsforfunction[0] = workbook.getSpreadsheet(0).getCell(0, 3);
+		
+		workbook.getSpreadsheet(0).useFunction(inputsforfunction, "Trim", workbook.getSpreadsheet(0).getCell(1,0));
 
 		System.out.println("And now we'll print everything:");
 
@@ -56,7 +67,30 @@ public class TerminalUI {
 
 			w++;
 		}
-
+		
+		//TESTING CSV FILE READER:
+		String filepath = "csvtest.txt";
+		System.out.println("");
+		System.out.println("Testing the CSV File Reader with the filename: "+filepath);
+		System.out.println("");
+		try {
+			CsvFileReader.readCsvFile(filepath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//TESTING CSV FILE CREATOR:
+		System.out.println("");
+		System.out.println("Testing the CSV File Creator with the workbook: "+workbook.getWorkbookName());
+		try {
+			CsvFileCreator.createCsvFile(workbook);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("");
 		System.out.println("-- End of testing program --");
 
 	}

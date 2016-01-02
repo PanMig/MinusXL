@@ -10,12 +10,21 @@ public class PowFunction extends MathFunction {
 		// The constructor creates a instance of AbsFunction Object
 		// and holds the Cells in the input data.
 		// DON'T FORGET: The "input" is CELL DATA!!!
-		this.input = input;
+		if(checkValidity(input) == true){
+			this.input = input;
+		}
 	}
 
 	@Override
 	public Object calculateValue() {
-		return Math.pow((Integer) input[0].getCell(), (Integer) input[1].getCell());
+		
+		Double pow = (Double) input[0].getCell();
+		int i = 1;
+		while (i < input.length) {
+			pow =  Math.pow( pow, (Double) input[i].getCell() );
+			i++;
+		}
+		return pow;	
 	}
 
 }

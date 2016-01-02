@@ -81,6 +81,11 @@ public class Workbook {
 		return spreadsheets.size();
 	}
 
+	public String getWorkbookName() {
+		// Returns the name of the workbook
+		return name;
+	}
+	
 	public void saveWorkbook() {
 		// TODO To be implemented later.
 	}
@@ -88,5 +93,6 @@ public class Workbook {
 	public void importSpreadsheet() {
 		// TODO To be implemented later.
 	}
+	
 
 }
