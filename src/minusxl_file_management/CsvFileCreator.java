@@ -1,26 +1,68 @@
 package minusxl_file_management;
 
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 
-import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
-public class CsvFileCreator {
-	
-	public static void main(String[] args) throws Exception
-	   {
-	      String csv = "data.csv";
-	      CSVWriter writer = new CSVWriter(new FileWriter(csv));
-	        
-	      //Create record
-	      String [] record = "4,David,Miller,Australia,30".split(",");
-	      //Write the record to file
-	      writer.writeNext(record);
-	        
-	      //close the writer
-	      writer.close();
-	   }
+import minusxl_data_management.*;
 
+public class CsvFileCreator {
+
+	public static void createCsvFile(Workbook workbook) throws Exception
+	   {
+		
+		// We will take a Workbook and iterate through every Spreadsheet
+		// and write each of those Spreadsheets to a file, using the name
+		// of the Workbook and a number next to it for each of the Spreadsheets:
+		
+		// Here we see how many Spreadsheets (from the current Workbook)
+		// we will go through in the upcoming loop - and the name of the workbook:
+		int numberOfSpreadsheets = workbook.getAttachedSpreadsheets();
+		String workbookName = workbook.getWorkbookName();
+		
+		// All-encompassing loop: Go through every spreadsheet:
+		for(int i=0; i<numberOfSpreadsheets; i++){
+			
+			Spreadsheet spreadsheet = workbook.getSpreadsheet(i);
+			
+			// Get rows and columns of the spreadsheet:
+			int rows = spreadsheet.getRowCount();
+			int columns = spreadsheet.getColumnCount();
+			
+		    String csv = workbookName+"-"+i+".csv";
+		    CSVWriter writer = new CSVWriter(new FileWriter(csv),';',' ');
+		    
+		    // The writeAll (of openCSV) needs a List of String[]:
+		    ArrayList<String[]> record = new ArrayList<String[]>(); 
+		    
+		    // Outside loop: Go through every row:
+		    for(int j=0; j<rows; j++){
+		    	
+			    // Used for the record of row data:
+			    String[] lineData = new String[columns]; 
+		    	
+		    	// Inside loop: Read every column in the current row
+		    	for(int k=0; k<columns; k++){
+		    			//Create record and check for NULL cells (because they can't be converted to String):
+		    			if( spreadsheet.getValueAt(j, k) == null){
+		    				lineData[k] = "";
+		    			} else {
+		    				lineData[k] = spreadsheet.getValueAt(j, k).toString();
+		    			}
+		    		}
+		    	
+			    record.add(lineData);
+			    
+			    // Clear the pointer:
+			    lineData = null;
+		    	}
+		    
+	    	//Write the whole list of lines and columns to the file:
+		    writer.writeAll(record);
+		        
+		    //close the writer
+		    writer.close();
+			}
+	   }
 }

@@ -31,7 +31,6 @@ public class Spreadsheet extends AbstractTableModel {
 		}
 	}
 	
-	
 	@Override
 	public int getRowCount() {
 		// Returns the size of the "row" array (containing the other arrays)

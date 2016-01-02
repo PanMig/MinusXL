@@ -2,6 +2,7 @@ package minusxl_data_management;
 
 import java.io.IOException;
 
+import minusxl_file_management.CsvFileCreator;
 import minusxl_file_management.CsvFileReader;
 
 public class TerminalUI {
@@ -68,14 +69,28 @@ public class TerminalUI {
 		}
 		
 		//TESTING CSV FILE READER:
-		String[] filenameinput = {"csvtest.txt"};
+		String filepath = "csvtest.txt";
+		System.out.println("");
+		System.out.println("Testing the CSV File Reader with the filename: "+filepath);
+		System.out.println("");
 		try {
-			CsvFileReader.main(filenameinput);
+			CsvFileReader.readCsvFile(filepath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		//TESTING CSV FILE CREATOR:
+		System.out.println("");
+		System.out.println("Testing the CSV File Creator with the workbook: "+workbook.getWorkbookName());
+		try {
+			CsvFileCreator.createCsvFile(workbook);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("");
 		System.out.println("-- End of testing program --");
 
 	}

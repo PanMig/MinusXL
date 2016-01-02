@@ -11,17 +11,15 @@ public class CsvFileReader {
 	   * @param args
 	   * @throws IOException 
 	   */
-	  public static void main(String[] filename) throws IOException {
-	    /**
-	     * Load CSV from classpath
-	     */
+	  public static void readCsvFile(String filepath) throws IOException {
+	    
 	    CSVReader csvReader = new CSVReader(new InputStreamReader(
-	        CsvFileReader.class.getClassLoader().getResourceAsStream("csvtest.txt")),';');
+	        CsvFileReader.class.getClassLoader().getResourceAsStream(filepath)),';');
 	    
 	      String [] rowAsTokens;
 	      while ((rowAsTokens = csvReader.readNext()) != null) {
 	        for (String token : rowAsTokens) {
-	          System.out.print(token + "#");
+	          System.out.print(token + "");
 	        }
 	        System.out.println();
 	      }
