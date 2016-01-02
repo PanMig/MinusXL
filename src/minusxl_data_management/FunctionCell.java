@@ -8,7 +8,7 @@ public class FunctionCell extends Cell<Object> {
 
 	// This constructor takes in consideration the constructor of the
 	// super-class (Cell)
-	FunctionCell(int row, int column, Cell[] input_cells, String function) {
+	public FunctionCell(int row, int column, Cell[] input_cells, String function) {
 		super(row, column);
 		// The "super" sends the arguments to the superclass constructor.
 
