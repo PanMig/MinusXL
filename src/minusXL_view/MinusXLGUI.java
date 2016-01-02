@@ -8,8 +8,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -21,18 +25,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 
+import minusXl_charts_managment.ChartManager;
+import minusxl_data_management.Cell;
+import minusxl_data_management.FunctionCell;
 import minusxl_data_management.Spreadsheet;
 import minusxl_data_management.Workbook;
-import javax.swing.ImageIcon;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 
@@ -48,9 +51,19 @@ public class MinusXLGUI {
 	private int sheetNumber=0;//keeps the number of the spreadsheet,becomes zero
 	//when new workbook is created
 	
-	private Workbook wbManager;
+	private Workbook workbookManager;
 	
-	private Spreadsheet spManager;
+	private Spreadsheet sheetManager;
+	
+	private Integer integer;
+	
+	private JTable tableManager;
+	
+	//list to keep the selected cells values
+	private ArrayList <Cell> selectedCellsList;
+	
+	//list of the jtables used,created for the correct referencing to the selected jtable
+	private ArrayList<JTable> tableList;
 	
 	//objects for opening files and creating a tabbed pane
 	JFileChooser fileChooser = new JFileChooser();
@@ -99,8 +112,10 @@ public class MinusXLGUI {
 		tabbedPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				spManager=wbManager.getSpreadsheet(tabbedPane.getSelectedIndex());
-				
+				//make spreadsheet reference point to the correct spreadsheet on the list
+				sheetManager=workbookManager.getSpreadsheet(tabbedPane.getSelectedIndex());
+				//make jtable reference point to the correct jtable on the list
+				tableManager=tableList.get(tabbedPane.getSelectedIndex());
 			}
 		});
 		
@@ -121,11 +136,13 @@ public class MinusXLGUI {
 	//initiate the first workbook when the program opens for the first time
 	public void initWorkbook(){
 		Workbook wb=new Workbook();
-		wbManager=wb;
-		spManager=wbManager.getSpreadsheet(wb.getAttachedSpreadsheets()-1);
+		tableList=new ArrayList<JTable>();
+		workbookManager=wb;
+		sheetManager=workbookManager.getSpreadsheet(wb.getAttachedSpreadsheets()-1);
 		//add values
-		spManager.setValueAt(true,2,2);
-		
+		/*sheetManager.setValueAt(true,2,2);
+		sheetManager.setValueAt(30,0,0);
+		sheetManager.setValueAt(54,0,1);*/
 		addSheet();
 	}
 
@@ -140,22 +157,24 @@ public class MinusXLGUI {
 		tabbedPane.addTab("sheet", null, scrollPane, null);
 		
 		JTable table=new JTable();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				System.out.println(spManager.getValueAt(0,0));
-			}
-		});
 		
 		
+		//add table to the list
+			tableList.add(table);
+		//make the reference point to the correct table
+			tableManager=tableList.get(0);
 		//attach jtable to the spreadsheet instance that we create in the above line
-		table.setModel(spManager);
+		table.setModel(sheetManager);
 		table.setRowSelectionAllowed(false);
 		table.setCellSelectionEnabled(true);
 		////attach to the scrool pane the Jtable
 		scrollPane.setViewportView(table);
 		table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
-		sheetNumber+=1;		
+		sheetNumber+=1;
+		//tableManager.setValueAt(10,5,5);
+		
+		
+		//System.out.println(sheetManager.getColumnCount() + "\t"  +sheetManager.getRowCount());
 	}
 
 	
@@ -164,19 +183,17 @@ public class MinusXLGUI {
 		JScrollPane scrollPane = new JScrollPane();
 		tabbedPane.addTab(sheetName, null, scrollPane, null);
 		//when tab is added make the tabbed pane selection to the last added tab
-		tabbedPane.setSelectedIndex(wbManager.getAttachedSpreadsheets()-1);
+		tabbedPane.setSelectedIndex(workbookManager.getAttachedSpreadsheets()-1);
 		
-		spManager=wbManager.getSpreadsheet(wbManager.getAttachedSpreadsheets()-1);
+		sheetManager=workbookManager.getSpreadsheet(workbookManager.getAttachedSpreadsheets()-1);
 		JTable table=new JTable();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				System.out.println(spManager.getValueAt(0,0));
-			}
-		});
-		
+			//add table to the list
+			tableList.add(table);
+			//make the reference point to the correct table
+			tableManager=tableList.get(tableList.size()-1);
+			//System.out.println(tableList.size());
 		//attach jtable to the spreadsheet instance that we create in the above line
-		table.setModel(spManager);
+		table.setModel(sheetManager);
 		table.setRowSelectionAllowed(false);
 		table.setCellSelectionEnabled(true);
 		
@@ -185,6 +202,8 @@ public class MinusXLGUI {
 		table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
 		
 		sheetNumber+=1;
+		
+		//System.out.println("added sheet: "+sheetManager.getColumnCount() + "\t"  +sheetManager.getRowCount());
 
 	}
 
@@ -216,7 +235,7 @@ public class MinusXLGUI {
 				option=JOptionPane.showConfirmDialog(tabbedPane,"Do you want to delete the choosen spreadsheet?");
 				if(option==0){
 					tabbedPane.remove(tabIndex);//remove tab from the tabbed pane
-					wbManager.deleteSpreadsheet(tabIndex);//delete spreadsheet from the list of spreadsheets
+					workbookManager.deleteSpreadsheet(tabIndex);//delete spreadsheet from the list of spreadsheets
 					sheetNumber-=1;
 				}
 			}
@@ -245,7 +264,7 @@ public class MinusXLGUI {
 					//TODO CHECK IF USERS PUTS STRING that's not an number
 					else	sheetColumns=Integer.parseInt(StringsheetColumns);
 				
-				wbManager.addSpreadsheet(sheetRows, sheetColumns);//add spreadsheet to the list
+				workbookManager.addSpreadsheet(sheetRows, sheetColumns);//add spreadsheet to the list
 				addSheet(sheetName,sheetRows,sheetColumns);//add tab to the tabbed pane
 				
 			}
@@ -309,7 +328,10 @@ public class MinusXLGUI {
 				if(workBookName.length()==0 && StringsheetRows.length()==0 && StringsheetColumns.length()==0 ){
 					sheetNumber=0;
 					Workbook wb =new Workbook();
-					wbManager=wb;//the reference now points to that specific object
+					//create a new tables list
+						tableList= new ArrayList<JTable>();
+					//created
+					workbookManager=wb;//the reference now points to that specific object
 					tabbedPane.removeAll();
 					addSheet();
 	
@@ -317,14 +339,20 @@ public class MinusXLGUI {
 				else if(workBookName.length()==0 && StringsheetRows.length()!=0 && StringsheetColumns.length()!=0 ){
 					sheetNumber=0;
 					Workbook wb =new Workbook(sheetRows,sheetColumns);
-					wbManager=wb;
+					//create a new tables list
+						tableList= new ArrayList<JTable>();
+					//created
+					workbookManager=wb;
 					tabbedPane.removeAll();
 					addSheet("sheet",sheetRows,sheetColumns);
 				}
 				else{
 					sheetNumber=0;
 					Workbook wb =new Workbook(workBookName,sheetRows,sheetColumns);
-					wbManager=wb;
+					//create a new tables list
+						tableList= new ArrayList<JTable>();
+					//created
+					workbookManager=wb;
 					tabbedPane.removeAll();
 					addSheet("sheet",sheetRows,sheetColumns);
 				}
@@ -354,32 +382,53 @@ public class MinusXLGUI {
 		});
 		menuBar.add(btnSave);
 		
-		JButton btnUseFunction = new JButton("Use Function :");
-		btnUseFunction.setForeground(Color.RED);
-		menuBar.add(btnUseFunction);
-		
-		//JLabel functionLabel =new JLabel("   Function : ");
-		//menuBar.add(functionLabel);
+		JLabel functionLabel =new JLabel("   Function : ");
+		menuBar.add(functionLabel);
 		
 		//Function and charts button
 		final JComboBox funcBox = new JComboBox();
 		funcBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				/*TODO function calling
-				*	- choose cells
-				*	- choose function
-				*	- press use function button
-				*	- message to choose the output cell
-				*	- call use function from spreadsheet 
+				* find selected cells
+				* put to an array of cells	
 				*/
 				
 				//holds the selected function string
 				String funcOption=(String)funcBox.getSelectedItem();
+				selectedCellsList=new ArrayList<Cell>();
+				//cell=sheetManager.getCell(0,0);
+				for(int i=0;i<sheetManager.getRowCount();i++){
+					for(int j=0;j<sheetManager.getColumnCount();j++){
+						if(tableManager.isCellSelected(i,j)){
+							//TODO make insertion to selected cell list work
+							selectedCellsList.add(sheetManager.getCell(i, j));
+							//System.out.println(sheetManager.getCell(i, j));
+						}
+					}
+				}
+				/*for(int i=0;i<selectedCellsList.size()-1;i++){
+					Cell cell1=selectedCellsList.get(i);
+					System.out.println(cell1.getCellType());
+					Cell cell2=selectedCellsList.get(i+1);
+					System.out.println(cell2.getCellType());
+				}*/
 				
-				//System.out.println(funcOption);
+				Cell[] cellArray = new Cell[selectedCellsList.size()];
+				for(int i=0;i<selectedCellsList.size();i++){
+					cellArray[i] =selectedCellsList.get(i);
+					System.out.println(cellArray[i].getCellType());
+					
+				}
+				Cell cell;
+				cell=sheetManager.getCell(2,3);
+				
+				sheetManager.useFunction(cellArray,funcOption,cell);
+				tableManager.updateUI();
+				
 			}
 		});
-		funcBox.setModel(new DefaultComboBoxModel(new String[] {"abs", "cos", "sin", "tan", "pow", "sum", "mult", "log", "log10", "and", "or", "not", "xor", "max", "min", "Mean", "Median", "Stddev", "Concat", "includes", "Trim", "Remove"}));
+		funcBox.setModel(new DefaultComboBoxModel(new String[] {"Abs", "Cos", "Sin", "Tan", "Pow", "Sum", "Mult", "log", "log10", "and", "or", "not", "xor", "max", "min", "Mean", "Median", "Stddev", "Concat", "includes", "Trim", "Remove"}));
 		menuBar.add(funcBox);
 		
 		
@@ -390,6 +439,20 @@ public class MinusXLGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				//holds the selected chart string
 				String chartOption=(String)chartBox.getSelectedItem();
+				
+				ArrayList<Cell> selectedChartCells = new ArrayList<Cell>();
+				for(int i=0;i<sheetManager.getRowCount();i++){
+					for(int j=0;j<sheetManager.getColumnCount();j++){
+						if(tableManager.isCellSelected(i,j)){
+							//TODO make insertion to selected cell list work
+							selectedChartCells.add(sheetManager.getCell(i, j));
+							System.out.println(sheetManager.getCell(i, j));
+						}
+					}
+				}
+				
+				ChartManager.createBarChart();
+				
 			}
 		});
 		JLabel chartLabel =new JLabel("   Chart : ");

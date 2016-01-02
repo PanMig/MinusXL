@@ -59,7 +59,30 @@ public class Spreadsheet extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object value, int row, int column) {
-
+	/*because input is always a string,
+	 if the user wants to input an integer we convert
+	 it to a integer same for the other types above
+	*/try{
+			value = Integer.parseInt((String)value);
+			 // is an integer!
+	} 
+	 catch (NumberFormatException e) {
+			  // not an integer!
+	}
+	
+	
+	try{
+		if(value.equals("true")){
+			value=Boolean.parseBoolean((String)value);
+		}
+		 // is a boolean!
+	} 
+	catch (Exception e ) {
+		  // not an boolean!
+		System.out.println("not a boolean");
+	}
+		
+		
 		// Check the type of the incoming input.
 		// We're going to create the respective type of Cell
 		// depending on the input that we take (eg. for Boolean input we're

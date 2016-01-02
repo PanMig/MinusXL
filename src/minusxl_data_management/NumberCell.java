@@ -16,8 +16,10 @@ public class NumberCell extends Cell<Integer> {
 	}
 
 	public Integer getCell() {
-		return value;
+			return value;
+		
 	}
+		
 
 	public void setCell(Object input) {
 		value = (Integer) input;
