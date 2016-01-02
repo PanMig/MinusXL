@@ -1,5 +1,9 @@
 package minusxl_data_management;
 
+import java.io.IOException;
+
+import minusxl_file_management.CsvFileReader;
+
 public class TerminalUI {
 
 	public static void main(String[] args) {
@@ -61,6 +65,15 @@ public class TerminalUI {
 			}
 
 			w++;
+		}
+		
+		//TESTING CSV FILE READER:
+		String[] filenameinput = {"csvtest.txt"};
+		try {
+			CsvFileReader.main(filenameinput);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		System.out.println("-- End of testing program --");
