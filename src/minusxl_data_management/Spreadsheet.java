@@ -61,7 +61,7 @@ public class Spreadsheet extends AbstractTableModel {
 	 if the user wants to input an integer we convert
 	 it to a integer same for the other types above
 	*/try{
-			value = Integer.parseInt((String)value);
+			value = Double.parseDouble((String)value);
 			 // is an integer!
 	} 
 	 catch (NumberFormatException e) {

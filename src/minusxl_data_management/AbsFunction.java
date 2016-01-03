@@ -19,7 +19,7 @@ public class AbsFunction extends MathFunction {
 			return (null);
 		}*/
 
-		return Math.abs((int) input[0].getCell());
+		return Math.abs((double) input[0].getCell());
 	}
 
 }

@@ -17,7 +17,7 @@ public class SumFunction extends MathFunction {
 		Float sum = 0f;
 		int i = 0;
 		while (i < input.length) {
-			sum = sum + (float) input[i].getCell();
+			sum = (float) (sum + (double) input[i].getCell());
 			i++;
 		}
 		return sum;

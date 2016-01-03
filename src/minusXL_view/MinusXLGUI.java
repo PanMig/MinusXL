@@ -420,7 +420,6 @@ public class MinusXLGUI {
 				Cell[] cellArray = new Cell[selectedCellsList.size()];
 				for(int i=0;i<selectedCellsList.size();i++){
 					cellArray[i] =selectedCellsList.get(i);
-					System.out.println(cellArray[i].getCellType());
 					
 				}
 				Cell cell;
@@ -431,7 +430,7 @@ public class MinusXLGUI {
 				
 			}
 		});
-		funcBox.setModel(new DefaultComboBoxModel(new String[] {"Abs", "Cos", "Sin", "Tan", "Pow", "Sum", "Mult", "log", "log10", "and", "or", "not", "xor", "max", "min", "Mean", "Median", "Stddev", "Concat", "includes", "Trim", "Remove"}));
+		funcBox.setModel(new DefaultComboBoxModel(new String[] {"Abs", "Cos", "Sin", "Tan", "Pow", "Sum", "Mult", "Log", "Log10", "And", "Or", "Not", "Xor", "Max", "Min", "Mean", "Median", "Stddev", "Concat", "includes", "Trim", "Remove"}));
 		menuBar.add(funcBox);
 		
 		
