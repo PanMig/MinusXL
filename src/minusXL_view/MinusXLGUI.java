@@ -1,9 +1,5 @@
 package minusXL_view;
 
-import minusxl_data_management.Spreadsheet;
-import minusxl_data_management.Workbook;
-import minusxl_file_management.CsvFileCreator;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -30,18 +26,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+
 import minusXl_charts_managment.ChartManager;
 import minusxl_data_management.Cell;
-import minusxl_data_management.FunctionCell;
 import minusxl_data_management.Spreadsheet;
 import minusxl_data_management.Workbook;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-
-
+import minusxl_file_management.CsvFileCreator;
 
 public class MinusXLGUI {
 

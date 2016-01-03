@@ -60,17 +60,17 @@ public class Spreadsheet extends AbstractTableModel {
 	/*because input is always a string,
 	 if the user wants to input an integer we convert
 	 it to a integer same for the other types above
-	*/try{
+	*/
+	try{
 			value = Double.parseDouble(value.toString());
-			 // is an integer!
+			 // is a double!
 	} 
 	 catch (NumberFormatException e) {
-			  // not an integer!
+			  // not a double!
 	}
 	
-	
 	try{
-		if(value.equals("true")){
+		if(value.equals("true") || value.equals("false")){
 			value=Boolean.parseBoolean((String)value);
 		}
 		 // is a boolean!

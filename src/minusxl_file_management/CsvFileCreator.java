@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 import com.opencsv.CSVWriter;
 
-import minusxl_data_management.*;
+import minusxl_data_management.Spreadsheet;
+import minusxl_data_management.Workbook;
 
 public class CsvFileCreator {
 
