@@ -69,7 +69,7 @@ public class TerminalUI {
 		}
 		
 		//TESTING CSV FILE READER:
-		String filepath = "csvtest.txt";
+		String filepath = "csvtest.csv";
 		System.out.println("");
 		System.out.println("Testing the CSV File Reader with the filename: "+filepath);
 		System.out.println("");

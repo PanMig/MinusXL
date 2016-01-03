@@ -2,6 +2,7 @@ package minusXL_view;
 
 import minusxl_data_management.Spreadsheet;
 import minusxl_data_management.Workbook;
+import minusxl_file_management.CsvFileCreator;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -248,7 +249,7 @@ public class MinusXLGUI {
 		JButton addButton = new JButton("+");
 		//when mouse mouse above the button shows a message
 		addButton.setToolTipText("Press to add spreadsheet");
-		
+		//TODO make default values appear on the dialog
 		addButton.setBackground(UIManager.getColor("Button.light"));
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -313,16 +314,16 @@ public class MinusXLGUI {
 		JButton btnNew = new JButton("New WorkBook");//"New workbook"
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//holds workbok name
-				workBookName=JOptionPane.showInputDialog("Enter new workBook name");
+				//holds workbook name
+				workBookName=JOptionPane.showInputDialog("Enter new workBook name","Workbook");
 				if(workBookName.length()==0) workBookName="Workbook";
 				//holds rows for the new sheet
-				String StringsheetRows = JOptionPane.showInputDialog("Enter rows for your spreadsheet");
+				String StringsheetRows = JOptionPane.showInputDialog("Enter rows for your spreadsheet","100");
 					if(StringsheetRows.length()==0) sheetRows=100;
 					//TODO CHECK IF USERS PUTS STRING that's not an number
 					else	sheetRows=Integer.parseInt(StringsheetRows);
 				//holds columns for sheet
-				String StringsheetColumns = JOptionPane.showInputDialog("Enter columns for your spreadsheet");
+				String StringsheetColumns = JOptionPane.showInputDialog("Enter columns for your spreadsheet","26");
 					if(StringsheetColumns.length()==0) sheetColumns=26;
 					//TODO CHECK IF USERS PUTS STRING that's not an number
 					else	sheetColumns=Integer.parseInt(StringsheetColumns);
@@ -381,6 +382,13 @@ public class MinusXLGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				//JOptionPane.showInputDialog("Enter a name for the workbook");
 				fileChooser.showSaveDialog(null);
+				try {
+					System.out.println("mesa");
+					CsvFileCreator.createCsvFile(workbookManager);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		menuBar.add(btnSave);
@@ -417,15 +425,19 @@ public class MinusXLGUI {
 					System.out.println(cell2.getCellType());
 				}*/
 				
+				//copy arraylist elements to an array
+				//because usefunction method uses an array
 				Cell[] cellArray = new Cell[selectedCellsList.size()];
 				for(int i=0;i<selectedCellsList.size();i++){
 					cellArray[i] =selectedCellsList.get(i);
 					
 				}
+				//for the output cell in usefunction method
 				Cell cell;
 				cell=sheetManager.getCell(2,3);
 				
 				sheetManager.useFunction(cellArray,funcOption,cell);
+				//updates the gui,used when new values
 				tableManager.updateUI();
 				
 			}

@@ -22,6 +22,8 @@ public class CsvFileReader {
 	          System.out.print(token + "");
 	        }
 	        System.out.println();
+	        System.out.println("End of loop");
+	        
 	      }
 	      csvReader.close();
 	  }
