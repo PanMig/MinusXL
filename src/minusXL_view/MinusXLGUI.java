@@ -247,7 +247,7 @@ public class MinusXLGUI {
 		
 		//button that adds a spreadsheet
 		JButton addButton = new JButton("+");
-		//when mouse mouse above the button shows a message
+		//when mouse mouse above the button shows a message.
 		addButton.setToolTipText("Press to add spreadsheet");
 		//TODO make default values appear on the dialog
 		addButton.setBackground(UIManager.getColor("Button.light"));
