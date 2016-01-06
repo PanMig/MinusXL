@@ -45,7 +45,8 @@ public class TerminalUI {
 		
 		workbook.getSpreadsheet(0).useFunction(inputsforfunction, "Mult", workbook.getSpreadsheet(0).getCell(0, 3));
 		
-		inputsforfunction[0] = workbook.getSpreadsheet(0).getCell(0, 3);
+		inputsforfunction = new Cell[1];
+		inputsforfunction[0] = workbook.getSpreadsheet(0).getCell(5, 4);
 		
 		workbook.getSpreadsheet(0).useFunction(inputsforfunction, "Trim", workbook.getSpreadsheet(0).getCell(1,0));
 
@@ -68,18 +69,6 @@ public class TerminalUI {
 			w++;
 		}
 		
-		//TESTING CSV FILE READER:
-		String filepath = "csvtest.txt";
-		System.out.println("");
-		System.out.println("Testing the CSV File Reader with the filename: "+filepath);
-		System.out.println("");
-		try {
-			CsvFileReader.readCsvFile(filepath);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		//TESTING CSV FILE CREATOR:
 		System.out.println("");
 		System.out.println("Testing the CSV File Creator with the workbook: "+workbook.getWorkbookName());
@@ -90,9 +79,40 @@ public class TerminalUI {
 			e.printStackTrace();
 		}
 		
-		System.out.println("");
-		System.out.println("-- End of testing program --");
+		
+		//TESTING CSV FILE READER:
+			String filepath = "csvtest.txt";
+			System.out.println("");
+			System.out.println("Testing the CSV File Reader with the filename: "+filepath);
+			System.out.println("");
+			try {
+				// Call the CSVFileReader and add the returned Spreadsheet to our working Workbook:
+				workbook.addSpreadsheet(CsvFileReader.readCsvFile(filepath));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			// Testing: Print all spreadsheets and their data
+			w = 0;
+			while (w < workbook.getAttachedSpreadsheets()) {
 
+				System.out.println(" ");
+				System.out.println("Spreadsheet #" + (w + 1) + ":");
+
+				for (int i = 0; i < workbook.getSpreadsheet(w).getRowCount(); i++) {
+					for (int y = 0; y < workbook.getSpreadsheet(w).getColumnCount(); y++) {
+						System.out.print(workbook.getSpreadsheet(w).getValueAt(i, y) + " ");
+					}
+					System.out.println(" ");
+				}
+
+				w++;
+			}
+			
+			System.out.println("");
+			System.out.println("-- End of testing program --");
 	}
-
+	
+	
 }

@@ -13,8 +13,24 @@ public class StdDevFunction extends StatisticalFunction {
 
 	@Override
 	public Object calculateValue() {
-		// TODO Implement the Standard Deviation algorithm:
-		return null;
-	}
 
+		//Get the mean:
+		int size = input.length;
+		
+		double sum = 0.0;
+        for(Cell<NumberCell> a : input){
+            sum += a.getCell().getCell();
+        	}
+        double mean = sum/size;
+        
+		//Get the variance
+	    double temp = 0;
+	    for(Cell<NumberCell> a :input){
+	        temp += (mean-a.getCell().getCell())*(mean-a.getCell().getCell());
+	    	}
+	    double variance = temp/size;
+
+	    //Get the standard deviation
+	    return Math.sqrt(variance);
+	}
 }

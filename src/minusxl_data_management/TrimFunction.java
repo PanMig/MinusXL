@@ -15,8 +15,9 @@ public class TrimFunction extends AlpharithmeticFunction {
 
 	@Override
 	public Object calculateValue() {
-		// TODO Auto-generated method stub
-		return null;
+		// Trim whitespace from the selected string:
+		String string1 = (String) input[0].getCell();
+		return(string1.trim());
 	}
 
 }
