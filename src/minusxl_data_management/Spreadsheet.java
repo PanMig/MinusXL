@@ -1,5 +1,7 @@
 package minusxl_data_management;
 
+import java.util.ArrayList;
+
 import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
@@ -132,6 +134,7 @@ public class Spreadsheet extends AbstractTableModel {
 		// that we want to use.
 
 	}
+	
 
 	public void createChart() {
 		// TODO: This method will call the Charts Manager package

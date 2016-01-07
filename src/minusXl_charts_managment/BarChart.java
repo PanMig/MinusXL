@@ -17,12 +17,15 @@ public class BarChart extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Cell> list;
+	private ArrayList<Cell> dataList;
 
 	public BarChart(String windowTitle, String chartTitle,String horizontalKeysTitle
-	,String verticalTitle,ArrayList<Cell> list) {
+	,String verticalTitle,ArrayList<Cell> list,ArrayList<Cell> dataList) {
 		super(windowTitle);
 		
+		
 		this.list=list;
+		this.dataList=dataList;
 		
 		//second arg stands for horizontal Keys Title and 3rd arg stands for vertical title
 		JFreeChart pieChart = ChartFactory.createBarChart(chartTitle,horizontalKeysTitle,
@@ -42,13 +45,16 @@ public class BarChart extends JFrame {
 
 	private CategoryDataset createDataSet() {
 		
+		double chartColumnValue = 0;
+		
+		Comparable columnKey = null;
 		//colors :given by the user
 		//final Comparable firefox =(Comparable) list.get(0).getCell();
 		//final String chrome = "Chrome";
 		//final String iexplorer = "InternetExplorer";
 		
 		// column keys...
-		final String speed = "Speed";
+		
 		final String popular = "Popular";
 		final String response = "Response";
 		final String osindependent = "OS Independent";
@@ -59,15 +65,25 @@ public class BarChart extends JFrame {
 		
 		//initialize and add values to the bar categories
 		for(int i=0;i<list.size();i++){
-			final Comparable key =(Comparable) list.get(i).getCell();
-			dataset.addValue(1.0,key, speed);
-			dataset.addValue(4.0,key, popular);
-			dataset.addValue(3.0,key, response);
-			dataset.addValue(5.0, key, osindependent);
-			dataset.addValue(5.0,key, features);
-		}
+			for(int j=0;j<dataList.size();j++){
+				final Comparable key =(Comparable) list.get(i).getCell();
+				if(dataList.get(j).getCellType().equals("String")){
+					columnKey =(Comparable) dataList.get(j).getCell();
+				}
+				else{
+					chartColumnValue=(double) dataList.get(j).getCell();
+					System.out.println(chartColumnValue);
+				}
+				dataset.addValue(chartColumnValue,key,columnKey);
+				
+				/*
+				dataset.addValue(4.0,key, popular);
+				dataset.addValue(3.0,key, response);
+				dataset.addValue(5.0, key, osindependent);
+				dataset.addValue(5.0,key, features);*/
+			}
 
-		
+		}
 
 		
 		/*

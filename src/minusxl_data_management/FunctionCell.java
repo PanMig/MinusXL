@@ -46,6 +46,10 @@ public class FunctionCell extends Cell<Object> {
 		case "Log10":
 			this.function = new Log10Function(input_cells);
 			break;
+			
+		case "Sin":
+			this.function = new SinFunction(input_cells);
+			break;	
 
 		// 2. Logical Functions:
 

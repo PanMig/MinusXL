@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -25,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 
 import minusXl_charts_managment.ChartManager;
@@ -32,7 +35,7 @@ import minusxl_data_management.Cell;
 import minusxl_data_management.Spreadsheet;
 import minusxl_data_management.Workbook;
 import minusxl_file_management.CsvFileCreator;
-import javax.swing.ListSelectionModel;
+import minusxl_file_management.CsvFileReader;
 
 public class MinusXLGUI {
 
@@ -61,7 +64,7 @@ public class MinusXLGUI {
 	private ArrayList<JTable> tableList;
 
 	// objects for opening files and creating a tabbed pane
-	JFileChooser fileChooser = new JFileChooser();
+	JFileChooser fileChooser = new JFileChooser("C:\\Users\\Panos\\git\\MinusXL\\bin");
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
 
 	/**
@@ -137,10 +140,11 @@ public class MinusXLGUI {
 		// creates a new list of jtable,used to keep the reference pointing to
 		// the correct table
 		tableList = new ArrayList<JTable>();
-		//make the workbook reference point to the correct workbook
+		// make the workbook reference point to the correct workbook
 		workbookManager = wb;
-		//make the spreadsheet reference point to the correct spreasheet in the list
-		//of spreadsheets
+		// make the spreadsheet reference point to the correct spreasheet in the
+		// list
+		// of spreadsheets
 		sheetManager = workbookManager.getSpreadsheet(wb.getAttachedSpreadsheets() - 1);
 		addSheet();
 	}
@@ -156,7 +160,7 @@ public class MinusXLGUI {
 		tabbedPane.addTab("sheet", null, scrollPane, null);
 
 		JTable table = new JTable();
-		
+
 		// add table to the list
 		tableList.add(table);
 		// make the reference point to the correct table
@@ -164,18 +168,19 @@ public class MinusXLGUI {
 		// attach jtable to the spreadsheet instance that we create in the above
 		// line
 		table.setModel(sheetManager);
-		//cannot select an entire row
+		// cannot select an entire row
 		table.setRowSelectionAllowed(false);
-		//select multiple cells in the array
+		// select multiple cells in the array
 		table.getColumnModel().setColumnSelectionAllowed(true);
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		//enables individual cell selection
+		// enables individual cell selection
 		table.setCellSelectionEnabled(true);
 		//// attach to the scrool pane the Jtable
 		scrollPane.setViewportView(table);
 		table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
-		sheetNumber += 1;//its an number that keeps the amount of the spreadsheets
-		//in the current workbook
+		sheetNumber += 1;// its an number that keeps the amount of the
+							// spreadsheets
+		// in the current workbook
 	}
 
 	public void addSheet(String sheetName, int rows, int columns) {
@@ -302,6 +307,19 @@ public class MinusXLGUI {
 		btnImportSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fileChooser.showOpenDialog(null);
+				File choosenFile = fileChooser.getSelectedFile();
+				try {
+					workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile.getName()));
+					sheetManager = workbookManager.getSpreadsheet(workbookManager.getAttachedSpreadsheets() - 1);
+					addSheet("Imported sheet", sheetManager.getRowCount(), sheetManager.getColumnCount());
+					// update the ui so the table will reviece the cchange and
+					// print it
+					// imediatly
+					tableManager.updateUI();
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(null, "Import failed");
+					e1.printStackTrace();
+				}
 			}
 		});
 		GridBagConstraints gbc_ImportSheet = new GridBagConstraints();
@@ -448,24 +466,25 @@ public class MinusXLGUI {
 				// integer
 				int outCellRow = Integer.parseInt(outputCellRow);
 				int outCellColumn = Integer.parseInt(outputCellColumn);
-				
-				/*check if the dimensions that the user inserted are in bounds
-				of the table
-				*/
-				if(outCellRow <= sheetManager.getRowCount() 
-				&& outCellColumn<=sheetManager.getColumnCount())
-				{
-				
+
+				/*
+				 * check if the dimensions that the user inserted are in bounds
+				 * of the table
+				 */
+				if (outCellRow <= sheetManager.getRowCount() && outCellColumn <= sheetManager.getColumnCount()) {
+
 					outputcell = sheetManager.getCell(outCellRow, outCellColumn);
-					//call the function method that prints an oitput to the table
+					// call the function method that prints an oitput to the
+					// table
 					sheetManager.useFunction(cellArray, funcOption, outputcell);
 					// updates the gui,used when new values to the table are
 					// inserted
 					tableManager.updateUI();
 				}
-				//reports that the user has inserted wrong dimensions for the output cell
-				else{
-					JOptionPane.showMessageDialog(null,"Wrong dimensions have been given!!");
+				// reports that the user has inserted wrong dimensions for the
+				// output cell
+				else {
+					JOptionPane.showMessageDialog(null, "Wrong dimensions have been given!!");
 				}
 
 			}
@@ -482,37 +501,46 @@ public class MinusXLGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				// holds the selected chart string
 				String chartOption = (String) chartBox.getSelectedItem();
-				
-				ArrayList<Cell> selectedChartKeys =new ArrayList<Cell>();
-				
-				//TODO make all selected cells unselected
-			 String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located"
-			,"0");
-			 int rowOfKeys=Integer.parseInt(rowOfKeysStr);
-					for (int j = 0; j < sheetManager.getColumnCount(); j++) {
-							if (tableManager.isCellSelected(rowOfKeys, j)) {
-								selectedChartKeys.add(sheetManager.getCell(rowOfKeys, j));
-								System.out.println(sheetManager.getCell(rowOfKeys, j));
-							}
+
+				ArrayList<Cell> selectedChartKeys = new ArrayList<Cell>();
+
+				// TODO make all selected cells unselected
+				String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located", "0");
+
+				// holds the row in the table where the keys are located,they
+				// must be in sequenece
+				int rowOfKeys = Integer.parseInt(rowOfKeysStr);
+
+				for (int j = 0; j < sheetManager.getColumnCount(); j++) {
+					if (tableManager.isCellSelected(rowOfKeys, j) 
+					 && sheetManager.getCell(rowOfKeys, j).getCellType()!=null) {
 						
+						selectedChartKeys.add(sheetManager.getCell(rowOfKeys, j));
 					}
-			
-				//create charts
-				ChartManager.createBarChart(selectedChartKeys);
-				
-				/*
-				// the arraylist that hold all the selected cells of the table
-				ArrayList<Cell> selectedChartCells = new ArrayList<Cell>();
-				for (int i = 0; i < sheetManager.getRowCount(); i++) {
+				}
+
+				ArrayList<Cell> selectedChartData = new ArrayList<Cell>();
+
+				for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
 					for (int j = 0; j < sheetManager.getColumnCount(); j++) {
 						if (tableManager.isCellSelected(i, j)) {
-							selectedChartCells.add(sheetManager.getCell(i, j));
-							System.out.println(sheetManager.getCell(i, j));
+								selectedChartData.add(sheetManager.getCell(i, j));
+
 						}
 					}
-				}*/
+				}
 
-				
+				// prints the elements of the list
+				for (int j = 0; j < selectedChartData.size(); j++) {
+					System.out.println(selectedChartData.get(j).getCell());
+				}
+
+				// create charts
+
+				if (chartOption.equals("Bar chart")) {
+					ChartManager.createBarChart(selectedChartKeys, selectedChartData);
+				}
+				// else ChartManager.createLineChart(selectedChartKeys);
 
 			}
 		});

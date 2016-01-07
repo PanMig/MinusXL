@@ -1,10 +1,10 @@
 package minusxl_data_management;
 
-public class AbsFunction extends MathFunction {
+public class SinFunction extends MathFunction {
 
 	private Cell[] input;
 
-	public AbsFunction(Cell[] input) {
+	public SinFunction(Cell[] input) {
 		// The constructor creates a instance of AbsFunction Object
 		// and holds the Cells in the input data.
 		// DON'T FORGET: The "input" is CELL DATA!!!
@@ -13,9 +13,9 @@ public class AbsFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-		
-
-		return Math.abs((double) input[0].getCell());
+		// Takes the first object of the input, casts to a double value
+		// converts to radians and then applies the Math.cos function
+		return Math.sin((Math.toRadians((double) input[0].getCell())));
 	}
 
 }
