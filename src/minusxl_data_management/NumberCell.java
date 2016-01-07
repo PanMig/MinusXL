@@ -19,7 +19,6 @@ public class NumberCell extends Cell<Double> {
 		return value;
 	}
 		
-
 	public void setCell(Object input) {
 		value = (Double) input;
 	}

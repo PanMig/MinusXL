@@ -4,19 +4,18 @@ public class FunctionCell extends Cell<Object> {
 
 	Object value;
 	final String cellType = "Function";
-	Function function;
+	Function function = null;
 
 	// This constructor takes in consideration the constructor of the
 	// super-class (Cell)
 	public FunctionCell(int row, int column, Cell[] input_cells, String function) {
+		// The "super" sends the arguments to the superclass constructor:
 		super(row, column);
-		// The "super" sends the arguments to the superclass constructor.
 
-		// The first step is to create a function object
-
+		// The first step is to create a function object:
 		switch (function) {
 		// Here, depending on the requested function, we create the
-		// corresponding one...
+		// corresponding one:
 
 		// 1: Mathematical Functions:
 		case "Abs":
@@ -48,7 +47,7 @@ public class FunctionCell extends Cell<Object> {
 			break;
 
 		// 2. Logical Functions:
-			
+
 		case "And":
 			this.function = new AndFunction(input_cells);
 			break;
@@ -66,7 +65,7 @@ public class FunctionCell extends Cell<Object> {
 			break;
 
 		// 3. Statistical Functions:
-			
+
 		case "Max":
 			this.function = new MaxFunction(input_cells);
 			break;
@@ -82,13 +81,13 @@ public class FunctionCell extends Cell<Object> {
 		case "Median":
 			this.function = new MedianFunction(input_cells);
 			break;
-			
+
 		case "StdDev":
 			this.function = new StdDevFunction(input_cells);
 			break;
 
 		// 4. Alpharithmetic Functions:
-			
+
 		case "Concat":
 			this.function = new ConcatFunction(input_cells);
 			break;
@@ -100,7 +99,7 @@ public class FunctionCell extends Cell<Object> {
 		case "Includes":
 			this.function = new IncludesFunction(input_cells);
 			break;
-			
+
 		case "Remove":
 			this.function = new RemoveFunction(input_cells);
 			break;
@@ -114,9 +113,12 @@ public class FunctionCell extends Cell<Object> {
 
 		// The second step is to let the function object do its job on the data
 		// and save the value here, to the FunctionCell's "value" field.
-		calculateValue();
-
-		// Aaaand, we're finished!
+		// But, first, we check if a function was indeed chosen in the previous
+		// switch:
+		if (function != null) {
+			calculateValue();
+		}
+		// Aaaand, we're done!
 	}
 
 	public void calculateValue() {

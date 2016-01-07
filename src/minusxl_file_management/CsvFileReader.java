@@ -44,7 +44,7 @@ public class CsvFileReader {
 		// and attach it to the last place of the current Workbook:
 		return importedCSV;
 		
-		// Hohohoho! Eimai kai poli gamatos programmer. >:D
+		// Hohohoho! Eimai kai poli gamatos. >:D
 		
 	}
 }

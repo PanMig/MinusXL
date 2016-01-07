@@ -9,7 +9,7 @@ import minusxl_data_management.*;
 
 public class CsvFileCreator {
 
-	public static void createCsvFile(Workbook workbook) throws Exception
+	public static void createCsvFile(Workbook workbook, String saveLocation) throws Exception
 	   {
 		
 		// We will take a Workbook and iterate through every Spreadsheet
@@ -30,7 +30,10 @@ public class CsvFileCreator {
 			int rows = spreadsheet.getRowCount();
 			int columns = spreadsheet.getColumnCount();
 			
-		    String csv = workbookName+"-"+i+".csv";
+			// We take the folder "save location" as an argument in
+			// the method call of the class. And we append the name
+			// of the file to that, in the FileWriter:
+		    String csv = saveLocation+workbookName+"-"+i+".csv";
 		    CSVWriter writer = new CSVWriter(new FileWriter(csv),';',' ');
 		    
 		    // The writeAll (of openCSV) needs a List of String[]:

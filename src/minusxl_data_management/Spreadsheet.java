@@ -80,7 +80,6 @@ public class Spreadsheet extends AbstractTableModel {
 		System.out.println("not a boolean");
 	}
 		
-		
 		// Check the type of the incoming input.
 		// We're going to create the respective type of Cell
 		// depending on the input that we take (eg. for Boolean input we're
@@ -102,6 +101,12 @@ public class Spreadsheet extends AbstractTableModel {
 		} else if (value.getClass() == String.class) {
 			data[row][column] = new StringCell(row, column);
 			data[row][column].setCell((String) value);
+		} else {
+			// This is the default action. If something goes wrong
+			// we will make a NumberCell by default, containing
+			// the "null" value:
+			data[row][column] = new NumberCell(row, column);
+			data[row][column].setCell(null);
 		}
 
 		// TODO To be implemented: We can add an exception on the previous block
