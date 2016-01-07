@@ -48,7 +48,7 @@ public class FunctionCell extends Cell<Object> {
 			break;
 
 		// 2. Logical Functions:
-			
+
 		case "And":
 			this.function = new AndFunction(input_cells);
 			break;
@@ -66,7 +66,7 @@ public class FunctionCell extends Cell<Object> {
 			break;
 
 		// 3. Statistical Functions:
-			
+
 		case "Max":
 			this.function = new MaxFunction(input_cells);
 			break;
@@ -82,13 +82,13 @@ public class FunctionCell extends Cell<Object> {
 		case "Median":
 			this.function = new MedianFunction(input_cells);
 			break;
-			
+
 		case "StdDev":
 			this.function = new StdDevFunction(input_cells);
 			break;
 
 		// 4. Alpharithmetic Functions:
-			
+
 		case "Concat":
 			this.function = new ConcatFunction(input_cells);
 			break;
@@ -100,7 +100,7 @@ public class FunctionCell extends Cell<Object> {
 		case "Includes":
 			this.function = new IncludesFunction(input_cells);
 			break;
-			
+
 		case "Remove":
 			this.function = new RemoveFunction(input_cells);
 			break;

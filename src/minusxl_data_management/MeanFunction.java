@@ -17,10 +17,10 @@ public class MeanFunction extends StatisticalFunction {
 		double sum = 0;
 
 		for (int i = 1; i < input.length; i++) {
-		      sum = sum + (double)input[i].getCell();
+			sum = sum + (double) input[i].getCell();
 		}
-		
-		return(sum/input.length);
+
+		return (sum / input.length);
 	}
 
 }

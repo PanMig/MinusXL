@@ -1,5 +1,7 @@
 package minusXl_charts_managment;
 
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
 import org.jfree.chart.ChartFactory;
@@ -9,63 +11,86 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import minusxl_data_management.Cell;
+
 public class BarChart extends JFrame {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	public BarChart(String windowTitle,String chartTitle){
+	private ArrayList<Cell> list;
+
+	public BarChart(String windowTitle, String chartTitle,String horizontalKeysTitle
+	,String verticalTitle,ArrayList<Cell> list) {
 		super(windowTitle);
 		
-		JFreeChart pieChart = ChartFactory.createBarChart(chartTitle, "Category", "Score",
-		createDataSet(),PlotOrientation.VERTICAL, true, true, false);
+		this.list=list;
 		
-		 	ChartPanel chartPanel = new ChartPanel(pieChart);
-	      
-	        // settind default size
-	        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-	      
-	        // add to contentPane
-	        setContentPane(chartPanel);
-		
+		//second arg stands for horizontal Keys Title and 3rd arg stands for vertical title
+		JFreeChart pieChart = ChartFactory.createBarChart(chartTitle,horizontalKeysTitle,
+		verticalTitle, 
+		createDataSet(), 
+		PlotOrientation.VERTICAL, true, true, false);
+
+		ChartPanel chartPanel = new ChartPanel(pieChart);
+
+		// settind default size
+		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+
+		// add to contentPane
+		setContentPane(chartPanel);
+
 	}
-	
-	private CategoryDataset createDataSet(){
-		 final String firefox = "Firefox";
-	      final String chrome = "Chrome";
-	      final String iexplorer = "InternetExplorer";
 
-	      // column keys...
-	      final String speed = "Speed";
-	      final String popular = "Popular";
-	      final String response = "Response";
-	      final String osindependent = "OS Independent";
-	      final String features = "Features";
-
-	      // create the dataset...
-	      final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-	      dataset.addValue(1.0, firefox, speed);
-	      dataset.addValue(4.0, firefox, popular);
-	      dataset.addValue(3.0, firefox, response);
-	      dataset.addValue(5.0, firefox, osindependent);
-	      dataset.addValue(5.0, firefox, features);
-
-	      dataset.addValue(5.0, chrome, speed);
-	      dataset.addValue(7.0, chrome, popular);
-	      dataset.addValue(6.0, chrome, response);
-	      dataset.addValue(8.0, chrome, osindependent);
-	      dataset.addValue(4.0, chrome, features);
-
-	      dataset.addValue(4.0, iexplorer, speed);
-	      dataset.addValue(3.0, iexplorer, popular);
-	      dataset.addValue(2.0, iexplorer, response);
-	      dataset.addValue(3.0, iexplorer, osindependent);
-	      dataset.addValue(6.0, iexplorer, features);
-	     
-	      return dataset;
-	     
-	  }
+	private CategoryDataset createDataSet() {
 		
+		//colors :given by the user
+		//final Comparable firefox =(Comparable) list.get(0).getCell();
+		//final String chrome = "Chrome";
+		//final String iexplorer = "InternetExplorer";
 		
+		// column keys...
+		final String speed = "Speed";
+		final String popular = "Popular";
+		final String response = "Response";
+		final String osindependent = "OS Independent";
+		final String features = "Features";
+		
+		// create the dataset...
+		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		
+		//initialize and add values to the bar categories
+		for(int i=0;i<list.size();i++){
+			final Comparable key =(Comparable) list.get(i).getCell();
+			dataset.addValue(1.0,key, speed);
+			dataset.addValue(4.0,key, popular);
+			dataset.addValue(3.0,key, response);
+			dataset.addValue(5.0, key, osindependent);
+			dataset.addValue(5.0,key, features);
+		}
+
+		
+
+		
+		/*
+		dataset.addValue(1.0, firefox, speed);
+		dataset.addValue(4.0, firefox, popular);
+		dataset.addValue(3.0, firefox, response);
+		dataset.addValue(5.0, firefox, osindependent);
+		dataset.addValue(5.0, firefox, features);
+
+		dataset.addValue(5.0, chrome, speed);
+		dataset.addValue(7.0, chrome, popular);
+		dataset.addValue(6.0, chrome, response);
+		dataset.addValue(8.0, chrome, osindependent);
+		dataset.addValue(4.0, chrome, features);
+
+		dataset.addValue(4.0, iexplorer, speed);
+		dataset.addValue(3.0, iexplorer, popular);
+		dataset.addValue(2.0, iexplorer, response);
+		dataset.addValue(3.0, iexplorer, osindependent);
+		dataset.addValue(6.0, iexplorer, features);
+		 */
+		return dataset;
+
+	}
+
 }
-

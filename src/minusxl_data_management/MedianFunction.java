@@ -13,11 +13,11 @@ public class MedianFunction extends StatisticalFunction {
 
 	@Override
 	public Object calculateValue() {
-		
+
 		// TODO: First we have to sort the array:
-		
+
 		// TODO: Then use the MEDIAN value algorithm:
-		
+
 		// TODO Auto-generated method stub
 		return null;
 	}

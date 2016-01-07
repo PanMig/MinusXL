@@ -19,5 +19,5 @@ public abstract class StatisticalFunction extends Function {
 		// Else...
 		return (true);
 	}
-	
+
 }
