@@ -13,18 +13,8 @@ public class IncludesFunction extends AlpharithmeticFunction {
 
 	@Override
 	public Object calculateValue() {
-		
-		// Take the first and second members of the input array (they are strings)
-		// and hold them in temporary variables to make the string search:
-		String string1 = input[0].getCell().toString();
-		String string2 = input[1].getCell().toString();
-		
-		// If string1 includes string2 then return "true"
-		if( string1.toLowerCase().contains(string2.toLowerCase()) == true ) {
-			return true;
-		} else {
-			return false;
-		}
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
+
 }

@@ -13,7 +13,9 @@ public class AbsFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-		return Math.abs((int) input[0].getCell());
+		
+
+		return Math.abs((double) input[0].getCell());
 	}
 
 }

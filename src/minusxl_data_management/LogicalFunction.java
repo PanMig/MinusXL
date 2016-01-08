@@ -17,5 +17,5 @@ public abstract class LogicalFunction extends Function {
 		// Else...
 		return (true);
 	}
-	
+
 }

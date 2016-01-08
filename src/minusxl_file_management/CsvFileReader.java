@@ -10,8 +10,8 @@ import minusxl_data_management.Spreadsheet;
 
 public class CsvFileReader {
 
-	public static Spreadsheet readCsvFile(String filepath) throws IOException {
 
+	public static Spreadsheet readCsvFile(String filepath) throws IOException {
 		CSVReader csvReader = new CSVReader(
 				new InputStreamReader(CsvFileReader.class.getClassLoader().getResourceAsStream(filepath)), ';');
 				

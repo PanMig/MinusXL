@@ -14,7 +14,7 @@ public class ConcatFunction extends AlpharithmeticFunction {
 	@Override
 	public Object calculateValue() {
 		// Combines a series of strings into one:
-		String concatenated = null;
+		String concatenated ="";
 		int i = 0;
 		while (i < input.length) {
 			concatenated = concatenated + (String) input[i].getCell();

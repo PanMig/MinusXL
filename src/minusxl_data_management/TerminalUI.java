@@ -42,8 +42,9 @@ public class TerminalUI {
 		inputsforfunction[0] = workbook.getSpreadsheet(0).getCell(0, 0);
 		inputsforfunction[1] = workbook.getSpreadsheet(0).getCell(0, 1);
 		inputsforfunction[2] = workbook.getSpreadsheet(0).getCell(0, 2);
-		
+
 		workbook.getSpreadsheet(0).useFunction(inputsforfunction, "Mult", workbook.getSpreadsheet(0).getCell(0, 3));
+
 		
 		inputsforfunction = new Cell[1];
 		inputsforfunction[0] = workbook.getSpreadsheet(0).getCell(5, 4);
@@ -68,10 +69,13 @@ public class TerminalUI {
 
 			w++;
 		}
+
+
 		
 		//TESTING CSV FILE CREATOR:
+
 		System.out.println("");
-		System.out.println("Testing the CSV File Creator with the workbook: "+workbook.getWorkbookName());
+		System.out.println("Testing the CSV File Creator with the workbook: " + workbook.getWorkbookName());
 		try {
 			CsvFileCreator.createCsvFile(workbook);
 		} catch (Exception e) {

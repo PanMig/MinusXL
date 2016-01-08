@@ -1,5 +1,7 @@
 package minusxl_data_management;
 
+import java.util.ArrayList;
+
 import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
@@ -19,28 +21,27 @@ public class Spreadsheet extends AbstractTableModel {
 		this.columns = columns;
 
 		data = new Cell[rows][columns];
-		
 
 		// TESTING:
 		System.out.println("Spreadsheet Inititalized (Constructor)");
 		for (int i = 0; i < rows; i++) {
 			for (int y = 0; y < columns; y++) {
 				data[i][y] = new NumberCell(i, y);
-				
+
 			}
 		}
 	}
-	
+
 	@Override
 	public int getRowCount() {
 		// Returns the size of the "row" array (containing the other arrays)
 		return rows;
 	}
-	
+
 	@Override
-	//override this method so all the jtable cells to become edible
-	public boolean isCellEditable(int rowIndex,int columnIndex) {
-		return  true;
+	// override this method so all the jtable cells to become edible
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return true;
 	}
 
 	@Override
@@ -57,29 +58,27 @@ public class Spreadsheet extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object value, int row, int column) {
-	/*because input is always a string,
-	 if the user wants to input an integer we convert
-	 it to a integer same for the other types above
-	*/
-	try{
+		/*
+		 * because input is always a string, if the user wants to input an
+		 * integer we convert it to a integer same for the other types above
+		 */
+		try {
 			value = Double.parseDouble(value.toString());
-			 // is a double!
-	} 
-	 catch (NumberFormatException e) {
-			  // not a double!
-	}
-	
-	try{
-		if(value.equals("true") || value.equals("false")){
-			value=Boolean.parseBoolean((String)value);
+			// is a double!
+		} catch (NumberFormatException e) {
+			// not a double!
 		}
-		 // is a boolean!
-	} 
-	catch (Exception e ) {
-		  // not an boolean!
-		System.out.println("not a boolean");
-	}
-		
+
+		try {
+			if (value.equals("true") || value.equals("false")) {
+				value = Boolean.parseBoolean((String) value);
+			}
+			// is a boolean!
+		} catch (Exception e) {
+			// not an boolean!
+			System.out.println("not a boolean");
+		}
+
 		// Check the type of the incoming input.
 		// We're going to create the respective type of Cell
 		// depending on the input that we take (eg. for Boolean input we're
@@ -90,7 +89,7 @@ public class Spreadsheet extends AbstractTableModel {
 			data[row][column] = new NumberCell(row, column);
 			// Here is a stupid hack to definitely get a double value
 			// from a possible integer input value:
-			Integer temp_integer = (Integer)value;
+			Integer temp_integer = (Integer) value;
 			data[row][column].setCell(temp_integer.doubleValue());
 		} else if (value.getClass() == Double.class) {
 			data[row][column] = new NumberCell(row, column);
@@ -125,9 +124,11 @@ public class Spreadsheet extends AbstractTableModel {
 
 		// TODO: output "cell" must be different from input "cell"
 
-		// To explain the data[output_cell.getRow] etc: To initialize the function Cell
-		// we use the output_cell data to get the location with the getRow and getColumn
-		
+		// To explain the data[output_cell.getRow] etc: To initialize the
+		// function Cell
+		// we use the output_cell data to get the location with the getRow and
+		// getColumn
+
 		data[output_cell.getRow()][output_cell.getColumn()] = new FunctionCell(output_cell.getRow(),
 				output_cell.getColumn(), input_cells, function);
 		// So, what does the big line here do? Simple. When we want to use a
@@ -139,6 +140,7 @@ public class Spreadsheet extends AbstractTableModel {
 		// that we want to use.
 
 	}
+	
 
 	public void createChart() {
 		// TODO: This method will call the Charts Manager package

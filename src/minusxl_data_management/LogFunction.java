@@ -13,8 +13,9 @@ public class LogFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-		// Gets the value of the first Cell object as double and applies the Math.log function to it:
-		return Math.log((double)input[0].getCell());
+		// Gets the value of the first Cell object as double and applies the
+		// Math.log function to it:
+		return Math.log((double) input[0].getCell());
 	}
 
 }
