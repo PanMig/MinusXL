@@ -16,8 +16,12 @@ import minusxl_data_management.Cell;
 public class BarChart extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	//sented lists,passed as arguments to constructor
 	private ArrayList<Cell> list;
 	private ArrayList<Cell> dataList;
+	
+	private ArrayList<Cell> columKeys;
+	private ArrayList<Cell> values;
 
 	public BarChart(String windowTitle, String chartTitle,String horizontalKeysTitle
 	,String verticalTitle,ArrayList<Cell> list,ArrayList<Cell> dataList) {
@@ -45,66 +49,54 @@ public class BarChart extends JFrame {
 
 	private CategoryDataset createDataSet() {
 		
-		double chartColumnValue = 0;
+		double value = 0;
 		
 		Comparable columnKey = null;
-		//colors :given by the user
-		//final Comparable firefox =(Comparable) list.get(0).getCell();
-		//final String chrome = "Chrome";
-		//final String iexplorer = "InternetExplorer";
 		
-		// column keys...
+		ArrayList<Cell> columnKeysList=new ArrayList<Cell>();
+		ArrayList<Cell> valuesList=new ArrayList<Cell>();
 		
-		final String popular = "Popular";
-		final String response = "Response";
-		final String osindependent = "OS Independent";
-		final String features = "Features";
+		for(int i=0;i<dataList.size();i++){
+			if(dataList.get(i).getCellType().equals("String")){
+				columnKeysList.add(dataList.get(i));
+			}
+			else{
+				valuesList.add(dataList.get(i));
+			}
+		}
+		
 		
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		
 		//initialize and add values to the bar categories
-		for(int i=0;i<list.size();i++){
-			for(int j=0;j<dataList.size();j++){
-				final Comparable key =(Comparable) list.get(i).getCell();
-				if(dataList.get(j).getCellType().equals("String")){
-					columnKey =(Comparable) dataList.get(j).getCell();
-				}
-				else{
-					chartColumnValue=(double) dataList.get(j).getCell();
-					System.out.println(chartColumnValue);
-				}
-				dataset.addValue(chartColumnValue,key,columnKey);
+		
+		//this variable is used to keep how many values are displayed from the valuesList
+		//it is used so every column key takes the correct value
+		int valuesIterator=0;
+		for(int i=0;i<columnKeysList.size();i++){
+			System.out.println(i);
+			
+			for(int j=0,k=valuesIterator;j<list.size() && k<valuesList.size();j++,k++){
 				
-				/*
-				dataset.addValue(4.0,key, popular);
-				dataset.addValue(3.0,key, response);
-				dataset.addValue(5.0, key, osindependent);
-				dataset.addValue(5.0,key, features);*/
+				//create the column key,located in the x-axis
+				//above the color keys
+				columnKey =(Comparable) columnKeysList.get(i).getCell();
+				
+				//create the color key
+				final Comparable key =(Comparable) list.get(j).getCell();
+				
+				//create the value displayed in the y-axis,cast to number
+				//because only number types are acceptable
+				value=(double) valuesList.get(k).getCell();
+				valuesIterator+=1;
+				//add the data to the chart
+				dataset.addValue(value,key,columnKey);
+				System.out.println(j+" "+k+" "+ valuesIterator);
 			}
 
 		}
 
-		
-		/*
-		dataset.addValue(1.0, firefox, speed);
-		dataset.addValue(4.0, firefox, popular);
-		dataset.addValue(3.0, firefox, response);
-		dataset.addValue(5.0, firefox, osindependent);
-		dataset.addValue(5.0, firefox, features);
-
-		dataset.addValue(5.0, chrome, speed);
-		dataset.addValue(7.0, chrome, popular);
-		dataset.addValue(6.0, chrome, response);
-		dataset.addValue(8.0, chrome, osindependent);
-		dataset.addValue(4.0, chrome, features);
-
-		dataset.addValue(4.0, iexplorer, speed);
-		dataset.addValue(3.0, iexplorer, popular);
-		dataset.addValue(2.0, iexplorer, response);
-		dataset.addValue(3.0, iexplorer, osindependent);
-		dataset.addValue(6.0, iexplorer, features);
-		 */
 		return dataset;
 
 	}

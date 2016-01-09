@@ -251,6 +251,7 @@ public class MinusXLGUI {
 			}
 		});
 
+		
 		// button that adds a spreadsheet
 		JButton addButton = new JButton("+");
 		// when mouse mouse above the button shows a message.
@@ -258,35 +259,52 @@ public class MinusXLGUI {
 		addButton.setBackground(UIManager.getColor("Button.light"));
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				//this part of the code add a new spreadsheet to the tabbebPane
+				//the multiple if's are used to handle the cases where the user
+				//presses cancel or closes the inputDialog
 				sheetName = JOptionPane.showInputDialog("Enter a name for spreadsheet");
+			if(sheetName!=null){	
+				
 				if (sheetName.length() == 0) {
 					sheetName = "sheet" + sheetNumber;
 				}
 
-				String StringsheetRows = JOptionPane.showInputDialog("Enter rows for your spreadsheet", "100");
-				if (StringsheetRows.length() == 0)
-					sheetRows = 100;
-				// TODO CHECK IF USERS PUTS STRING that's not an number
-				else
-					sheetRows = Integer.parseInt(StringsheetRows);
-
-				String StringsheetColumns = JOptionPane.showInputDialog("Enter columns for your spreadsheet", "26");
-				if (StringsheetColumns.length() == 0)
-					sheetColumns = 26;
-				// TODO CHECK IF USERS PUTS STRING that's not an number
-				else
-					sheetColumns = Integer.parseInt(StringsheetColumns);
-
-				workbookManager.addSpreadsheet(sheetRows, sheetColumns);// add
-																		// spreadsheet
-																		// to
-																		// the
-																		// list
-				addSheet(sheetName, sheetRows, sheetColumns);// add tab to the
-																// tabbed pane
-
+				String StringsheetRows = JOptionPane.showInputDialog(null, "Enter rows for your spreadsheet",
+					"100");
+				
+				if(StringsheetRows!=null){
+					
+				
+					if (StringsheetRows.length() == 0)
+						sheetRows = 100;
+					// TODO CHECK IF USERS PUTS STRING that's not an number
+					else
+						sheetRows = Integer.parseInt(StringsheetRows);
+	
+					String StringsheetColumns = JOptionPane.showInputDialog(null,"Enter columns for your spreadsheet",
+					"26");
+					
+					if(StringsheetColumns!=null){
+					
+						if (StringsheetColumns.length() == 0)
+							sheetColumns = 26;
+						// TODO CHECK IF USERS PUTS STRING that's not an number
+						else
+							sheetColumns = Integer.parseInt(StringsheetColumns);
+		
+						workbookManager.addSpreadsheet(sheetRows, sheetColumns);// add
+																				// spreadsheet
+																				// to
+																				// the
+																				// list
+						addSheet(sheetName, sheetRows, sheetColumns);// add tab to the  tabbed pane
+					}
+				}
 			}
-		});
+			
+		}
+	});
 		addButton.setForeground(Color.RED);
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
 		gbc_addButton.anchor = GridBagConstraints.NORTHEAST;
@@ -302,23 +320,32 @@ public class MinusXLGUI {
 		gbc_btnDeleteSpreadsheet.gridy = 0;
 		panel.add(btnDeleteSpreadsheet, gbc_btnDeleteSpreadsheet);
 
-		// TODO make import sheet button work
+		//this part implements the insertion of a spreasheet from a file
+		//to the workBook
 		JButton btnImportSheet = new JButton("Import Sheet");
 		btnImportSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fileChooser.showOpenDialog(null);
 				File choosenFile = fileChooser.getSelectedFile();
-				try {
-					workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile.getName()));
-					sheetManager = workbookManager.getSpreadsheet(workbookManager.getAttachedSpreadsheets() - 1);
-					addSheet("Imported sheet", sheetManager.getRowCount(), sheetManager.getColumnCount());
-					// update the ui so the table will reviece the cchange and
-					// print it
-					// imediatly
-					tableManager.updateUI();
-				} catch (IOException e1) {
-					JOptionPane.showMessageDialog(null, "Import failed");
-					e1.printStackTrace();
+				
+				//check if user presses cancel or close
+				if(choosenFile!=null){
+				
+					try {
+						//add to workBook
+						workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile.getName()));
+						//fix reference
+						sheetManager = workbookManager.getSpreadsheet(workbookManager.getAttachedSpreadsheets() - 1);
+						//add to the jtable
+						addSheet("Imported sheet", sheetManager.getRowCount(), sheetManager.getColumnCount());
+						// update the ui so the table will reviece the cchange and
+						// print it
+						// imediatly
+						tableManager.updateUI();
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null, "Import failed");
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -338,58 +365,74 @@ public class MinusXLGUI {
 		JButton btnNew = new JButton("New WorkBook");// "New workbook"
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//add a new workBook to the program
+				
 				// holds workbook name
 				workBookName = JOptionPane.showInputDialog("Enter new workBook name", "Workbook");
-				if (workBookName.length() == 0)
-					workBookName = "Workbook";
-				// holds rows for the new sheet
-				String StringsheetRows = JOptionPane.showInputDialog("Enter rows for your spreadsheet", "100");
-				if (StringsheetRows.length() == 0)
-					sheetRows = 100;
-				// TODO CHECK IF USERS PUTS STRING that's not an number
-				else
-					sheetRows = Integer.parseInt(StringsheetRows);
-				// holds columns for sheet
-				String StringsheetColumns = JOptionPane.showInputDialog("Enter columns for your spreadsheet", "26");
-				if (StringsheetColumns.length() == 0)
-					sheetColumns = 26;
-				// TODO CHECK IF USERS PUTS STRING that's not an number
-				else
-					sheetColumns = Integer.parseInt(StringsheetColumns);
-
-				// multiple cases where the user either insert a value at the
-				// input dialog and presses "ok" or just presses "ok"
-				if (workBookName.length() == 0 && StringsheetRows.length() == 0 && StringsheetColumns.length() == 0) {
-					sheetNumber = 0;
-					Workbook wb = new Workbook();
-					// create a new tables list
-					tableList = new ArrayList<JTable>();
-					// created
-					workbookManager = wb;// the reference now points to that
-											// specific object
-					tabbedPane.removeAll();
-					addSheet();
-
-				} else if (workBookName.length() == 0 && StringsheetRows.length() != 0
-						&& StringsheetColumns.length() != 0) {
-					sheetNumber = 0;
-					Workbook wb = new Workbook(sheetRows, sheetColumns);
-					// create a new tables list
-					tableList = new ArrayList<JTable>();
-					// created
-					workbookManager = wb;
-					tabbedPane.removeAll();
-					addSheet("sheet", sheetRows, sheetColumns);
-				} else {
-					sheetNumber = 0;
-					Workbook wb = new Workbook(workBookName, sheetRows, sheetColumns);
-					// create a new tables list
-					tableList = new ArrayList<JTable>();
-					// created
-					workbookManager = wb;
-					tabbedPane.removeAll();
-					addSheet("sheet", sheetRows, sheetColumns);
-				}
+				
+				if(workBookName!=null){
+				
+					if (workBookName.length() == 0)
+						workBookName = "Workbook";
+					
+					// holds rows for the new sheet
+					String StringsheetRows = JOptionPane.showInputDialog("Enter rows for your spreadsheet", "100");
+					
+					if(StringsheetRows!=null){
+					
+						if (StringsheetRows.length() == 0)
+							sheetRows = 100;
+						// TODO CHECK IF USERS PUTS STRING that's not an number
+						else
+							sheetRows = Integer.parseInt(StringsheetRows);
+						// holds columns for sheet
+						String StringsheetColumns = JOptionPane.showInputDialog("Enter columns for your spreadsheet", "26");
+						
+						if(StringsheetColumns!=null){
+						
+							if (StringsheetColumns.length() == 0)
+								sheetColumns = 26;
+							// TODO CHECK IF USERS PUTS STRING that's not an number
+							else
+								sheetColumns = Integer.parseInt(StringsheetColumns);
+			
+							// multiple cases where the user either insert a value at the
+							// input dialog and presses "ok" or just presses "ok"
+							if (workBookName.length() == 0 && StringsheetRows.length() == 0 && StringsheetColumns.length() == 0) {
+								sheetNumber = 0;
+								Workbook wb = new Workbook();
+								// create a new tables list
+								tableList = new ArrayList<JTable>();
+								// created
+								workbookManager = wb;// the reference now points to that
+														// specific object
+								tabbedPane.removeAll();
+								addSheet();
+			
+							} else if (workBookName.length() == 0 && StringsheetRows.length() != 0
+									&& StringsheetColumns.length() != 0) {
+								sheetNumber = 0;
+								Workbook wb = new Workbook(sheetRows, sheetColumns);
+								// create a new tables list
+								tableList = new ArrayList<JTable>();
+								// created
+								workbookManager = wb;
+								tabbedPane.removeAll();
+								addSheet("sheet", sheetRows, sheetColumns);
+							} 
+							else {
+								sheetNumber = 0;
+								Workbook wb = new Workbook(workBookName, sheetRows, sheetColumns);
+								// create a new tables list
+								tableList = new ArrayList<JTable>();
+								// created
+								workbookManager = wb;
+								tabbedPane.removeAll();
+								addSheet("sheet", sheetRows, sheetColumns);
+							}
+						}
+					}
+			}
 			}
 		});
 		menuBar.add(btnNew);
@@ -491,7 +534,9 @@ public class MinusXLGUI {
 				}
 
 			}
-		});
+			
+			}
+		);
 		
 		// The Function Dropdown Menu:
 		funcBox.setModel(new DefaultComboBoxModel(
@@ -507,48 +552,78 @@ public class MinusXLGUI {
 				// Holds the selected chart string
 				String chartOption = (String) chartBox.getSelectedItem();
 
+				//list that holds the keys in the chart
+				//keys correspond the number of different bars in the chart
+				//each bar has its unique color.So you can
+				//distinguish keys by their color
+				//also keys are located in the first row of all the
+				//selected data(cells) for the chart
 				ArrayList<Cell> selectedChartKeys = new ArrayList<Cell>();
 
 				// TODO make all selected cells unselected
 				String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located", "0");
-
-				// Holds the row in the table where the keys are located, they
-				// must be in sequenece:
-				int rowOfKeys = Integer.parseInt(rowOfKeysStr);
-
-				for (int j = 0; j < sheetManager.getColumnCount(); j++) {
-					if (tableManager.isCellSelected(rowOfKeys, j) 
-					 && sheetManager.getCell(rowOfKeys, j).getCellType()!=null) {
-						
-						selectedChartKeys.add(sheetManager.getCell(rowOfKeys, j));
-					}
-				}
-
-				ArrayList<Cell> selectedChartData = new ArrayList<Cell>();
-
-				for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
-					for (int j = 0; j < sheetManager.getColumnCount(); j++) {
-						if (tableManager.isCellSelected(i, j)) {
-								selectedChartData.add(sheetManager.getCell(i, j));
-
+				String columnOfFirstKeyStr = JOptionPane.showInputDialog("Enter the column that your first key is located", "1");
+				
+			if(rowOfKeysStr!=null && columnOfFirstKeyStr!=null ){
+					// holds the row in the table where the keys are located,they
+					// must be in sequenece,also holds the column that the first key is located
+					int rowOfKeys = Integer.parseInt(rowOfKeysStr);
+					int columnOfFirstKey = Integer.parseInt(columnOfFirstKeyStr);
+					
+					
+					//add the keys to the list,the row is given by the user
+					//so the check is only for the columns
+					
+					//COLOR KEYS list
+					for (int j = columnOfFirstKey; j < sheetManager.getColumnCount(); j++) {
+						if (tableManager.isCellSelected(rowOfKeys, j) 
+						 && sheetManager.getCell(rowOfKeys, j).getCellType()!="null") {
+							
+							selectedChartKeys.add(sheetManager.getCell(rowOfKeys, j));
 						}
 					}
-				}
-
-				// Prints the elements of the list:
-				for (int j = 0; j < selectedChartData.size(); j++) {
-					System.out.println(selectedChartData.get(j).getCell());
-				}
-
-				// Create charts:
-
-				if (chartOption.equals("Bar chart")) {
-					ChartManager.createBarChart(selectedChartKeys, selectedChartData);
-				}
-				// else ChartManager.createLineChart(selectedChartKeys);
-
+					/*for(int i=0;i<selectedChartKeys.size();i++){
+						System.out.println(selectedChartKeys.get(i).getCellType());
+					}*/
+	
+					//the rest of the data for the chat is holded here
+					//like column keys,datavalues(always type number)
+					ArrayList<Cell> selectedChartData = new ArrayList<Cell>();
+	
+					
+					//list that hold all the column keys
+					/*for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
+					
+							if (tableManager.isCellSelected(i, columnOfFirstKey-1)) {
+									selectedColumnKeys.add(sheetManager.getCell(i,columnOfFirstKey-1));
+	
+							}
+					}*/
+					
+					for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
+						for(int j=columnOfFirstKey-1;j<sheetManager.getColumnCount();j++){
+							if (tableManager.isCellSelected(i,j) && 
+								sheetManager.getCell(i,j).getCell().toString().length()>0) {
+								selectedChartData.add(sheetManager.getCell(i,j));
+							}
+						}
+					}
+					
+					/*for(int i=0;i<selectedColumnKeys.size();i++){
+						System.out.println(selectedColumnKeys.get(i).getCell());
+					}*/
+					
+	
+					// create charts
+	
+					if (chartOption.equals("Bar chart")) {
+						ChartManager.createBarChart(selectedChartKeys, selectedChartData);
+					}
+					 else ChartManager.createLineChart(selectedChartKeys, selectedChartData);
 			}
-		});
+				
+		}
+	});
 		JLabel chartLabel = new JLabel("   Chart : ");
 		menuBar.add(chartLabel);
 		chartBox.setModel(new DefaultComboBoxModel(new String[] { "Line chart", "Bar chart" }));

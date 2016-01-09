@@ -12,7 +12,11 @@ public class ChartManager {
 		chart.setVisible(true);
 	}
 
-	public static void createLineChart() {
+	public static void createLineChart(ArrayList<minusxl_data_management.Cell> keysList, ArrayList<Cell> dataList) {
+		LineChart chart = new LineChart("Browser Usage Statistics",
+		"Which Browser are you using?",keysList,dataList);
+		chart.pack();
+		chart.setVisible(true);
 
 	}
 
