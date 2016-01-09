@@ -9,6 +9,7 @@ public class NumberCell extends Cell<Double> {
 	// super-class (Cell)
 	NumberCell(int row, int column) {
 		super(row, column);
+		value = null;
 	}
 
 	public String getCellType() {

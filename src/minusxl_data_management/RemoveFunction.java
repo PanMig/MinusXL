@@ -19,7 +19,7 @@ public class RemoveFunction extends AlpharithmeticFunction {
 		String string1 = (String) input[0].getCell();
 		String string2 = (String) input[1].getCell();
 		
-		// Replace the occurence of string2 found in string1 with the empty string
+		// Replace the occurrence of string2 found in string1 with the empty string
 		// It's the same as deleting it:
 		string1.replace(string2, "");
 		

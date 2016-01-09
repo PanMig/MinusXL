@@ -47,8 +47,8 @@ public class WorkbookGUIManager {
 	}
 
 	// prints the spreadsheets list size
-	public void getListLength() {
-		wbManager.getListLength();
+	public int getListLength() {
+		return wbManager.getAttachedSpreadsheets();
 	}
 
 	// getters and setters

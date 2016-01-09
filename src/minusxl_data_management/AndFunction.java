@@ -13,17 +13,21 @@ public class AndFunction extends LogicalFunction {
 
 	@Override
 	public Object calculateValue() {
-		// Multiplies the values of all the inputed objects together and returns
-		// the multiplication value:
-		// We initialize the bool variable with the value of the first input
-		// cell.
-		Boolean bool = (Boolean) input[0].getCell();
-		int i = 1;
-		while (i < input.length) {
-			bool = bool && (Boolean) input[i].getCell();
-			i++;
+		if(checkValidity(input)==true){
+			// Multiplies the values of all the inputed objects together and returns
+			// the multiplication value:
+			// We initialize the bool variable with the value of the first input
+			// cell.
+			Boolean bool = (Boolean) input[0].getCell();
+			int i = 1;
+			while (i < input.length) {
+				bool = bool && (Boolean) input[i].getCell();
+				i++;
+			}
+			return bool;
+		} else {
+			return "";
 		}
-		return bool;
 	}
 
 }

@@ -4,17 +4,24 @@ public abstract class AlpharithmeticFunction extends Function {
 
 	public abstract Object calculateValue();
 
-	public boolean checkValidity(Object[] inputs) {
+	public boolean checkValidity(Cell[] inputs) {
 
 		for (int i = 0; i < inputs.length; i++) {
-			// Checking if the values of the input are strings:
-			if ((inputs[i] instanceof StringCell) != true) {
+
+			// Checking if the values of the input cells are NOT strings:
+			if ((inputs[i] instanceof StringCell) == false ) {
+
 				System.out.println("Error: The input data are not alpharithmetic values.");
+				return (false);
+			}
+			
+			if(inputs[i].getCell() == null){
+				System.out.println("Error: The input data contains null values.");
 				return (false);
 			}
 		}
 
-		// Else...
+		// Else (if everything is OK)...
 		return (true);
 	}
 

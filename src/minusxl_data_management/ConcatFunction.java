@@ -13,14 +13,18 @@ public class ConcatFunction extends AlpharithmeticFunction {
 
 	@Override
 	public Object calculateValue() {
-		// Combines a series of strings into one:
-		String concatenated ="";
-		int i = 0;
-		while (i < input.length) {
-			concatenated = concatenated + (String) input[i].getCell();
-			i++;
+		if(checkValidity(input)==true){
+			// Combines a series of strings into one:
+			String concatenated ="";
+			int i = 0;
+			while (i < input.length) {
+				concatenated = concatenated + (String) input[i].getCell();
+				i++;
+			}
+			return concatenated;
+		} else {
+			return "";
 		}
-		return concatenated;
 	}
 
 }
