@@ -44,6 +44,7 @@ public class LineChart extends JFrame {
 	   
 	   ArrayList<Cell> valuesList=new ArrayList<Cell>();
 		
+
 		for(int i=0;i<dataList.size();i++){
 			if(dataList.get(i).getCellType().equals("String")){
 				continue;
@@ -70,12 +71,15 @@ public class LineChart extends JFrame {
       final XYSeriesCollection dataset = new XYSeriesCollection();
       
       for(int i=0;i<list.size();i++){
+    	  System.out.println(i);
     	  //TODO values are not inserted correctly
   	    XYSeries key = new XYSeries((String)list.get(i).getCell());
-  		for(int j=dataIterator;j<valuesList.size();j++){
-  			value=(double) valuesList.get(j).getCell();
+  		for(int j=0;j<list.size();j++){
+  			value=(double) valuesList.get(dataIterator).getCell();
   			key.add(value,value);
   			dataIterator++;
+  			System.out.println(j+""+dataIterator);
+  			
   		}
   		dataset.addSeries(key);
   	}

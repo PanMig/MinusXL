@@ -160,6 +160,9 @@ public class MinusXLGUI {
 		tabbedPane.addTab("sheet", null, scrollPane, null);
 
 		JTable table = new JTable();
+		
+		// Make the Grid lines show up in MAC:
+		table.setGridColor(Color.GRAY);
 
 		// add table to the list
 		tableList.add(table);
@@ -458,8 +461,7 @@ public class MinusXLGUI {
 				fileChooser.showSaveDialog(null);
 				try {
 					System.out.println("file ready to save");
-					// TODO: Temporarily, I'm putting an empty string as a location argument
-					CsvFileCreator.createCsvFile(workbookManager, "");
+					CsvFileCreator.createCsvFile(workbookManager,"");
 					JOptionPane.showMessageDialog(null, "Workbook Saved");
 				} catch (Exception e) {
 					System.out.println("file not saved");
@@ -470,8 +472,6 @@ public class MinusXLGUI {
 		});
 		menuBar.add(btnSave);
 
-		// Here starts the code for the Function dropdown selector
-		// and for passing the selected Cells to the Function methods:
 		JLabel functionLabel = new JLabel("   Function : ");
 		menuBar.add(functionLabel);
 
@@ -494,67 +494,70 @@ public class MinusXLGUI {
 					}
 				}
 
-				// Copy the arraylist elements to an array
-				// because usefunction method uses an array:
+				// copy arraylist elements to an array
+				// because usefunction method uses an array
 				Cell[] cellArray = new Cell[selectedCellsList.size()];
 				for (int i = 0; i < selectedCellsList.size(); i++) {
 					cellArray[i] = selectedCellsList.get(i);
+
 				}
 				
-				// Ask the user to choose the cell(row and column) to print the
-				// function output
-				String outputCellRow = JOptionPane.showInputDialog("Enter the row for the function result:", 1);
-				String outputCellColumn = JOptionPane.showInputDialog("Enter the column for the function result:", 1);
-
-				// Parses the string values that the user had inserted to
-				// integer
-				Integer outCellRow = null;
-				Integer outCellColumn = null;
-				
-				if(outputCellRow != null && outputCellColumn != null) {
-					outCellRow = (Integer.parseInt(outputCellRow));
-					outCellColumn = (Integer.parseInt(outputCellColumn));
-				}
-
-				// For the output cell in usefunction method:
+				// for the output cell in usefunction method
 				Cell outputcell;
 				
-				// Check if the dimensions that the user inserted are inside
-				// the bounds of the table:
-				if ( outCellRow > 0 && outCellRow < sheetManager.getRowCount()
-						&& outCellColumn>0 && outCellColumn <= sheetManager.getColumnCount()) {
-
-					outputcell = sheetManager.getCell(outCellRow-1, outCellColumn-1);
-					// Call the function method that prints an output to the
-					// table:
-					sheetManager.useFunction(cellArray, funcOption, outputcell);
-					// updates the gui - used when new values are inserted
-					// in the table:
-					tableManager.updateUI();
-				}
-				// reports that the user has inserted wrong dimensions for the
-				// output cell
-				else {
-					JOptionPane.showMessageDialog(null, "Wrong dimensions have been given!!");
-				}
-
+				// ask the user to choose the cell(row and column) to print the
+				// function output
+				String outputCellRow=null;
+				String outputCellColumn=null;
+				
+				outputCellRow= JOptionPane.showInputDialog("Enter function cell row"
+						+ ",counting starts from zero(Left to right and top to bottom)", 0);
+				outputCellColumn = JOptionPane.showInputDialog("Enter function cell column", 0);
+				
+				if(outputCellRow!=null && outputCellColumn!=null){//check if user presses cancel or closes the window 
+					
+					
+					int outCellRow = Integer.parseInt(outputCellRow);
+					int outCellColumn = Integer.parseInt(outputCellColumn);
+					
+					/*
+					 * check if the dimensions that the user inserted are in bounds
+					 * of the table
+					 */
+					if (outCellRow >= 0 &&outCellRow <= sheetManager.getRowCount()
+							&& outCellColumn >= 0 && outCellColumn <= sheetManager.getColumnCount()) {
+	
+						outputcell = sheetManager.getCell(outCellRow, outCellColumn);
+						// call the function method that prints an output to the
+						// table
+						sheetManager.useFunction(cellArray, funcOption, outputcell);
+						// updates the gui,used when new values to the table are
+						// inserted
+						tableManager.updateUI();
+					}
+					// reports that the user has inserted wrong dimensions for the
+					// output cell
+					else {
+						JOptionPane.showMessageDialog(null, "Wrong dimensions have been given!!");
+					}
+				
 			}
 			
 			}
-		);
-		
-		// The Function Dropdown Menu:
+			
+			
+		});
+		// the function chart box
 		funcBox.setModel(new DefaultComboBoxModel(
 				new String[] { "Abs", "Cos", "Sin", "Tan", "Pow", "Sum", "Mult", "Log", "Log10", "And", "Or", "Not",
 						"Xor", "Max", "Min", "Mean", "Median", "Stddev", "Concat", "Includes", "Trim", "Remove" }));
 		menuBar.add(funcBox);
-		
-		// Here starts the code for the Charts selector:
+
 		final JComboBox chartBox = new JComboBox();
 
 		chartBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// Holds the selected chart string
+				// holds the selected chart string
 				String chartOption = (String) chartBox.getSelectedItem();
 
 				//list that holds the keys in the chart
@@ -566,8 +569,10 @@ public class MinusXLGUI {
 				ArrayList<Cell> selectedChartKeys = new ArrayList<Cell>();
 
 				// TODO make all selected cells unselected
-				String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located", "0");
+				String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located"
+						+"counting starts from zero(Left to right and top to bottom)", "0");
 				String columnOfFirstKeyStr = JOptionPane.showInputDialog("Enter the column that your first key is located", "1");
+				
 				
 			if(rowOfKeysStr!=null && columnOfFirstKeyStr!=null ){
 					// holds the row in the table where the keys are located,they
