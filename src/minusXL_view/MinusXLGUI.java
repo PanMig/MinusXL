@@ -579,7 +579,7 @@ public class MinusXLGUI {
 					//COLOR KEYS list
 					for (int j = columnOfFirstKey; j < sheetManager.getColumnCount(); j++) {
 						if (tableManager.isCellSelected(rowOfKeys, j) 
-						 && sheetManager.getCell(rowOfKeys, j).getCellType()!="null") {
+						 && sheetManager.getCell(rowOfKeys, j).getCell().toString().length()>0) {
 							
 							selectedChartKeys.add(sheetManager.getCell(rowOfKeys, j));
 						}
