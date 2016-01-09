@@ -25,11 +25,9 @@ public class Workbook {
 	// This is the List of Spreadsheets that makes up the data of the Workbook.
 
 	public Workbook() {
+		// Constructor without parameters, creates a default valued spreadsheet.
 		spreadsheets = new ArrayList<Spreadsheet>();
 		spreadsheets.add(new Spreadsheet(DEFAULT_ROWS, DEFAULT_COLUMNS));
-		// Constructor without parameters, creates a default valued spreadsheet.
-
-		System.out.println("Workbook Object Inititalized (Constructor)");
 	}
 
 	public Workbook(String name, int rows, int columns) {
@@ -38,8 +36,6 @@ public class Workbook {
 		spreadsheets = new ArrayList<Spreadsheet>();
 		spreadsheets.add(new Spreadsheet(rows, columns));
 		this.name = name;
-
-		System.out.println("Workbook Object Inititalized (Constructor)");
 	}
 
 	public Workbook(int rows, int columns) {
@@ -47,19 +43,12 @@ public class Workbook {
 		// and creates a Workbook with one attached spreadsheet with x rows and y columns
 		spreadsheets = new ArrayList<Spreadsheet>();
 		spreadsheets.add(new Spreadsheet(rows, columns));
-
-		// TESTING:
-		System.out.println("Workbook Object Inititalized (Constructor)");
 	}
 
 	public void addSpreadsheet(int rows, int columns) {
 		// Creating a new spreadsheet and attaching it to the last position in
 		// our list
 		spreadsheets.add(new Spreadsheet(rows, columns));
-	}
-
-	public void getListLength(){
-		System.out.println(spreadsheets.size());
 	}
 
 	public void addSpreadsheet(Spreadsheet spreadsheet) {
@@ -97,6 +86,7 @@ public class Workbook {
 			CsvFileCreator.createCsvFile(this, saveLocation);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			System.out.println("Could not save Workbook - Exception error!");
 			e.printStackTrace();
 		}
 	}
@@ -108,6 +98,7 @@ public class Workbook {
 		try {
 			addSpreadsheet(CsvFileReader.readCsvFile(filepath));
 		} catch (IOException e) {
+			System.out.println("Could not import Spreadsheet - Exception error!");
 			e.printStackTrace();
 		}
 	}
@@ -119,9 +110,13 @@ public class Workbook {
 		// the imported file to the current open workbook)
 		try {
 			// Clear the current list of spreadsheets, and attach only the imported one:
+			// Tip: We read first and clear the spreadsheet list later, because we want
+			// to keep the list of Spreadsheets intact should any IO Exception happens...
+			Spreadsheet tempSpreadsheet = CsvFileReader.readCsvFile(filepath);
 			spreadsheets.clear();
-			addSpreadsheet(CsvFileReader.readCsvFile(filepath));
+			addSpreadsheet(tempSpreadsheet);
 		} catch (IOException e) {
+			System.out.println("Could not open Spreadsheet - Exception error!");
 			e.printStackTrace();
 		}
 	}

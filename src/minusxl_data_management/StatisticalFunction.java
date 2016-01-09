@@ -16,6 +16,11 @@ public abstract class StatisticalFunction extends Function {
 				System.out.println("Error: The input data are not number values.");
 				return (false);
 			}
+			
+			if(inputs[i].getCell() == null){
+				System.out.println("Error: The input data contains null values.");
+				return (false);
+			}
 		}
 
 		// Else...

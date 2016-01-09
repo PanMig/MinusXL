@@ -2,13 +2,14 @@ package minusxl_data_management;
 
 public class FunctionCell extends Cell<Object> {
 
-	Object value;
+	Object value = null;
 	final String cellType = "Function";
 	Function function = null;
 
 	// This constructor takes in consideration the constructor of the
 	// super-class (Cell)
 	public FunctionCell(int row, int column, Cell[] input_cells, String function) {
+		
 		// The "super" sends the arguments to the superclass constructor:
 		super(row, column);
 
@@ -110,18 +111,18 @@ public class FunctionCell extends Cell<Object> {
 
 		default:
 			// TODO: Right now, using the console - later maybe using the GUI,
-			// return an error message
+			// return an error message.
 			System.out.println("Sorry, but the requested function was not found.");
 			break;
 		}
 
 		// The second step is to let the function object do its job on the data
 		// and save the value here, to the FunctionCell's "value" field.
-		// But, first, we check if a function was indeed chosen in the previous
-		// switch:
-		if (function != null) {
+
+			// This refers to the method inside the FunctionCell class
+			// and not to the same-named method of Function:
 			calculateValue();
-		}
+			
 		// Aaaand, we're done!
 	}
 
@@ -129,7 +130,20 @@ public class FunctionCell extends Cell<Object> {
 		// We ask the function object to do its job on the data
 		// and then we save the value here, to the FunctionCell's "value" field.
 		// We can call this method whenever we want the data to be updated
-		value = function.calculateValue();
+		if (function != null) {
+			// If calculateValue returns "null", we won't change the value
+			// at the output coordinates:
+			Object tempValue = function.calculateValue();
+			if(tempValue != null){
+				value = tempValue;
+			} else {
+				value = " ";
+			}
+		} else {
+			// This happens if the requested function is not found (is null):
+			value = "";
+			System.out.println("Error: No function is availabe for this Function Cell.");
+		}
 	}
 
 	@Override
@@ -146,5 +160,5 @@ public class FunctionCell extends Cell<Object> {
 	public void setCell(Object input) {
 		value = input.toString();
 	}
-
+	
 }

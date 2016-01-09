@@ -12,6 +12,11 @@ public abstract class LogicalFunction extends Function {
 				System.out.println("Error: The input data are not boolean values.");
 				return (false);
 			}
+			
+			if(inputs[i].getCell() == null){
+				System.out.println("Error: The input data contains null values.");
+				return (false);
+			}
 		}
 
 		// Else...

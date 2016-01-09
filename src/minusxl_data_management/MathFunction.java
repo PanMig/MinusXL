@@ -12,8 +12,19 @@ public abstract class MathFunction extends Function {
 			// For the sake of simplicity, we have made a design choice
 			// to only deal with Double values, which can always be converted
 			// to an Integer, if some need arises:
+			
+			if(inputs[i] == null){
+				System.out.println("Error: The input data contains null values.");
+				return (false);
+			}
+			
 			if ((inputs[i] instanceof NumberCell) == false) {
 				System.out.println("Error: The input data are not number values.");
+				return (false);
+				}
+			
+			if(inputs[i].getCell() == null){
+				System.out.println("Error: The input data contains null values.");
 				return (false);
 			}
 		}

@@ -427,6 +427,8 @@ public class MinusXLGUI {
 		});
 		menuBar.add(btnSave);
 
+		// Here starts the code for the Function dropdown selector
+		// and for passing the selected Cells to the Function methods:
 		JLabel functionLabel = new JLabel("   Function : ");
 		menuBar.add(functionLabel);
 
@@ -449,37 +451,37 @@ public class MinusXLGUI {
 					}
 				}
 
-				// copy arraylist elements to an array
-				// because usefunction method uses an array
+				// Copy the arraylist elements to an array
+				// because usefunction method uses an array:
 				Cell[] cellArray = new Cell[selectedCellsList.size()];
 				for (int i = 0; i < selectedCellsList.size(); i++) {
 					cellArray[i] = selectedCellsList.get(i);
-
 				}
-				// for the output cell in usefunction method
-				Cell outputcell;
-				// ask the user to choose the cell(row and column) to print the
+				
+				// Ask the user to choose the cell(row and column) to print the
 				// function output
-				String outputCellRow = JOptionPane.showInputDialog("Enter function cell row", 2);
-				String outputCellColumn = JOptionPane.showInputDialog("Enter function cell column", 2);
+				String outputCellRow = JOptionPane.showInputDialog("Enter the row for the function result:", 1);
+				String outputCellColumn = JOptionPane.showInputDialog("Enter the column for the function result:", 1);
 
-				// parses the string values that the user had inserted to
+				// Parses the string values that the user had inserted to
 				// integer
-				int outCellRow = Integer.parseInt(outputCellRow);
-				int outCellColumn = Integer.parseInt(outputCellColumn);
+				int outCellRow = (Integer.parseInt(outputCellRow));
+				int outCellColumn = (Integer.parseInt(outputCellColumn));
 
-				/*
-				 * check if the dimensions that the user inserted are in bounds
-				 * of the table
-				 */
-				if (outCellRow <= sheetManager.getRowCount() && outCellColumn <= sheetManager.getColumnCount()) {
+				// For the output cell in usefunction method:
+				Cell outputcell;
+				
+				// Check if the dimensions that the user inserted are inside
+				// the bounds of the table:
+				if ( outCellRow > 0 && outCellRow < sheetManager.getRowCount()
+						&& outCellColumn>0 && outCellColumn <= sheetManager.getColumnCount()) {
 
-					outputcell = sheetManager.getCell(outCellRow, outCellColumn);
-					// call the function method that prints an oitput to the
-					// table
+					outputcell = sheetManager.getCell(outCellRow-1, outCellColumn-1);
+					// Call the function method that prints an output to the
+					// table:
 					sheetManager.useFunction(cellArray, funcOption, outputcell);
-					// updates the gui,used when new values to the table are
-					// inserted
+					// updates the gui - used when new values are inserted
+					// in the table:
 					tableManager.updateUI();
 				}
 				// reports that the user has inserted wrong dimensions for the
@@ -490,17 +492,19 @@ public class MinusXLGUI {
 
 			}
 		});
-		// the function chart box
+		
+		// The Function Dropdown Menu:
 		funcBox.setModel(new DefaultComboBoxModel(
 				new String[] { "Abs", "Cos", "Sin", "Tan", "Pow", "Sum", "Mult", "Log", "Log10", "And", "Or", "Not",
 						"Xor", "Max", "Min", "Mean", "Median", "Stddev", "Concat", "Includes", "Trim", "Remove" }));
 		menuBar.add(funcBox);
-
+		
+		// Here starts the code for the Charts selector:
 		final JComboBox chartBox = new JComboBox();
 
 		chartBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// holds the selected chart string
+				// Holds the selected chart string
 				String chartOption = (String) chartBox.getSelectedItem();
 
 				ArrayList<Cell> selectedChartKeys = new ArrayList<Cell>();
@@ -508,8 +512,8 @@ public class MinusXLGUI {
 				// TODO make all selected cells unselected
 				String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located", "0");
 
-				// holds the row in the table where the keys are located,they
-				// must be in sequenece
+				// Holds the row in the table where the keys are located, they
+				// must be in sequenece:
 				int rowOfKeys = Integer.parseInt(rowOfKeysStr);
 
 				for (int j = 0; j < sheetManager.getColumnCount(); j++) {
@@ -531,12 +535,12 @@ public class MinusXLGUI {
 					}
 				}
 
-				// prints the elements of the list
+				// Prints the elements of the list:
 				for (int j = 0; j < selectedChartData.size(); j++) {
 					System.out.println(selectedChartData.get(j).getCell());
 				}
 
-				// create charts
+				// Create charts:
 
 				if (chartOption.equals("Bar chart")) {
 					ChartManager.createBarChart(selectedChartKeys, selectedChartData);
