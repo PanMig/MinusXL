@@ -27,7 +27,7 @@ public class PowFunction extends MathFunction {
 			}
 			return pow;
 		} else {
-			return "";
+			return null;
 		}
 	}
 

@@ -15,7 +15,10 @@ public class Log10Function extends MathFunction {
 	public Object calculateValue() {
 		// Gets the value of the first Cell object as double and applies the
 		// Math.log10 function to it:
-		return Math.log10((double) input[0].getCell());
+		if(checkValidity(input) == true){
+			return Math.log10((double) input[0].getCell());
+		} else {
+			return null;
+		}
 	}
-
 }

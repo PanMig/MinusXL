@@ -508,8 +508,13 @@ public class MinusXLGUI {
 
 				// Parses the string values that the user had inserted to
 				// integer
-				int outCellRow = (Integer.parseInt(outputCellRow));
-				int outCellColumn = (Integer.parseInt(outputCellColumn));
+				Integer outCellRow = null;
+				Integer outCellColumn = null;
+				
+				if(outputCellRow != null && outputCellColumn != null) {
+					outCellRow = (Integer.parseInt(outputCellRow));
+					outCellColumn = (Integer.parseInt(outputCellColumn));
+				}
 
 				// For the output cell in usefunction method:
 				Cell outputcell;

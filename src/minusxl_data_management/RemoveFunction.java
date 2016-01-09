@@ -14,16 +14,20 @@ public class RemoveFunction extends AlpharithmeticFunction {
 	@Override
 	public Object calculateValue() {
 		
-		// Take the first and second member of the input array and save them
-		// in temporary variables:
-		String string1 = (String) input[0].getCell();
-		String string2 = (String) input[1].getCell();
-		
-		// Replace the occurrence of string2 found in string1 with the empty string
-		// It's the same as deleting it:
-		string1.replace(string2, "");
-		
-		return string1;
+		if (checkValidity(input) == true){
+			// Take the first and second member of the input array and save them
+			// in temporary variables:
+			String string1 = (String) input[0].getCell();
+			String string2 = (String) input[1].getCell();
+			
+			// Replace the occurrence of string2 found in string1 with the empty string
+			// It's the same as deleting it:
+			string1.replace(string2, "");
+			
+			return string1;
+		} else {
+			return "";
+		}
 	}
 
 }
