@@ -49,7 +49,7 @@ public class BarChart extends JFrame {
 
 	private CategoryDataset createDataSet() {
 		
-		double chartColumnValue = 0;
+		double value = 0;
 		
 		Comparable columnKey = null;
 		
@@ -65,58 +65,38 @@ public class BarChart extends JFrame {
 			}
 		}
 		
-		for(int i=0;i<columnKeysList.size();i++){
-			System.out.println(columnKeysList.get(i).getCell());
-		}
 		
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		
 		//initialize and add values to the bar categories
 		
-		//this variable is used to keep the values displayed from the valuesList
-		//it is used so every color key takes the correct value
+		//this variable is used to keep how many values are displayed from the valuesList
+		//it is used so every column key takes the correct value
 		int valuesIterator=0;
-		for(int i=0;i<list.size();i++){
+		for(int i=0;i<columnKeysList.size();i++){
+			System.out.println(i);
 			
-			for(int j=0,k=valuesIterator;j<columnKeysList.size()&& k<valuesList.size();j++,k++){
-				//create the color key
-				final Comparable key =(Comparable) list.get(i).getCell();
+			for(int j=0,k=valuesIterator;j<list.size() && k<valuesList.size();j++,k++){
 				
 				//create the column key,located in the x-axis
 				//above the color keys
-				columnKey =(Comparable) columnKeysList.get(j).getCell();
+				columnKey =(Comparable) columnKeysList.get(i).getCell();
+				
+				//create the color key
+				final Comparable key =(Comparable) list.get(j).getCell();
 				
 				//create the value displayed in the y-axis,cast to number
 				//because only number types are acceptable
-				chartColumnValue=(double) valuesList.get(k).getCell();
+				value=(double) valuesList.get(k).getCell();
 				valuesIterator+=1;
 				//add the data to the chart
-				dataset.addValue(chartColumnValue,key,columnKey);
+				dataset.addValue(value,key,columnKey);
+				System.out.println(j+" "+k+" "+ valuesIterator);
 			}
 
 		}
 
-		
-		/*
-		dataset.addValue(1.0, firefox, speed);
-		dataset.addValue(4.0, firefox, popular);
-		dataset.addValue(3.0, firefox, response);
-		dataset.addValue(5.0, firefox, osindependent);
-		dataset.addValue(5.0, firefox, features);
-
-		dataset.addValue(5.0, chrome, speed);
-		dataset.addValue(7.0, chrome, popular);
-		dataset.addValue(6.0, chrome, response);
-		dataset.addValue(8.0, chrome, osindependent);
-		dataset.addValue(4.0, chrome, features);
-
-		dataset.addValue(4.0, iexplorer, speed);
-		dataset.addValue(3.0, iexplorer, popular);
-		dataset.addValue(2.0, iexplorer, response);
-		dataset.addValue(3.0, iexplorer, osindependent);
-		dataset.addValue(6.0, iexplorer, features);
-		 */
 		return dataset;
 
 	}

@@ -563,26 +563,27 @@ public class MinusXLGUI {
 
 				// TODO make all selected cells unselected
 				String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located", "0");
-				String columnOfKeyStr = JOptionPane.showInputDialog("Enter the column that your first key is located", "1");
+				String columnOfFirstKeyStr = JOptionPane.showInputDialog("Enter the column that your first key is located", "1");
 				
 				
-			if(rowOfKeysStr!=null && columnOfKeyStr!=null ){
+			if(rowOfKeysStr!=null && columnOfFirstKeyStr!=null ){
 					// holds the row in the table where the keys are located,they
 					// must be in sequenece,also holds the column that the first key is located
 					int rowOfKeys = Integer.parseInt(rowOfKeysStr);
-					int columnOfKey = Integer.parseInt(columnOfKeyStr);
+					int columnOfFirstKey = Integer.parseInt(columnOfFirstKeyStr);
 					
 					
 					//add the keys to the list,the row is given by the user
 					//so the check is only for the columns
-					for (int j = columnOfKey; j < sheetManager.getColumnCount(); j++) {
+					
+					//COLOR KEYS list
+					for (int j = columnOfFirstKey; j < sheetManager.getColumnCount(); j++) {
 						if (tableManager.isCellSelected(rowOfKeys, j) 
 						 && sheetManager.getCell(rowOfKeys, j).getCellType()!="null") {
 							
 							selectedChartKeys.add(sheetManager.getCell(rowOfKeys, j));
 						}
 					}
-					System.out.println(selectedChartKeys.get(0).getCellType());
 					/*for(int i=0;i<selectedChartKeys.size();i++){
 						System.out.println(selectedChartKeys.get(i).getCellType());
 					}*/
@@ -591,21 +592,36 @@ public class MinusXLGUI {
 					//like column keys,datavalues(always type number)
 					ArrayList<Cell> selectedChartData = new ArrayList<Cell>();
 	
-					for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
-						for (int j = 0; j < sheetManager.getColumnCount(); j++) {
-							if (tableManager.isCellSelected(i, j)) {
-									selectedChartData.add(sheetManager.getCell(i, j));
+					
+					//list that hold all the column keys
+					/*for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
+					
+							if (tableManager.isCellSelected(i, columnOfFirstKey-1)) {
+									selectedColumnKeys.add(sheetManager.getCell(i,columnOfFirstKey-1));
 	
+							}
+					}*/
+					
+					for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
+						for(int j=columnOfFirstKey-1;j<sheetManager.getColumnCount();j++){
+							if (tableManager.isCellSelected(i,j) && 
+								sheetManager.getCell(i,j).getCell().toString().length()>0) {
+								selectedChartData.add(sheetManager.getCell(i,j));
 							}
 						}
 					}
+					
+					/*for(int i=0;i<selectedColumnKeys.size();i++){
+						System.out.println(selectedColumnKeys.get(i).getCell());
+					}*/
+					
 	
 					// create charts
 	
 					if (chartOption.equals("Bar chart")) {
 						ChartManager.createBarChart(selectedChartKeys, selectedChartData);
 					}
-					// else ChartManager.createLineChart(selectedChartKeys);
+					 else ChartManager.createLineChart(selectedChartKeys, selectedChartData);
 			}
 				
 		}
