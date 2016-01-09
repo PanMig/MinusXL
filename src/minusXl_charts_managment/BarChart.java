@@ -16,8 +16,12 @@ import minusxl_data_management.Cell;
 public class BarChart extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	//sented lists,passed as arguments to constructor
 	private ArrayList<Cell> list;
 	private ArrayList<Cell> dataList;
+	
+	private ArrayList<Cell> columKeys;
+	private ArrayList<Cell> values;
 
 	public BarChart(String windowTitle, String chartTitle,String horizontalKeysTitle
 	,String verticalTitle,ArrayList<Cell> list,ArrayList<Cell> dataList) {
@@ -48,39 +52,47 @@ public class BarChart extends JFrame {
 		double chartColumnValue = 0;
 		
 		Comparable columnKey = null;
-		//colors :given by the user
-		//final Comparable firefox =(Comparable) list.get(0).getCell();
-		//final String chrome = "Chrome";
-		//final String iexplorer = "InternetExplorer";
 		
-		// column keys...
+		ArrayList<Cell> columnKeysList=new ArrayList<Cell>();
+		ArrayList<Cell> valuesList=new ArrayList<Cell>();
 		
-		final String popular = "Popular";
-		final String response = "Response";
-		final String osindependent = "OS Independent";
-		final String features = "Features";
+		for(int i=0;i<dataList.size();i++){
+			if(dataList.get(i).getCellType().equals("String")){
+				columnKeysList.add(dataList.get(i));
+			}
+			else{
+				valuesList.add(dataList.get(i));
+			}
+		}
+		
+		for(int i=0;i<columnKeysList.size();i++){
+			System.out.println(columnKeysList.get(i).getCell());
+		}
 		
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		
 		//initialize and add values to the bar categories
+		
+		//this variable is used to keep the values displayed from the valuesList
+		//it is used so every color key takes the correct value
+		int valuesIterator=0;
 		for(int i=0;i<list.size();i++){
-			for(int j=0;j<dataList.size();j++){
+			
+			for(int j=0,k=valuesIterator;j<columnKeysList.size()&& k<valuesList.size();j++,k++){
+				//create the color key
 				final Comparable key =(Comparable) list.get(i).getCell();
-				if(dataList.get(j).getCellType().equals("String")){
-					columnKey =(Comparable) dataList.get(j).getCell();
-				}
-				else{
-					chartColumnValue=(double) dataList.get(j).getCell();
-					System.out.println(chartColumnValue);
-				}
-				dataset.addValue(chartColumnValue,key,columnKey);
 				
-				/*
-				dataset.addValue(4.0,key, popular);
-				dataset.addValue(3.0,key, response);
-				dataset.addValue(5.0, key, osindependent);
-				dataset.addValue(5.0,key, features);*/
+				//create the column key,located in the x-axis
+				//above the color keys
+				columnKey =(Comparable) columnKeysList.get(j).getCell();
+				
+				//create the value displayed in the y-axis,cast to number
+				//because only number types are acceptable
+				chartColumnValue=(double) valuesList.get(k).getCell();
+				valuesIterator+=1;
+				//add the data to the chart
+				dataset.addValue(chartColumnValue,key,columnKey);
 			}
 
 		}

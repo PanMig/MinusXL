@@ -1,7 +1,5 @@
 package minusxl_data_management;
 
-import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
