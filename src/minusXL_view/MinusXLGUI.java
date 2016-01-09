@@ -415,7 +415,8 @@ public class MinusXLGUI {
 				fileChooser.showSaveDialog(null);
 				try {
 					System.out.println("file ready to save");
-					CsvFileCreator.createCsvFile(workbookManager);
+					// TODO: Temporarily, I'm putting an empty string as a location argument
+					CsvFileCreator.createCsvFile(workbookManager, "");
 					JOptionPane.showMessageDialog(null, "Workbook Saved");
 				} catch (Exception e) {
 					System.out.println("file not saved");
