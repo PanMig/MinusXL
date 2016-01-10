@@ -119,6 +119,7 @@ public class MinusXLGUI {
 				tableManager = tableList.get(tabbedPane.getSelectedIndex());
 			}
 		});
+		
 
 		// add tabbed pane to the center of the borderLayout
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -172,6 +173,7 @@ public class MinusXLGUI {
 		// attach jtable to the spreadsheet instance that we create in the above
 		// line
 		table.setModel(sheetManager);
+		
 		// cannot select an entire row
 		table.setRowSelectionAllowed(false);
 		// select multiple cells in the array
@@ -194,6 +196,9 @@ public class MinusXLGUI {
 		// when tab is added make the tabbed pane selection to the last added
 		// tab
 		tabbedPane.setSelectedIndex(workbookManager.getAttachedSpreadsheets() - 1);
+		
+		// Make the table lines seen on Mac:
+		tableManager.setGridColor(Color.GRAY);
 
 		sheetManager = workbookManager.getSpreadsheet(workbookManager.getAttachedSpreadsheets() - 1);
 		JTable table = new JTable();
@@ -205,6 +210,7 @@ public class MinusXLGUI {
 		tableManager = tableList.get(tableList.size() - 1);
 		// attach jtable to the spreadsheet instance that we create in the above
 		// line
+		tableManager.setGridColor(Color.GRAY);
 		table.setModel(sheetManager);
 		table.setRowSelectionAllowed(false);
 		table.setCellSelectionEnabled(true);
@@ -365,6 +371,7 @@ public class MinusXLGUI {
 		frame.setJMenuBar(menuBar);
 
 		// New Workbook button
+
 		JButton btnNew = new JButton("New WorkBook");// "New workbook"
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
