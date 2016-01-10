@@ -64,7 +64,7 @@ public class MinusXLGUI {
 	private ArrayList<JTable> tableList;
 
 	// objects for opening files and creating a tabbed pane
-	JFileChooser fileChooser = new JFileChooser("C:\\Users\\Panos\\git\\MinusXL\\bin");
+	JFileChooser fileChooser = new JFileChooser("C:\\Users\\Panos\\git\\MinusXL");
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
 
 	/**
@@ -99,6 +99,7 @@ public class MinusXLGUI {
 		// initialize the frame,select Layout
 		sheetNumber = 0;
 		frame = new JFrame();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.getContentPane().setBackground(UIManager.getColor("Button.background"));
 		frame.setForeground(Color.DARK_GRAY);
 		frame.setBounds(100, 100, 571, 412);
@@ -511,8 +512,8 @@ public class MinusXLGUI {
 				String outputCellColumn=null;
 				
 				outputCellRow= JOptionPane.showInputDialog("Enter function cell row"
-						+ ",counting starts from zero(Left to right and top to bottom)", 0);
-				outputCellColumn = JOptionPane.showInputDialog("Enter function cell column", 0);
+						+ ",counting starts from zero(Left to right and top to bottom)", 1);
+				outputCellColumn = JOptionPane.showInputDialog("Enter function cell column", 1);
 				
 				if(outputCellRow!=null && outputCellColumn!=null){//check if user presses cancel or closes the window 
 					
@@ -527,8 +528,8 @@ public class MinusXLGUI {
 					if (outCellRow >= 0 &&outCellRow <= sheetManager.getRowCount()
 							&& outCellColumn >= 0 && outCellColumn <= sheetManager.getColumnCount()) {
 	
-						outputcell = sheetManager.getCell(outCellRow, outCellColumn);
-						// call the function method that prints an output to the
+						outputcell = sheetManager.getCell(outCellRow-1, outCellColumn-1);
+						// call the function method that prints an oitput to the
 						// table
 						sheetManager.useFunction(cellArray, funcOption, outputcell);
 						// updates the gui,used when new values to the table are
@@ -580,6 +581,9 @@ public class MinusXLGUI {
 					int rowOfKeys = Integer.parseInt(rowOfKeysStr);
 					int columnOfFirstKey = Integer.parseInt(columnOfFirstKeyStr);
 					
+					//Jtable starts from zero so,to be user friendly we make the user feel that counting start from 1
+					rowOfKeys--;
+					columnOfFirstKey--;
 					
 					//add the keys to the list,the row is given by the user
 					//so the check is only for the columns
