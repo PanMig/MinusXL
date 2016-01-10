@@ -64,7 +64,7 @@ public class MinusXLGUI {
 	private ArrayList<JTable> tableList;
 
 	// objects for opening files and creating a tabbed pane
-	JFileChooser fileChooser = new JFileChooser("C:\\Users\\Panos\\git\\MinusXL\\bin");
+	JFileChooser fileChooser = new JFileChooser("C:\\Users\\Panos\\git\\MinusXL");
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
 
 	/**
