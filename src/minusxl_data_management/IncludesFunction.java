@@ -13,8 +13,25 @@ public class IncludesFunction extends AlpharithmeticFunction {
 
 	@Override
 	public Object calculateValue() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if(checkValidity(input) == true){
+			
+			String tempString1 = "";
+			String tempString2 = "a";
+			
+			// Doing this to be absolutely sure that
+			// we're getting String values:
+			if(input[0].getCell() instanceof String && input[1].getCell() instanceof String){
+				tempString1 = (String)input[0].getCell();
+				tempString2 = (String)input[1].getCell();
+			}
+			
+			// Check if tempString1 (the first member of the input array) contains
+			// tempString2 (the second member of the input array):
+			return (tempString1.toLowerCase().contains(tempString2.toLowerCase()));
+			
+		} else {
+			return null;
+		}
 	}
-
 }
