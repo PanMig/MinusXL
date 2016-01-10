@@ -13,13 +13,18 @@ public class SumFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-		Float sum = 0f;
-		int i = 0;
-		while (i < input.length) {
-			sum = sum + (float) input[i].getCell();
-			i++;
+		if(checkValidity(input) == true){
+			// Adds the value of all the inputed objects and returns their sum:
+			Float sum = 0f;
+			int i = 0;
+			while (i < input.length) {
+				sum = (float) (sum + (double) input[i].getCell());
+				i++;
+			}
+			return sum;
+		} else {
+			return null;
 		}
-		return sum;
 	}
 
 }

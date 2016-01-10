@@ -3,8 +3,6 @@ package minusxl_data_management;
 public class AbsFunction extends MathFunction {
 
 	private Cell[] input;
-	
-	//TEST comment
 
 	public AbsFunction(Cell[] input) {
 		// The constructor creates a instance of AbsFunction Object
@@ -15,10 +13,10 @@ public class AbsFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-		if (checkValidity(input) == true) {
-			return Math.abs((int) input[0].getCell());
+		if(checkValidity(input)==true){
+			return Math.abs((Double)input[0].getCell());
 		} else {
-			return (null);
+			return null;
 		}
 	}
 

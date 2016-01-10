@@ -1,6 +1,10 @@
 package minusxl_data_management;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import minusxl_file_management.CsvFileCreator;
+import minusxl_file_management.CsvFileReader;
 
 public class Workbook {
 	// The Workbook class is the basis of the Data Management system. It
@@ -11,7 +15,7 @@ public class Workbook {
 	// the contained methods.
 
 	private final int DEFAULT_ROWS = 100;
-	private final int DEFAULT_COLUMNS = 100;
+	private final int DEFAULT_COLUMNS = 26;
 
 	private String name = "MinusXL_Workbook";
 	// The name of the Workbook. Default name given here. Optionally initialized
@@ -21,9 +25,9 @@ public class Workbook {
 	// This is the List of Spreadsheets that makes up the data of the Workbook.
 
 	public Workbook() {
+		// Constructor without parameters, creates a default valued spreadsheet.
 		spreadsheets = new ArrayList<Spreadsheet>();
 		spreadsheets.add(new Spreadsheet(DEFAULT_ROWS, DEFAULT_COLUMNS));
-		// Constructor without parameters, creates a default valued spreadsheet.
 	}
 
 	public Workbook(String name, int rows, int columns) {
@@ -35,16 +39,10 @@ public class Workbook {
 	}
 
 	public Workbook(int rows, int columns) {
-		// This polymorphic constructor doesn't have a name argument, thus uses
-		// the Default name
-		// and creates a Workbook with one attached spreadsheet with x rows and
-		// y columns
+		// This polymorphic constructor doesn't have a name argument, thus uses the Default name
+		// and creates a Workbook with one attached spreadsheet with x rows and y columns
 		spreadsheets = new ArrayList<Spreadsheet>();
 		spreadsheets.add(new Spreadsheet(rows, columns));
-
-		// TESTING:
-		System.out.println("Workbook Object Inititalized (Constructor)");
-
 	}
 
 	public void addSpreadsheet(int rows, int columns) {
@@ -73,12 +71,53 @@ public class Workbook {
 		return spreadsheets.size();
 	}
 
-	public void saveWorkbook() {
-		// TODO To be implemented later.
+	public String getWorkbookName() {
+		// Returns the name of the workbook
+		return name;
+	}
+	
+	public void saveWorkbook(String saveLocation) {
+		// If we want to SAVE/Export the Workbook as CSV Files (one for each of its Spreadsheets)
+		// we pass the "this" argument (that refers to the Workbook object itself) to the static
+		// CSV File Creator.
+		try {
+			// The "saveLocation" argument refers to the filesystem folder where we want
+			// the files to be saved. We should pass this as a String from the GUI call:
+			CsvFileCreator.createCsvFile(this, saveLocation);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("Could not save Workbook - Exception error!");
+			e.printStackTrace();
+		}
 	}
 
-	public void importSpreadsheet() {
-		// TODO To be implemented later.
+	public void importSpreadsheet(String filepath) {
+		// If we want to import a Spreadsheet from a CSV file, we pass the file's "filepath"
+		// to this method from the GUI, and the new Spreadsheet is automatically attached to
+		// the current Workbook:
+		try {
+			addSpreadsheet(CsvFileReader.readCsvFile(filepath));
+		} catch (IOException e) {
+			System.out.println("Could not import Spreadsheet - Exception error!");
+			e.printStackTrace();
+		}
 	}
-
+	
+	public void openSpreadsheet(String filepath) {
+		// The OpenSpreadsheet method is different to the importSpreadsheet
+		// in that it creates a whole new Workbook and then imports and attaches
+		// the chosen CSV File. (In contrast, the "importSpreadsheet" one, attaches
+		// the imported file to the current open workbook)
+		try {
+			// Clear the current list of spreadsheets, and attach only the imported one:
+			// Tip: We read first and clear the spreadsheet list later, because we want
+			// to keep the list of Spreadsheets intact should any IO Exception happens...
+			Spreadsheet tempSpreadsheet = CsvFileReader.readCsvFile(filepath);
+			spreadsheets.clear();
+			addSpreadsheet(tempSpreadsheet);
+		} catch (IOException e) {
+			System.out.println("Could not open Spreadsheet - Exception error!");
+			e.printStackTrace();
+		}
+	}
 }
