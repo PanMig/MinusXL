@@ -64,6 +64,7 @@ public class MinusXLGUI {
 
 	// objects for opening files and creating a tabbed pane
 	JFileChooser fileChooser = new JFileChooser("C:\\Users\\Panos\\git\\MinusXL\\bin");
+	
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
 
 	/**
@@ -334,14 +335,19 @@ public class MinusXLGUI {
 		JButton btnImportSheet = new JButton("Import Sheet");
 		btnImportSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/*fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 				fileChooser.showOpenDialog(null);
-				File choosenFile = fileChooser.getSelectedFile();
+				String choosenFile = fileChooser.getSelectedFile().getName();
+				System.out.println(choosenFile);
+				*/
+				String choosenFile=JOptionPane.showInputDialog("Write the file name that you want to enter" 
+				+"\n"+"The file must be located in the same directory as MinusXl");
 				//check if user presses cancel or close
 				if(choosenFile!=null){
 				
 					try {
 						//add to workBook
-						workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile.getName()));
+						workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile.toString()));
 						//fix reference
 						sheetManager = workbookManager.getSpreadsheet(workbookManager.getAttachedSpreadsheets() - 1);
 						//add to the jtable
@@ -634,11 +640,15 @@ public class MinusXLGUI {
 					
 	
 					// create charts
+					
+					//ask user to enter title for the charts
+					String chartTitle = JOptionPane.showInputDialog(null,"Give title for your chart");
+					
 	
 					if (chartOption.equals("Bar chart")) {
-						ChartManager.createBarChart(selectedChartKeys, selectedChartData);
+						ChartManager.createBarChart(selectedChartKeys, selectedChartData,chartTitle);
 					}
-					 else ChartManager.createLineChart(selectedChartKeys, selectedChartData);
+					 else ChartManager.createLineChart(selectedChartKeys, selectedChartData,chartTitle);
 			}
 				else{
 					JOptionPane.showMessageDialog(null,"Wrong dimension have been given");
