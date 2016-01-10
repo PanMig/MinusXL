@@ -64,7 +64,7 @@ public class MinusXLGUI {
 	private ArrayList<JTable> tableList;
 
 	// objects for opening files and creating a tabbed pane
-	JFileChooser fileChooser = new JFileChooser("C:\\Users\\Panos\\git\\MinusXL");
+	JFileChooser fileChooser = new JFileChooser("C:\\Users\\Panos\\git\\MinusXL\\bin");
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
 
 	/**
@@ -331,7 +331,6 @@ public class MinusXLGUI {
 			public void actionPerformed(ActionEvent e) {
 				fileChooser.showOpenDialog(null);
 				File choosenFile = fileChooser.getSelectedFile();
-				
 				//check if user presses cancel or close
 				if(choosenFile!=null){
 				
@@ -525,8 +524,8 @@ public class MinusXLGUI {
 					 * check if the dimensions that the user inserted are in bounds
 					 * of the table
 					 */
-					if (outCellRow >= 0 &&outCellRow <= sheetManager.getRowCount()
-							&& outCellColumn >= 0 && outCellColumn <= sheetManager.getColumnCount()) {
+					if (outCellRow > 0 &&outCellRow <= sheetManager.getRowCount()
+							&& outCellColumn > 0 && outCellColumn <= sheetManager.getColumnCount()) {
 	
 						outputcell = sheetManager.getCell(outCellRow-1, outCellColumn-1);
 						// call the function method that prints an oitput to the
@@ -570,9 +569,8 @@ public class MinusXLGUI {
 				ArrayList<Cell> selectedChartKeys = new ArrayList<Cell>();
 
 				// TODO make all selected cells unselected
-				String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located"
-						+"counting starts from zero(Left to right and top to bottom)", "0");
-				String columnOfFirstKeyStr = JOptionPane.showInputDialog("Enter the column that your first key is located", "1");
+				String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located", "1");
+				String columnOfFirstKeyStr = JOptionPane.showInputDialog("Enter the column that your first key is located", "2");
 				
 				
 			if(rowOfKeysStr!=null && columnOfFirstKeyStr!=null ){
@@ -581,10 +579,11 @@ public class MinusXLGUI {
 					int rowOfKeys = Integer.parseInt(rowOfKeysStr);
 					int columnOfFirstKey = Integer.parseInt(columnOfFirstKeyStr);
 					
-					//Jtable starts from zero so,to be user friendly we make the user feel that counting start from 1
 					rowOfKeys--;
 					columnOfFirstKey--;
-					
+				//Jtable starts from zero so,to be user friendly we make the user feel that counting start from 1
+				if(rowOfKeys>=0 && rowOfKeys<=sheetManager.getRowCount() && columnOfFirstKey>=0
+				&&columnOfFirstKey<=sheetManager.getColumnCount()){
 					//add the keys to the list,the row is given by the user
 					//so the check is only for the columns
 					
@@ -635,6 +634,11 @@ public class MinusXLGUI {
 					}
 					 else ChartManager.createLineChart(selectedChartKeys, selectedChartData);
 			}
+				else{
+					JOptionPane.showMessageDialog(null,"Wrong dimension have been given");
+				}
+		}
+				
 				
 		}
 	});
