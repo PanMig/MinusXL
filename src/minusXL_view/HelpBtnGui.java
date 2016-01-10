@@ -3,16 +3,13 @@ package minusXL_view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 public class HelpBtnGui extends JFrame {
@@ -38,8 +35,9 @@ public class HelpBtnGui extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
 	 */
-	public HelpBtnGui() {
+	public HelpBtnGui() throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -51,12 +49,14 @@ public class HelpBtnGui extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JFileChooser chooser =new JFileChooser();
-		chooser.showOpenDialog(null);
-		File f=chooser.getSelectedFile();
-		String filename=f.getAbsolutePath();
+		JTextArea JtextArea1=new JTextArea();
 		
-		//FileReader reader =new FileReader(filename);
+		FileReader reader =new FileReader("C:\\Users\\Panos\\git\\MinusXL\\Help.txt");
+		BufferedReader br=new BufferedReader(reader);
+		JtextArea1.read(br,null);
+		br.close();
+		JtextArea1.requestFocus();
+		
 	
 	}
 
