@@ -59,6 +59,7 @@ public class HelpBtnGui extends JFrame {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/help.txt"),"windows-1253"));
 		Area.read(br, null);
+
 		br.close();
 		Area.requestFocus();
 

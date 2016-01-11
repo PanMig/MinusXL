@@ -347,6 +347,7 @@ public class MinusXLGUI {
 		JButton btnImportSheet = new JButton("Import Sheet");
 		btnImportSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 				fileChooser.showOpenDialog(null);
 				File choosenFile = fileChooser.getSelectedFile();
 				// check if user presses cancel or close
@@ -356,6 +357,19 @@ public class MinusXLGUI {
 						// add to workBook
 						workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile.getName()));
 						// fix reference
+=======
+			//String choosenFile=JOptionPane.showMessageDialog(null,"Write the file name you want to enter"+ "\n" +
+			//"The file must be located in the same directory with minusXl application");
+				String choosenFile=JOptionPane.showInputDialog("Write the file name you want to enter"+ "\n" +
+				"The file must be located in the same directory with minusXl application");
+				//check if user presses cancel or close
+				if(choosenFile!=null){
+				
+					try {
+						//add to workBook
+						workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile));
+						//fix reference
+>>>>>>> 26755fa6ca80d1c5f0ab9f86c11a25a004c06d41
 						sheetManager = workbookManager.getSpreadsheet(workbookManager.getAttachedSpreadsheets() - 1);
 						// add to the jtable
 						addSheet("Imported sheet", sheetManager.getRowCount(), sheetManager.getColumnCount());
