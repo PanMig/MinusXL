@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,7 +27,7 @@ public class HelpBtnGui extends JFrame {
 				try {
 					HelpBtnGui frame = new HelpBtnGui();
 					frame.setVisible(true);
-					frame.setSize(700,500);
+					frame.setSize(700, 500);
 					frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +38,8 @@ public class HelpBtnGui extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public HelpBtnGui() throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,19 +52,20 @@ public class HelpBtnGui extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JTextArea Area=new JTextArea();
-		
-		FileReader reader =new FileReader("C:\\Users\\Panos\\git\\MinusXL\\Help.txt");
-		BufferedReader br=new BufferedReader(reader);
-		Area.read(br,null);
+
+		JTextArea Area = new JTextArea();
+		Area.setLineWrap(true);
+		Area.setWrapStyleWord(true);
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/help.txt"),"windows-1253"));
+		Area.read(br, null);
+
 		br.close();
 		Area.requestFocus();
-		
-		JScrollPane scroll =new JScrollPane(Area);
+
+		JScrollPane scroll = new JScrollPane(Area);
 		contentPane.add(scroll, null);
-		
-	
+
 	}
 
 }
