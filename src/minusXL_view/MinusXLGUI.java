@@ -347,14 +347,14 @@ public class MinusXLGUI {
 		JButton btnImportSheet = new JButton("Import Sheet");
 		btnImportSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fileChooser.showOpenDialog(null);
-				File choosenFile = fileChooser.getSelectedFile();
+				String choosenFile=JOptionPane.showInputDialog("Enter the file name you want to import"
+						+"\n"+"The file must be located in the same directory with minusXL appplication");
 				// check if user presses cancel or close
 				if (choosenFile != null) {
 
 					try {
 						// add to workBook
-						workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile.getName()));
+						workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile));
 						// fix reference
 						sheetManager = workbookManager.getSpreadsheet(workbookManager.getAttachedSpreadsheets() - 1);
 						// add to the jtable
@@ -640,19 +640,7 @@ public class MinusXLGUI {
 						// like column keys,datavalues(always type number)
 						ArrayList<Cell> selectedChartData = new ArrayList<Cell>();
 
-						// list that hold all the column keys
-						/*
-						 * for (int i = rowOfKeys + 1; i <
-						 * sheetManager.getRowCount(); i++) {
-						 * 
-						 * if (tableManager.isCellSelected(i,
-						 * columnOfFirstKey-1)) {
-						 * selectedColumnKeys.add(sheetManager.getCell(i,
-						 * columnOfFirstKey-1));
-						 * 
-						 * } }
-						 */
-
+					if(chartOption=="Bar chart"){
 						for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
 							for (int j = columnOfFirstKey - 1; j < sheetManager.getColumnCount(); j++) {
 								if (tableManager.isCellSelected(i, j)
@@ -661,25 +649,44 @@ public class MinusXLGUI {
 								}
 							}
 						}
-
-						/*
-						 * for(int i=0;i<selectedColumnKeys.size();i++){
-						 * System.out.println(selectedColumnKeys.get(i).getCell(
-						 * )); }
-						 */
-
-						// create charts
-
-						if (chartOption.equals("Bar chart")) {
-							ChartManager.createBarChart(selectedChartKeys, selectedChartData);
-						} else
-							ChartManager.createLineChart(selectedChartKeys, selectedChartData);
-					} else {
-						JOptionPane.showMessageDialog(null, "Wrong dimension have been given");
 					}
+					
+					//collect data for line chart
+					else{
+						
+							for (int j = columnOfFirstKey; j < sheetManager.getColumnCount(); j++) {
+								for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
+									if (tableManager.isCellSelected(i, j)
+										&& sheetManager.getCell(i, j).getCell().toString().length() > 0) {
+												selectedChartData.add(sheetManager.getCell(i, j));
+								}
+							}
+						}
+					}
+					
+					for (int i =0; i < selectedChartData.size(); i++) {
+						System.out.println(selectedChartData.get(i).getCell());
+					}
+						//ask user to insert name for the chart
+						String chartTitle=JOptionPane.showInputDialog("Enter title for your chart");
+						//ask again if he just presses enter without inserting value
+						while(chartTitle.length()<=0){
+							chartTitle=JOptionPane.showInputDialog("Enter title for your chart");
+						}
+						// create charts
+						
+						if (chartOption.equals("Bar chart")) {
+							ChartManager.createBarChart(selectedChartKeys, selectedChartData,chartTitle);
+						} else
+						    ChartManager.createLineChart(selectedChartKeys, selectedChartData,chartTitle);   
+						} 
+				else {
+					JOptionPane.showMessageDialog(null, "Wrong dimension have been given");
 				}
-
+				
 			}
+
+		}
 		});
 		JLabel chartLabel = new JLabel("   Chart : ");
 		menuBar.add(chartLabel);

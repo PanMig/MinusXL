@@ -43,7 +43,7 @@ public class LineChart extends JFrame {
    private XYDataset createDataset() {
 	   
 	   ArrayList<Cell> valuesList=new ArrayList<Cell>();
-		
+	
 
 		for(int i=0;i<dataList.size();i++){
 			if(dataList.get(i).getCellType().equals("String")){
@@ -53,16 +53,14 @@ public class LineChart extends JFrame {
 				valuesList.add(dataList.get(i));
 			}
 		}
+		
+		/*for(int i=0;i<valuesList.size();i++){
+			System.out.println(valuesList.get(i).getCell());
+		}*/
      
 		
 	
 
-     
-      /*final XYSeries chrome = new XYSeries("chrome");
-      chrome.add(1.0, 4.0);
-      chrome.add(x, y);
-      chrome.add(2.0, 6.0);
-      chrome.add(3.0, 5.0);*/
      double value=0.0;
      //used to keep the index in the dataList
      //used for adding correct values to the keys
@@ -74,7 +72,7 @@ public class LineChart extends JFrame {
     	  System.out.println(i);
     	  //TODO values are not inserted correctly
   	    XYSeries key = new XYSeries((String)list.get(i).getCell());
-  		for(int j=0;j<list.size();j++){
+  		for(int j=0;j<(valuesList.size()-list.size())-1;j++){
   			value=(double) valuesList.get(dataIterator).getCell();
   			key.add(value,value);
   			dataIterator++;
