@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
@@ -25,6 +26,7 @@ public class HelpBtnGui extends JFrame {
 				try {
 					HelpBtnGui frame = new HelpBtnGui();
 					frame.setVisible(true);
+					frame.setSize(700,500);
 					frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,13 +51,16 @@ public class HelpBtnGui extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JTextArea JtextArea1=new JTextArea();
+		JTextArea Area=new JTextArea();
 		
 		FileReader reader =new FileReader("C:\\Users\\Panos\\git\\MinusXL\\Help.txt");
 		BufferedReader br=new BufferedReader(reader);
-		JtextArea1.read(br,null);
+		Area.read(br,null);
 		br.close();
-		JtextArea1.requestFocus();
+		Area.requestFocus();
+		
+		JScrollPane scroll =new JScrollPane(Area);
+		contentPane.add(scroll, null);
 		
 	
 	}
