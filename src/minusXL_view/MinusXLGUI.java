@@ -256,6 +256,13 @@ public class MinusXLGUI {
 																// from the list
 																// of
 																// spreadsheets
+					// make spreadsheet reference point to the correct spreadsheet
+					// on the list
+					tabIndex=tabbedPane.getSelectedIndex();
+					sheetManager = workbookManager.getSpreadsheet(tabIndex);
+					// make jtable reference point to the correct jtable on the list
+					tableManager = tableList.get(tabIndex);
+					
 					sheetNumber -= 1;
 				}
 			}
