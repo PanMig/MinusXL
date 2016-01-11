@@ -13,18 +13,14 @@ public class MeanFunction extends StatisticalFunction {
 
 	@Override
 	public Object calculateValue() {
-		if (checkValidity(input) == true) {
-			// A simple search for the mean in the list of Cell values:
-			double sum = 0;
+		// A simple search for the mean in the list of Cell values:
+		double sum = 0;
 
-			for (int i = 1; i < input.length; i++) {
-				sum = sum + (double) input[i].getCell();
-			}
-
-			return (sum / input.length);
-		} else {
-			return null;
+		for (int i = 1; i < input.length; i++) {
+			sum = sum + (double) input[i].getCell();
 		}
+
+		return (sum / input.length);
 	}
 
 }

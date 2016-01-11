@@ -17,18 +17,14 @@ public class PowFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-	
-		if(checkValidity(this.input) == true){
-			Double pow = (Double) input[0].getCell();
-			int i = 1;
-			while (i < input.length) {
-				pow = Math.pow(pow, (Double) input[i].getCell());
-				i++;
-			}
-			return pow;
-		} else {
-			return null;
+
+		Double pow = (Double) input[0].getCell();
+		int i = 1;
+		while (i < input.length) {
+			pow = Math.pow(pow, (Double) input[i].getCell());
+			i++;
 		}
+		return pow;
 	}
 
 }

@@ -13,20 +13,16 @@ public class MinFunction extends StatisticalFunction {
 
 	@Override
 	public Object calculateValue() {
-		if (checkValidity(input) == true){
-			// A simple search for the min in the list of Cell values:
-			double min = (double) input[0].getCell();
-	
-			for (int i = 1; i < input.length; i++) {
-				if ((double) input[i].getCell() < min) {
-					min = (double) input[i].getCell();
-				}
+		// A simple search for the min in the list of Cell values:
+		double min = (double) input[0].getCell();
+
+		for (int i = 1; i < input.length; i++) {
+			if ((double) input[i].getCell() < min) {
+				min = (double) input[i].getCell();
 			}
-	
-			return (min);
-		} else {
-			return false;
 		}
+
+		return (min);
 	}
 
 }

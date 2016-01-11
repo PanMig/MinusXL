@@ -14,17 +14,13 @@ public class NotFunction extends LogicalFunction {
 	@Override
 	public Object calculateValue() {
 
-		if (checkValidity(input) == true){
-			// Here we use only the first value of our list of Cell inputs:
-			Boolean bool = (Boolean) input[0].getCell();
-	
-			if (bool == true) {
-				return (false);
-			} else {
-				return (true);
-			}
+		// Here we use only the first value of our list of Cell inputs:
+		Boolean bool = (Boolean) input[0].getCell();
+
+		if (bool == true) {
+			return (false);
 		} else {
-			return "";
+			return (true);
 		}
 
 	}

@@ -4,6 +4,6 @@ public abstract class Function {
 
 	public abstract Object calculateValue();
 
-	public abstract boolean checkValidity(Cell[] inputs);
+	public abstract boolean checkValidity(Object[] inputs);
 
 }

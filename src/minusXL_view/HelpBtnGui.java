@@ -3,15 +3,13 @@ package minusXL_view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 public class HelpBtnGui extends JFrame {
@@ -27,7 +25,6 @@ public class HelpBtnGui extends JFrame {
 				try {
 					HelpBtnGui frame = new HelpBtnGui();
 					frame.setVisible(true);
-					frame.setSize(700, 500);
 					frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,10 +35,8 @@ public class HelpBtnGui extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
-	 * @throws IOException
 	 */
-	public HelpBtnGui() throws IOException {
+	public HelpBtnGui() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -53,19 +48,26 @@ public class HelpBtnGui extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JTextArea Area = new JTextArea();
-		Area.setLineWrap(true);
-		Area.setWrapStyleWord(true);
+		JButton btnSpreadsheets = new JButton("spreadsheets");
+		panel.add(btnSpreadsheets);
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/help.txt"),"windows-1253"));
-		Area.read(br, null);
+		JButton btnWorkbooks = new JButton("Workbooks");
+		panel.add(btnWorkbooks);
 
-		br.close();
-		Area.requestFocus();
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.CENTER);
+		GridBagLayout gbl_panel_1 = new GridBagLayout();
+		gbl_panel_1.columnWidths = new int[] { 0, 0, 0, 231, 0 };
+		gbl_panel_1.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		gbl_panel_1.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panel_1.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		panel_1.setLayout(gbl_panel_1);
 
-		JScrollPane scroll = new JScrollPane(Area);
-		contentPane.add(scroll, null);
-
+		JLabel lblSelectTutorialCategories = new JLabel("Select tutorial categories to begin with :");
+		GridBagConstraints gbc_lblSelectTutorialCategories = new GridBagConstraints();
+		gbc_lblSelectTutorialCategories.gridx = 3;
+		gbc_lblSelectTutorialCategories.gridy = 5;
+		panel_1.add(lblSelectTutorialCategories, gbc_lblSelectTutorialCategories);
 	}
 
 }

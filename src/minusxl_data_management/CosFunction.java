@@ -15,11 +15,7 @@ public class CosFunction extends MathFunction {
 	public Object calculateValue() {
 		// Takes the first object of the input, casts to a double value
 		// converts to radians and then applies the Math.cos function
-		if (checkValidity(input) == true){
-			return Math.cos((Math.toRadians((double) input[0].getCell())));
-		} else {
-			return null;
-		}
+		return Math.cos((Math.toRadians((double) input[0].getCell())));
 	}
 
 }

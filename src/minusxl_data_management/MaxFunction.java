@@ -13,20 +13,16 @@ public class MaxFunction extends StatisticalFunction {
 
 	@Override
 	public Object calculateValue() {
-		if (checkValidity(input) == true) {
-			// A simple search for the max in the list of Cell values:
-			double max = (double) input[0].getCell();
+		// A simple search for the max in the list of Cell values:
+		double max = (double) input[0].getCell();
 
-			for (int i = 1; i < input.length; i++) {
-				if ((double) input[i].getCell() > max) {
-					max = (double) input[i].getCell();
-				}
+		for (int i = 1; i < input.length; i++) {
+			if ((double) input[i].getCell() > max) {
+				max = (double) input[i].getCell();
 			}
-
-			return (max);
-		} else {
-			return null;
 		}
+
+		return (max);
 	}
 
 }

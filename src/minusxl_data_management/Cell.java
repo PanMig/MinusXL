@@ -23,8 +23,6 @@ public abstract class Cell<T> {
 	public int getColumn() {
 		return column;
 	}
-	
-	//Ceci n'est pas un comment.
 
 	public abstract T getCell();
 

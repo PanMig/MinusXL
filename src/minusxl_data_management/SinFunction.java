@@ -13,13 +13,9 @@ public class SinFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-		if(checkValidity(input) == true){
-			// Takes the first object of the input, casts to a double value
-			// converts to radians and then applies the Math.cos function
-			return Math.sin((Math.toRadians((double) input[0].getCell())));
-		} else {
-			return null;
-		}
+		// Takes the first object of the input, casts to a double value
+		// converts to radians and then applies the Math.cos function
+		return Math.sin((Math.toRadians((double) input[0].getCell())));
 	}
 
 }

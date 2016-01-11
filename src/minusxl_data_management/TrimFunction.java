@@ -5,8 +5,9 @@ public class TrimFunction extends AlpharithmeticFunction {
 	private Cell[] input;
 
 	public TrimFunction(Cell[] input) {
-		// The constructor creates an instance of TrimFunction Object
+		// The constructor creates a instance of AbsFunction Object
 		// and holds the Cells in the input data.
+		// DON'T FORGET: The "input" is CELL DATA!!!
 		if (checkValidity(input) == true) {
 			this.input = input;
 		}
@@ -14,13 +15,9 @@ public class TrimFunction extends AlpharithmeticFunction {
 
 	@Override
 	public Object calculateValue() {
-		
-		if (checkValidity(input) == true){
-			// Trim whitespace from the selected string:
-			String string1 = (String) input[0].getCell();
-			return(string1.trim());
-		} else {
-			return null;
-		}
+		// Trim whitespace from the selected string:
+		String string1 = (String) input[0].getCell();
+		return(string1.trim());
 	}
+
 }

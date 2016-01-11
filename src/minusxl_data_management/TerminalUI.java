@@ -77,7 +77,7 @@ public class TerminalUI {
 		System.out.println("");
 		System.out.println("Testing the CSV File Creator with the workbook: " + workbook.getWorkbookName());
 		try {
-			CsvFileCreator.createCsvFile(workbook, null);
+			CsvFileCreator.createCsvFile(workbook);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

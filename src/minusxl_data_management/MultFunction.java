@@ -13,19 +13,15 @@ public class MultFunction extends MathFunction {
 
 	@Override
 	public Object calculateValue() {
-		if (checkValidity(input) == true) {
-			// Multiplies the values of all the inputed objects together and
-			// returns
-			// the multiplication value:
-			Double mult = 1d;
-			int i = 0;
-			while (i < input.length) {
-				mult = mult * (double) input[i].getCell();
-				i++;
-			}
-			return mult;
-		} else {
-			return null;
+		// Multiplies the values of all the inputed objects together and returns
+		// the multiplication value:
+		Double mult = 1d;
+		int i = 0;
+		while (i < input.length) {
+			mult = mult * (double) input[i].getCell();
+			i++;
 		}
+		return mult;
 	}
+
 }
