@@ -52,7 +52,6 @@ public class HelpBtnGui extends JFrame {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JTextArea Area=new JTextArea();
-		
 		FileReader reader =new FileReader("C:\\Users\\Panos\\git\\MinusXL\\Help.txt");
 		BufferedReader br=new BufferedReader(reader);
 		Area.read(br,null);
