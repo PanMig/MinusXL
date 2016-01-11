@@ -6,9 +6,11 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
-import org.jfree.util.Rotation;
 
 public class PieChart extends JFrame {
 
@@ -55,7 +57,7 @@ public class PieChart extends JFrame {
 
 		PiePlot3D plot = (PiePlot3D) chart.getPlot();
 		plot.setStartAngle(290);
-		plot.setDirection(Rotation.CLOCKWISE);
+		//plot.setDirection(Rotation.CLOCKWISE);
 		plot.setForegroundAlpha(0.5f);
 		return chart;
 
