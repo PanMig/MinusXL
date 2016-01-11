@@ -54,6 +54,8 @@ public class HelpBtnGui extends JFrame {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JTextArea Area = new JTextArea();
+		Area.setLineWrap(true);
+		Area.setWrapStyleWord(true);
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/help.txt"),"windows-1253"));
 		Area.read(br, null);
