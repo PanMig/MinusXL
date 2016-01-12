@@ -2,7 +2,12 @@ package minusXl_charts_managment;
 
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -18,13 +23,16 @@ public class LineChart extends JFrame {
 
    private static final long serialVersionUID = 1L;
    private ArrayList<Cell> list;
-   private ArrayList<Cell> dataList;
+   private ArrayList<Cell> listX;
+   private ArrayList<Cell> listY;
    
-   public LineChart(String applicationTitle, String chartTitle,ArrayList<Cell> list,ArrayList<Cell> dataList) {
+   public LineChart(String applicationTitle, String chartTitle,ArrayList<Cell> list,
+		   ArrayList<Cell> listX,ArrayList<Cell> listY) {
         super(applicationTitle);
 
         this.list=list;
-		this.dataList=dataList;
+		this.listX=listX;
+		this.listY=listY;
         
         // based on the dataset we create the chart
         JFreeChart pieChart = ChartFactory.createXYLineChart(chartTitle, "Category", "Score",
@@ -41,50 +49,29 @@ public class LineChart extends JFrame {
     }
   
    private XYDataset createDataset() {
-	   
-	   ArrayList<Cell> valuesList=new ArrayList<Cell>();
-		
-
-		for(int i=0;i<dataList.size();i++){
-			if(dataList.get(i).getCellType().equals("String")){
-				continue;
-			}
-			else{
-				valuesList.add(dataList.get(i));
-			}
-		}
-     
 		
 	
 
-     
-      /*final XYSeries chrome = new XYSeries("chrome");
-      chrome.add(1.0, 4.0);
-      chrome.add(x, y);
-      chrome.add(2.0, 6.0);
-      chrome.add(3.0, 5.0);*/
-     double value=0.0;
+     double valueX=0.0;
+     double valueY=0.0;
      //used to keep the index in the dataList
      //used for adding correct values to the keys
      int dataIterator=0;
      
       final XYSeriesCollection dataset = new XYSeriesCollection();
+ 
       
       for(int i=0;i<list.size();i++){
-    	  System.out.println(i);
-    	  //TODO values are not inserted correctly
   	    XYSeries key = new XYSeries((String)list.get(i).getCell());
-  		for(int j=0;j<list.size();j++){
-  			value=(double) valuesList.get(dataIterator).getCell();
-  			key.add(value,value);
+  	    
+  	  for(int j=0,k=dataIterator;j<listX.size() && k<listY.size();j++,k++){
+  			valueX=(double) listX.get(j).getCell();
+  			valueY=(double) listY.get(dataIterator).getCell();
   			dataIterator++;
-  			System.out.println(j+""+dataIterator);
-  			
+  			key.add(valueX,valueY);
   		}
   		dataset.addSeries(key);
   	}
-      
-      //dataset.addSeries(chrome);
      
       return dataset;
      

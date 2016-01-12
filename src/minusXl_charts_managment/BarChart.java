@@ -75,7 +75,6 @@ public class BarChart extends JFrame {
 		//it is used so every column key takes the correct value
 		int valuesIterator=0;
 		for(int i=0;i<columnKeysList.size();i++){
-			System.out.println(i);
 			
 			for(int j=0,k=valuesIterator;j<list.size() && k<valuesList.size();j++,k++){
 				
@@ -92,7 +91,6 @@ public class BarChart extends JFrame {
 				valuesIterator+=1;
 				//add the data to the chart
 				dataset.addValue(value,key,columnKey);
-				System.out.println(j+" "+k+" "+ valuesIterator);
 			}
 
 		}

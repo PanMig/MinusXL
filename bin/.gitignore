@@ -1,0 +1,11 @@
+src/minusXl_charts_managment/BarChart.java
+src/minusXl_charts_managment/ChartManager.java
+/.DS_Store
+/.classpath
+/.gitignore
+/.project
+/.settings/
+/MinusXL_Workbook-0.csv
+/OpenCSV/
+/README.md
+/jfreechart-1.0.19/

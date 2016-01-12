@@ -280,7 +280,7 @@ public class MinusXLGUI {
 				// this part of the code add a new spreadsheet to the tabbebPane
 				// the multiple if's are used to handle the cases where the user
 				// presses cancel or closes the inputDialog
-				sheetName = JOptionPane.showInputDialog("Enter a name for spreadsheet");
+				sheetName = JOptionPane.showInputDialog("Enter a name for spreadsheet","Spreadsheet");
 				if (sheetName != null) {
 
 					if (sheetName.length() == 0) {
@@ -291,25 +291,43 @@ public class MinusXLGUI {
 							"100");
 
 					if (StringsheetRows != null) {
-
-						if (StringsheetRows.length() == 0)
+						//case where users just presses enter
+						if (StringsheetRows.length() == 0){
 							sheetRows = 100;
-						// TODO CHECK IF USERS PUTS STRING that's not an number
-						else
-							sheetRows = Integer.parseInt(StringsheetRows);
-
+						}
+						// CHECK IF USERS PUTS STRING that's not an number
+						else{
+							try {
+								int value;
+								value=Integer.parseInt(StringsheetRows);
+								// Runs if it's a int
+							} catch (NumberFormatException e1) {
+								JOptionPane.showMessageDialog(null,"Insert a number not a string");
+							}
+							sheetRows =Integer.parseInt(StringsheetRows);
+						}
 						String StringsheetColumns = JOptionPane.showInputDialog(null,
 								"Enter columns for your spreadsheet", "26");
 
 						if (StringsheetColumns != null) {
 
-							if (StringsheetColumns.length() == 0)
+							if (StringsheetColumns.length() == 0){
 								sheetColumns = 26;
-							// TODO CHECK IF USERS PUTS STRING that's not an
-							// number
-							else
-								sheetColumns = Integer.parseInt(StringsheetColumns);
-
+							}
+							//CHECK IF USERS PUTS STRING that's not an
+							//number
+							else{
+								try {
+									int value;
+									value=Integer.parseInt(StringsheetColumns);
+									// Runs if it's a int
+							} catch (NumberFormatException e1) {
+								JOptionPane.showMessageDialog(null,"Insert a number value not a string");
+							}
+								sheetColumns=Integer.parseInt(StringsheetColumns);
+							}	
+							
+							
 							workbookManager.addSpreadsheet(sheetRows, sheetColumns);// add
 																					// spreadsheet
 																					// to
@@ -342,7 +360,7 @@ public class MinusXLGUI {
 		gbc_btnDeleteSpreadsheet.gridy = 0;
 		panel.add(btnDeleteSpreadsheet, gbc_btnDeleteSpreadsheet);
 
-		// this part implements the insertion of a spreasheet from a file
+		// this part implements the insertion of a spreadsheet from a file
 		// to the workBook
 		JButton btnImportSheet = new JButton("Import Sheet");
 		btnImportSheet.addActionListener(new ActionListener() {
@@ -350,30 +368,32 @@ public class MinusXLGUI {
 
 			//String choosenFile=JOptionPane.showMessageDialog(null,"Write the file name you want to enter"+ "\n" +
 			//"The file must be located in the same directory with minusXl application");
-				String choosenFile=JOptionPane.showInputDialog("Write the file name you want to enter"+ "\n" +
-				"The file must be located in the same directory with minusXl application");
+				String choosenFile=JOptionPane.showInputDialog("Enter the filename of the CSV file that you want to import"+ "\n" +
+				"(It must be located in the same directory as the minusXL application)");
 				//check if user presses cancel or close
 				if(choosenFile!=null){
 				
 					try {
-						//add to workBook
+						// add to workBook
 						workbookManager.addSpreadsheet(CsvFileReader.readCsvFile(choosenFile));
-						//fix reference
+						// fix reference
 						sheetManager = workbookManager.getSpreadsheet(workbookManager.getAttachedSpreadsheets() - 1);
 						// add to the jtable
 						addSheet("Imported sheet", sheetManager.getRowCount(), sheetManager.getColumnCount());
-						// update the ui so the table will reviece the cchange
+						// update the ui so the table will receive the cchange
 						// and
 						// print it
-						// imediatly
+						// immediately
 						tableManager.updateUI();
 					} catch (IOException e1) {
 						JOptionPane.showMessageDialog(null, "Import failed");
 						e1.printStackTrace();
 					}
+				} else {
+					JOptionPane.showMessageDialog(null, "The filename was empty (or an error happened).");
 				}
 			}
-		});
+			});
 		GridBagConstraints gbc_ImportSheet = new GridBagConstraints();
 		gbc_ImportSheet.gridx = 3;
 		gbc_ImportSheet.gridy = 0;
@@ -406,24 +426,41 @@ public class MinusXLGUI {
 
 					if (StringsheetRows != null) {
 
-						if (StringsheetRows.length() == 0)
+						if (StringsheetRows.length() == 0){
 							sheetRows = 100;
-						// TODO CHECK IF USERS PUTS STRING that's not an number
-						else
-							sheetRows = Integer.parseInt(StringsheetRows);
+						}	
+						// CHECK IF USERS PUTS STRING that's not an number
+						else{
+							try {
+								int value;
+								value=Integer.parseInt(StringsheetRows);
+								// Runs if it's a int
+							} catch (NumberFormatException e1) {
+								JOptionPane.showMessageDialog(null,"Insert a number not a string");
+							}
+							sheetRows =Integer.parseInt(StringsheetRows);
+						}
 						// holds columns for sheet
 						String StringsheetColumns = JOptionPane.showInputDialog("Enter columns for your spreadsheet",
 								"26");
 
 						if (StringsheetColumns != null) {
 
-							if (StringsheetColumns.length() == 0)
+							if (StringsheetColumns.length() == 0){
 								sheetColumns = 26;
-							// TODO CHECK IF USERS PUTS STRING that's not an
+							}	
+							// CHECK IF USERS PUTS STRING that's not an
 							// number
-							else
-								sheetColumns = Integer.parseInt(StringsheetColumns);
-
+							else{
+								try {
+									int value;
+									value=Integer.parseInt(StringsheetColumns);
+									// Runs if it's a int
+								} catch (NumberFormatException e1) {
+									JOptionPane.showMessageDialog(null,"Insert a number not a string");
+								}
+								sheetColumns =Integer.parseInt(StringsheetColumns);
+							}
 							// multiple cases where the user either insert a
 							// value at the
 							// input dialog and presses "ok" or just presses
@@ -633,56 +670,76 @@ public class MinusXLGUI {
 								selectedChartKeys.add(sheetManager.getCell(rowOfKeys, j));
 							}
 						}
-						/*
-						 * for(int i=0;i<selectedChartKeys.size();i++){
-						 * System.out.println(selectedChartKeys.get(i).
-						 * getCellType()); }
-						 */
 
 						// the rest of the data for the chat is holded here
 						// like column keys,datavalues(always type number)
-						ArrayList<Cell> selectedChartData = new ArrayList<Cell>();
-
-						// list that hold all the column keys
-						/*
-						 * for (int i = rowOfKeys + 1; i <
-						 * sheetManager.getRowCount(); i++) {
-						 * 
-						 * if (tableManager.isCellSelected(i,
-						 * columnOfFirstKey-1)) {
-						 * selectedColumnKeys.add(sheetManager.getCell(i,
-						 * columnOfFirstKey-1));
-						 * 
-						 * } }
-						 */
-
+						
+					//for the bar chart	
+					ArrayList<Cell> selectedData = new ArrayList<Cell>();
+					//for line chart
+					ArrayList<Cell> selectedDataY = new ArrayList<Cell>();
+					ArrayList<Cell> selectedDataX = new ArrayList<Cell>();
+					
+					if(chartOption=="Bar chart"){
 						for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
 							for (int j = columnOfFirstKey - 1; j < sheetManager.getColumnCount(); j++) {
 								if (tableManager.isCellSelected(i, j)
 										&& sheetManager.getCell(i, j).getCell().toString().length() > 0) {
-									selectedChartData.add(sheetManager.getCell(i, j));
+									selectedData.add(sheetManager.getCell(i, j));
 								}
 							}
 						}
-
-						/*
-						 * for(int i=0;i<selectedColumnKeys.size();i++){
-						 * System.out.println(selectedColumnKeys.get(i).getCell(
-						 * )); }
-						 */
-
-						// create charts
-
-						if (chartOption.equals("Bar chart")) {
-							ChartManager.createBarChart(selectedChartKeys, selectedChartData);
-						} else
-							ChartManager.createLineChart(selectedChartKeys, selectedChartData);
-					} else {
-						JOptionPane.showMessageDialog(null, "Wrong dimension have been given");
 					}
+					
+					//collect  XY data for line chart
+					else{
+							//Y data
+							for (int j = columnOfFirstKey; j < sheetManager.getColumnCount(); j++) {
+								for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
+									if (tableManager.isCellSelected(i, j)
+										&& sheetManager.getCell(i, j).getCell().toString().length() > 0) {
+												selectedDataY.add(sheetManager.getCell(i, j));
+									}
+								}
+							}
+							
+							//X axis data
+								for (int i = rowOfKeys+1; i < sheetManager.getRowCount(); i++) {
+									if (tableManager.isCellSelected(i,columnOfFirstKey-1)
+										&& sheetManager.getCell(i,columnOfFirstKey-1).getCell().toString().length() > 0) {
+												selectedDataX.add(sheetManager.getCell(i,columnOfFirstKey-1));
+									}
+								}
+							}
+							
+							
+					
+					
+					/*for (int i =0; i < selectedChartData.size(); i++) {
+						System.out.println(selectedChartData.get(i).getCell());
+					}*/
+						//ask user to insert name for the chart
+						String chartTitle=JOptionPane.showInputDialog("Enter title for your chart");
+						//ask again if he just presses enter without inserting value
+						while(chartTitle.length()<=0){
+							chartTitle=JOptionPane.showInputDialog("Enter title for your chart");
+						}
+						// create charts
+						
+						if (chartOption.equals("Bar chart")) {
+							ChartManager.createBarChart(selectedChartKeys, selectedData,chartTitle);
+						} 
+						else{
+						    ChartManager.createLineChart(selectedChartKeys, selectedDataX,selectedDataY,chartTitle);   
+						}
+					}
+				else {
+					JOptionPane.showMessageDialog(null, "Wrong dimension have been given");
 				}
-
+				
 			}
+
+		}
 		});
 		JLabel chartLabel = new JLabel("   Chart : ");
 		menuBar.add(chartLabel);
@@ -700,7 +757,7 @@ public class MinusXLGUI {
 				try {
 					helpWindow = new HelpBtnGui();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null,"Error displaying Help window,restart the application please");
 					e1.printStackTrace();
 				}
 				helpWindow.setVisible(true);
