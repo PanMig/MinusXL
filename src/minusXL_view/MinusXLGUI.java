@@ -280,7 +280,7 @@ public class MinusXLGUI {
 				// this part of the code add a new spreadsheet to the tabbebPane
 				// the multiple if's are used to handle the cases where the user
 				// presses cancel or closes the inputDialog
-				sheetName = JOptionPane.showInputDialog("Enter a name for spreadsheet");
+				sheetName = JOptionPane.showInputDialog("Enter a name for spreadsheet","Spreadsheet");
 				if (sheetName != null) {
 
 					if (sheetName.length() == 0) {
@@ -291,25 +291,43 @@ public class MinusXLGUI {
 							"100");
 
 					if (StringsheetRows != null) {
-
-						if (StringsheetRows.length() == 0)
+						//case where users just presses enter
+						if (StringsheetRows.length() == 0){
 							sheetRows = 100;
-						// TODO CHECK IF USERS PUTS STRING that's not an number
-						else
-							sheetRows = Integer.parseInt(StringsheetRows);
-
+						}
+						// CHECK IF USERS PUTS STRING that's not an number
+						else{
+							try {
+								int value;
+								value=Integer.parseInt(StringsheetRows);
+								// Runs if it's a int
+							} catch (NumberFormatException e1) {
+								JOptionPane.showMessageDialog(null,"Insert a number not a string");
+							}
+							sheetRows =Integer.parseInt(StringsheetRows);
+						}
 						String StringsheetColumns = JOptionPane.showInputDialog(null,
 								"Enter columns for your spreadsheet", "26");
 
 						if (StringsheetColumns != null) {
 
-							if (StringsheetColumns.length() == 0)
+							if (StringsheetColumns.length() == 0){
 								sheetColumns = 26;
-							// TODO CHECK IF USERS PUTS STRING that's not an
-							// number
-							else
-								sheetColumns = Integer.parseInt(StringsheetColumns);
-
+							}
+							//CHECK IF USERS PUTS STRING that's not an
+							//number
+							else{
+								try {
+									int value;
+									value=Integer.parseInt(StringsheetColumns);
+									// Runs if it's a int
+							} catch (NumberFormatException e1) {
+								JOptionPane.showMessageDialog(null,"Insert a number value not a string");
+							}
+								sheetColumns=Integer.parseInt(StringsheetColumns);
+							}	
+							
+							
 							workbookManager.addSpreadsheet(sheetRows, sheetColumns);// add
 																					// spreadsheet
 																					// to
@@ -403,24 +421,41 @@ public class MinusXLGUI {
 
 					if (StringsheetRows != null) {
 
-						if (StringsheetRows.length() == 0)
+						if (StringsheetRows.length() == 0){
 							sheetRows = 100;
-						// TODO CHECK IF USERS PUTS STRING that's not an number
-						else
-							sheetRows = Integer.parseInt(StringsheetRows);
+						}	
+						// CHECK IF USERS PUTS STRING that's not an number
+						else{
+							try {
+								int value;
+								value=Integer.parseInt(StringsheetRows);
+								// Runs if it's a int
+							} catch (NumberFormatException e1) {
+								JOptionPane.showMessageDialog(null,"Insert a number not a string");
+							}
+							sheetRows =Integer.parseInt(StringsheetRows);
+						}
 						// holds columns for sheet
 						String StringsheetColumns = JOptionPane.showInputDialog("Enter columns for your spreadsheet",
 								"26");
 
 						if (StringsheetColumns != null) {
 
-							if (StringsheetColumns.length() == 0)
+							if (StringsheetColumns.length() == 0){
 								sheetColumns = 26;
-							// TODO CHECK IF USERS PUTS STRING that's not an
+							}	
+							// CHECK IF USERS PUTS STRING that's not an
 							// number
-							else
-								sheetColumns = Integer.parseInt(StringsheetColumns);
-
+							else{
+								try {
+									int value;
+									value=Integer.parseInt(StringsheetColumns);
+									// Runs if it's a int
+								} catch (NumberFormatException e1) {
+									JOptionPane.showMessageDialog(null,"Insert a number not a string");
+								}
+								sheetColumns =Integer.parseInt(StringsheetColumns);
+							}
 							// multiple cases where the user either insert a
 							// value at the
 							// input dialog and presses "ok" or just presses
@@ -630,43 +665,54 @@ public class MinusXLGUI {
 								selectedChartKeys.add(sheetManager.getCell(rowOfKeys, j));
 							}
 						}
-						/*
-						 * for(int i=0;i<selectedChartKeys.size();i++){
-						 * System.out.println(selectedChartKeys.get(i).
-						 * getCellType()); }
-						 */
 
 						// the rest of the data for the chat is holded here
 						// like column keys,datavalues(always type number)
-						ArrayList<Cell> selectedChartData = new ArrayList<Cell>();
-
+						
+					//for the bar chart	
+					ArrayList<Cell> selectedData = new ArrayList<Cell>();
+					//for line chart
+					ArrayList<Cell> selectedDataY = new ArrayList<Cell>();
+					ArrayList<Cell> selectedDataX = new ArrayList<Cell>();
+					
 					if(chartOption=="Bar chart"){
 						for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
 							for (int j = columnOfFirstKey - 1; j < sheetManager.getColumnCount(); j++) {
 								if (tableManager.isCellSelected(i, j)
 										&& sheetManager.getCell(i, j).getCell().toString().length() > 0) {
-									selectedChartData.add(sheetManager.getCell(i, j));
+									selectedData.add(sheetManager.getCell(i, j));
 								}
 							}
 						}
 					}
 					
-					//collect data for line chart
+					//collect  XY data for line chart
 					else{
-						
+							//Y data
 							for (int j = columnOfFirstKey; j < sheetManager.getColumnCount(); j++) {
 								for (int i = rowOfKeys + 1; i < sheetManager.getRowCount(); i++) {
 									if (tableManager.isCellSelected(i, j)
 										&& sheetManager.getCell(i, j).getCell().toString().length() > 0) {
-												selectedChartData.add(sheetManager.getCell(i, j));
+												selectedDataY.add(sheetManager.getCell(i, j));
+									}
 								}
 							}
-						}
-					}
+							
+							//X axis data
+								for (int i = rowOfKeys+1; i < sheetManager.getRowCount(); i++) {
+									if (tableManager.isCellSelected(i,columnOfFirstKey-1)
+										&& sheetManager.getCell(i,columnOfFirstKey-1).getCell().toString().length() > 0) {
+												selectedDataX.add(sheetManager.getCell(i,columnOfFirstKey-1));
+									}
+								}
+							}
+							
+							
 					
-					for (int i =0; i < selectedChartData.size(); i++) {
+					
+					/*for (int i =0; i < selectedChartData.size(); i++) {
 						System.out.println(selectedChartData.get(i).getCell());
-					}
+					}*/
 						//ask user to insert name for the chart
 						String chartTitle=JOptionPane.showInputDialog("Enter title for your chart");
 						//ask again if he just presses enter without inserting value
@@ -676,10 +722,12 @@ public class MinusXLGUI {
 						// create charts
 						
 						if (chartOption.equals("Bar chart")) {
-							ChartManager.createBarChart(selectedChartKeys, selectedChartData,chartTitle);
-						} else
-						    ChartManager.createLineChart(selectedChartKeys, selectedChartData,chartTitle);   
+							ChartManager.createBarChart(selectedChartKeys, selectedData,chartTitle);
 						} 
+						else{
+						    ChartManager.createLineChart(selectedChartKeys, selectedDataX,selectedDataY,chartTitle);   
+						}
+					}
 				else {
 					JOptionPane.showMessageDialog(null, "Wrong dimension have been given");
 				}
@@ -704,7 +752,7 @@ public class MinusXLGUI {
 				try {
 					helpWindow = new HelpBtnGui();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null,"Error displaying Help window,restart the application please");
 					e1.printStackTrace();
 				}
 				helpWindow.setVisible(true);

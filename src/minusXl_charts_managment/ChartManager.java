@@ -12,9 +12,9 @@ public class ChartManager {
 		chart.setVisible(true);
 	}
 
-	public static void createLineChart(ArrayList<minusxl_data_management.Cell> keysList, ArrayList<Cell> dataList,String title) {
+	public static void createLineChart(ArrayList<minusxl_data_management.Cell> keysList, ArrayList<Cell>listX, ArrayList<Cell>listY,String title) {
 		LineChart chart = new LineChart("Line chart window",
-		title,keysList,dataList);
+		title,keysList,listX,listY);
 		chart.pack();
 		chart.setVisible(true);
 
