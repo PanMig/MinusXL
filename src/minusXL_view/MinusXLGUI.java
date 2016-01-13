@@ -250,11 +250,12 @@ public class MinusXLGUI {
 				if (option == 0) {
 					tabbedPane.remove(tabIndex);// remove tab from the tabbed
 												// pane
+					tableList.remove(tabIndex);//remove table from the table list
 					workbookManager.deleteSpreadsheet(tabIndex);// delete
 																// spreadsheet
 																// from the list
 																// of
-																// spreadsheets
+															// spreadsheets
 					// make spreadsheet reference point to the correct
 					// spreadsheet
 					// on the list
@@ -263,6 +264,8 @@ public class MinusXLGUI {
 					// make jtable reference point to the correct jtable on the
 					// list
 					tableManager = tableList.get(tabIndex);
+					System.out.println(tabIndex);
+					System.out.println(tableList.size());
 
 					sheetNumber -= 1;
 				}

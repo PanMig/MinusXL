@@ -6,5 +6,6 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/JFreeChart"/>
 	<classpathentry exported="true" kind="lib" path="OpenCSV/opencsv-3.6.jar"/>
 	<classpathentry kind="lib" path="jfreechart-1.0.19/jfreechart-1.0.19/lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
