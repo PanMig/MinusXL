@@ -59,21 +59,18 @@ public class Spreadsheet extends AbstractTableModel {
 		// we first convert it to a Double (we only use Doubles).
 		// The same happens for the Boolean type:
 		
-		// TODO: Maybe make this not use an exception?
+		// TODO: Maybe make this should not use an exception?
 		try {
 			value = Double.parseDouble(value.toString());
 			// Runs if it's a double
 		} catch (NumberFormatException e) {
-			// Exception if it's not a double
+			// Exception if it's not a double.
+			// Just keep going.
 		}
 
-		try {
-			if (value.equals("true") || value.equals("false")) {
-				value = Boolean.parseBoolean((String) value);
-			}
-			// Runs if it's a boolean
-		} catch (Exception e) {
-			// Exception if it's not a boolean
+		if (value.equals("true") || value.equals("false")) {
+			// If the input String is "true" of "false", make it a Boolean:
+			value = Boolean.parseBoolean(value.toString());
 		}
 
 		// We're going to create the respective type of Cell
