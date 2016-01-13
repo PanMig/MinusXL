@@ -16,6 +16,7 @@ public class IncludesFunction extends AlpharithmeticFunction {
 		
 		if(checkValidity(input) == true){
 			
+			// Values to be used if the next step doesn't go through:
 			String tempString1 = "";
 			String tempString2 = "a";
 			
