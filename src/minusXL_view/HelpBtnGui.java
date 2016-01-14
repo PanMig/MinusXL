@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 public class HelpBtnGui extends JFrame {
@@ -53,11 +54,10 @@ public class HelpBtnGui extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JTextArea Area = new JTextArea();
-		Area.setLineWrap(true);
-		Area.setWrapStyleWord(true);
+		JTextPane Area = new JTextPane();
+		Area.setContentType("text/html");
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/resources/help.txt"),"windows-1253"));
+		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/resources/help.txt"),"utf-8"));
 		Area.read(br, null);
 
 		br.close();
