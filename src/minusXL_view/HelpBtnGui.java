@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -56,8 +56,8 @@ public class HelpBtnGui extends JFrame {
 		JTextArea Area = new JTextArea();
 		Area.setLineWrap(true);
 		Area.setWrapStyleWord(true);
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("help.txt"),"windows-1253"));
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/resources/help.txt"),"windows-1253"));
 		Area.read(br, null);
 
 		br.close();

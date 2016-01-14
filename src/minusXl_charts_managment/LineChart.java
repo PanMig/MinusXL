@@ -2,12 +2,7 @@ package minusXl_charts_managment;
 
 import java.util.ArrayList;
 
-import javax.swing.Box;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
