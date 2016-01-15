@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="src/" kind="src" path=""/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/JCommon 1.0.23"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/JFreeChart 1.0.19"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/JFreeChart"/>
 	<classpathentry exported="true" kind="lib" path="OpenCSV/opencsv-3.6.jar"/>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
->>>>>>> c9991d37eb0aaa4384a92573fac7f922e848f5cf
-=======
 	<classpathentry kind="lib" path="jfreechart-1.0.19/jfreechart-1.0.19/lib/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
->>>>>>> Development-Panos
 	<classpathentry kind="output" path="bin"/>
 </classpath>
