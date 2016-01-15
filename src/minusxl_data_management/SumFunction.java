@@ -15,10 +15,10 @@ public class SumFunction extends MathFunction {
 	public Object calculateValue() {
 		if(checkValidity(input) == true){
 			// Adds the value of all the inputed objects and returns their sum:
-			Float sum = 0f;
+			Double sum = 0d;
 			int i = 0;
 			while (i < input.length) {
-				sum = (float) (sum + (double) input[i].getCell());
+				sum = (Double) (sum + (Double) input[i].getCell());
 				i++;
 			}
 			return sum;

@@ -59,6 +59,7 @@ public class HelpBtnGui extends JFrame {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/resources/help.txt"),"utf-8"));
 		Area.read(br, null);
+		Area.setEditable(false);
 
 		br.close();
 		Area.requestFocus();

@@ -19,10 +19,18 @@ public abstract class MathFunction extends Function {
 					return (false);
 				}
 				
-				if ((inputs[i] instanceof NumberCell) == false) {
-					System.out.println("Error: The input data are not number values.");
+				// Checking if the values of the input cells are NOT numbers:
+				if ( ((inputs[i] instanceof NumberCell) == false) && (inputs[i] instanceof FunctionCell == false) ) {
+					System.out.println("Error 0: The input data are not number values.");
 					return (false);
+				}
+						
+				if ( (inputs[i] instanceof FunctionCell) == true ){
+					if( (inputs[i].getCell() instanceof Double) == false ){
+						System.out.println("Error 1: The input data are not number values.");
+						return (false);
 					}
+				}
 				
 				if(inputs[i].getCell() == null){
 					System.out.println("Error: The input data contains null values.");
@@ -33,6 +41,7 @@ public abstract class MathFunction extends Function {
 			// This only happens if "inputs" is not NULL, and no
 			// exception situation arises:
 			return (true);
+			
 		} else {
 			// This happens if the "inputs" had null value:
 			return (false);

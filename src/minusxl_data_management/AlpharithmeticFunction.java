@@ -10,8 +10,12 @@ public abstract class AlpharithmeticFunction extends Function {
 			for (int i = 0; i < inputs.length; i++) {
 
 				// Checking if the values of the input cells are NOT strings:
-				if ((inputs[i] instanceof StringCell) == false) {
-
+				if ( ((inputs[i] instanceof StringCell ) == false) && ((inputs[i] instanceof FunctionCell) == false)) {
+					System.out.println("Error: The input data are not alpharithmetic values.");
+					return (false);
+				}
+				
+				if (inputs[i] instanceof FunctionCell && (inputs[i].getCell() instanceof String)==false){
 					System.out.println("Error: The input data are not alpharithmetic values.");
 					return (false);
 				}

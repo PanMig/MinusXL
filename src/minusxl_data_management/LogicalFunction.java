@@ -9,7 +9,13 @@ public abstract class LogicalFunction extends Function {
 		if(inputs != null){
 			for (int i = 0; i < inputs.length; i++) {
 				// Checking if the values of the input cells are boolean values:
-				if ((inputs[i] instanceof BooleanCell) == false) {
+				
+				if (((inputs[i] instanceof BooleanCell) == false) && ((inputs[i] instanceof FunctionCell) == false)) {
+					System.out.println("Error: The input data are not boolean values.");
+					return (false);
+				}
+						
+				if ( ((inputs[i] instanceof FunctionCell) == true) && ((inputs[i].getCell() instanceof Boolean)==false) ){
 					System.out.println("Error: The input data are not boolean values.");
 					return (false);
 				}
