@@ -3,13 +3,20 @@ package minusXL_view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 public class HelpBtnGui extends JFrame {
@@ -36,8 +43,9 @@ public class HelpBtnGui extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public HelpBtnGui() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	public HelpBtnGui() throws IOException {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -48,26 +56,17 @@ public class HelpBtnGui extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JButton btnSpreadsheets = new JButton("spreadsheets");
-		panel.add(btnSpreadsheets);
 
-		JButton btnWorkbooks = new JButton("Workbooks");
-		panel.add(btnWorkbooks);
+		JTextPane Area = new JTextPane();
+		Area.setContentType("text/html");
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/resources/help.txt"),"utf-8"));
+		Area.read(br, null);
 
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[] { 0, 0, 0, 231, 0 };
-		gbl_panel_1.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-		gbl_panel_1.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gbl_panel_1.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		panel_1.setLayout(gbl_panel_1);
-
-		JLabel lblSelectTutorialCategories = new JLabel("Select tutorial categories to begin with :");
-		GridBagConstraints gbc_lblSelectTutorialCategories = new GridBagConstraints();
-		gbc_lblSelectTutorialCategories.gridx = 3;
-		gbc_lblSelectTutorialCategories.gridy = 5;
-		panel_1.add(lblSelectTutorialCategories, gbc_lblSelectTutorialCategories);
+		br.close();
+		Area.requestFocus();
+		JScrollPane scroll = new JScrollPane(Area);
+		contentPane.add(scroll, null);
 	}
 
 }

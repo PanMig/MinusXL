@@ -56,25 +56,27 @@ public class Spreadsheet extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object value, int row, int column) {
-		/*
-		 * because input is always a string, if the user wants to input an
-		 * integer we convert it to a integer same for the other types above
-		 */
+		
+		// Here, we will check the type of the incoming input:
+		
+		// Because the input is always a string, if the user wants to input a number
+		// we first convert it to a Double (we only use Doubles).
+		// The same happens for the Boolean type:
+		
+		// TODO: Maybe make this should not use an exception?
+
 		try {
 			value = Double.parseDouble(value.toString());
 			// is a double!
 		} catch (NumberFormatException e) {
-			// not a double!
+
+			// Exception if it's not a double.
+			// Just keep going.
 		}
 
-		try {
-			if (value.equals("true") || value.equals("false")) {
-				value = Boolean.parseBoolean((String) value);
-			}
-			// is a boolean!
-		} catch (Exception e) {
-			// not an boolean!
-			System.out.println("not a boolean");
+		if (value.equals("true") || value.equals("false")) {
+			// If the input String is "true" of "false", make it a Boolean:
+			value = Boolean.parseBoolean(value.toString());
 		}
 
 		// Check the type of the incoming input.
