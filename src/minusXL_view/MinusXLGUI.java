@@ -64,7 +64,7 @@ public class MinusXLGUI {
 	private ArrayList<JTable> tableList;
 
 	// objects for opening files and creating a tabbed pane
-	JFileChooser fileChooser = new JFileChooser("C:\\Users\\Panos\\git\\MinusXL\\bin");
+	JFileChooser fileChooser = new JFileChooser();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
 
 	/**
@@ -117,6 +117,8 @@ public class MinusXLGUI {
 				sheetManager = workbookManager.getSpreadsheet(tabbedPane.getSelectedIndex());
 				// make jtable reference point to the correct jtable on the list
 				tableManager = tableList.get(tabbedPane.getSelectedIndex());
+				//unselect all previous selected cells
+				tableManager.getSelectionModel().clearSelection();
 			}
 		});
 
@@ -264,8 +266,6 @@ public class MinusXLGUI {
 					// make jtable reference point to the correct jtable on the
 					// list
 					tableManager = tableList.get(tabIndex);
-					System.out.println(tabIndex);
-					System.out.println(tableList.size());
 
 					sheetNumber -= 1;
 				}
@@ -368,8 +368,9 @@ public class MinusXLGUI {
 		JButton btnImportSheet = new JButton("Import Sheet");
 		btnImportSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String choosenFile=JOptionPane.showInputDialog("Enter the file name you want to import"
+				String choosenFile=JOptionPane.showInputDialog("Enter the file name(e.g file.csv) you want to import"
 						+"\n"+"The file must be located in the same directory with minusXL appplication");
+				
 				// check if user presses cancel or close
 				if (choosenFile != null) {
 
@@ -521,15 +522,21 @@ public class MinusXLGUI {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// JOptionPane.showInputDialog("Enter a name for the workbook");
-				fileChooser.showSaveDialog(null);
-				try {
-					System.out.println("file ready to save");
-					CsvFileCreator.createCsvFile(workbookManager, "");
-					JOptionPane.showMessageDialog(null, "Workbook Saved");
-				} catch (Exception e) {
-					System.out.println("file not saved");
-					JOptionPane.showMessageDialog(null, "Error saving the Workbook");
-					e.printStackTrace();
+				int option=fileChooser.showSaveDialog(null);
+				
+				if(option==JFileChooser.APPROVE_OPTION){
+					try {
+						System.out.println("file ready to save");
+						CsvFileCreator.createCsvFile(workbookManager, "");
+						JOptionPane.showMessageDialog(null, "Workbook Saved");
+					} catch (Exception e) {
+						System.out.println("file not saved");
+						JOptionPane.showMessageDialog(null, "Error saving the Workbook");
+						e.printStackTrace();
+					}
+				}
+				else{
+					System.out.println("save canceled");
 				}
 			}
 		});
@@ -572,48 +579,42 @@ public class MinusXLGUI {
 				// function output
 				String outputCellRow = null;
 				String outputCellColumn = null;
-
+				//TODO change cancel order
 				outputCellRow = JOptionPane.showInputDialog(
-						"Enter function cell row" + ",counting starts from zero(Left to right and top to bottom)", 1);
-				outputCellColumn = JOptionPane.showInputDialog("Enter function cell column", 1);
-
-				if (outputCellRow != null && outputCellColumn != null) {// check
-																		// if
-																		// user
-																		// presses
-																		// cancel
-																		// or
-																		// closes
-																		// the
-																		// window
-
-					int outCellRow = Integer.parseInt(outputCellRow);
-					int outCellColumn = Integer.parseInt(outputCellColumn);
-
-					/*
-					 * check if the dimensions that the user inserted are in
-					 * bounds of the table
-					 */
-					if (outCellRow > 0 && outCellRow <= sheetManager.getRowCount() && outCellColumn > 0
-							&& outCellColumn <= sheetManager.getColumnCount()) {
-
-						outputcell = sheetManager.getCell(outCellRow - 1, outCellColumn - 1);
-						// call the function method that prints an oitput to the
-						// table
-						sheetManager.useFunction(cellArray, funcOption, outputcell);
-						// updates the gui,used when new values to the table are
-						// inserted
-						tableManager.updateUI();
+						"Enter function cell row", 1);
+				
+				if(outputCellRow!=null){
+					outputCellColumn = JOptionPane.showInputDialog("Enter function cell column", 1);
+					if (outputCellColumn != null) {// check
+						// if user presses cancel or closes the window
+						int outCellRow = Integer.parseInt(outputCellRow);
+						int outCellColumn = Integer.parseInt(outputCellColumn);
+	
+						/*
+						 * check if the dimensions that the user inserted are in
+						 * bounds of the table
+						 */
+						if (outCellRow > 0 && outCellRow <= sheetManager.getRowCount() && outCellColumn > 0
+								&& outCellColumn <= sheetManager.getColumnCount()) {
+	
+							outputcell = sheetManager.getCell(outCellRow - 1, outCellColumn - 1);
+							// call the function method that prints an oitput to the
+							// table
+							sheetManager.useFunction(cellArray, funcOption, outputcell);
+							// updates the gui,used when new values to the table are
+							// inserted
+							tableManager.updateUI();
+						}
+						// reports that the user has inserted wrong dimensions for
+						// the
+						// output cell
+						else {
+							JOptionPane.showMessageDialog(null, "Wrong dimensions have been given!!");
+						}
+	
 					}
-					// reports that the user has inserted wrong dimensions for
-					// the
-					// output cell
-					else {
-						JOptionPane.showMessageDialog(null, "Wrong dimensions have been given!!");
-					}
-
-				}
-
+				
+			}
 			}
 
 		});
@@ -640,10 +641,11 @@ public class MinusXLGUI {
 
 				// TODO make all selected cells unselected
 				String rowOfKeysStr = JOptionPane.showInputDialog("Enter the row that your keys are located", "1");
-				String columnOfFirstKeyStr = JOptionPane
-						.showInputDialog("Enter the column that your first key is located", "2");
-
-				if (rowOfKeysStr != null && columnOfFirstKeyStr != null) {
+				
+				
+			if(rowOfKeysStr !=null){	
+				String columnOfFirstKeyStr = JOptionPane.showInputDialog("Enter the column that your first key is located", "2");
+				if ( columnOfFirstKeyStr != null) {
 					// holds the row in the table where the keys are
 					// located,they
 					// must be in sequenece,also holds the column that the first
@@ -736,7 +738,7 @@ public class MinusXLGUI {
 				}
 				
 			}
-
+		}		
 		}
 		});
 		JLabel chartLabel = new JLabel("   Chart : ");
