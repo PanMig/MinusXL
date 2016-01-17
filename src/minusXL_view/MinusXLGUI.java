@@ -145,7 +145,7 @@ public class MinusXLGUI {
 		tableList = new ArrayList<JTable>();
 		// make the workbook reference point to the correct workbook
 		workbookManager = wb;
-		// make the spreadsheet reference point to the correct spreasheet in the
+		// make the spreadsheet reference point to the correct spreadsheet in the
 		// list
 		// of spreadsheets
 		sheetManager = workbookManager.getSpreadsheet(wb.getAttachedSpreadsheets() - 1);
@@ -160,7 +160,7 @@ public class MinusXLGUI {
 
 		// create scroll and tabbed panes
 		JScrollPane scrollPane = new JScrollPane();
-		tabbedPane.addTab("sheet", null, scrollPane, null);
+		tabbedPane.addTab("Sheet", null, scrollPane, null);
 
 		JTable table = new JTable();
 
@@ -237,7 +237,7 @@ public class MinusXLGUI {
 
 		// delete button,deletes a spreadsheet from the tabbed pane
 		JButton btnDeleteSpreadsheet = new JButton("Delete spreadsheet");
-		btnDeleteSpreadsheet.setToolTipText("press to delete a spreadsheet");
+		btnDeleteSpreadsheet.setToolTipText("Press to delete a spreadsheet");
 
 		// select color for the button
 		btnDeleteSpreadsheet.setBackground(UIManager.getColor("Button.light"));
@@ -248,7 +248,7 @@ public class MinusXLGUI {
 																// selected tab
 				// option holds the choice of the user, 0 is yes ,1 is no , 2 is
 				// cancel
-				option = JOptionPane.showConfirmDialog(tabbedPane, "Do you want to delete the choosen spreadsheet?");
+				option = JOptionPane.showConfirmDialog(tabbedPane, "Do you want to delete the active spreadsheet?");
 				if (option == 0) {
 					tabbedPane.remove(tabIndex);// remove tab from the tabbed
 												// pane
@@ -283,14 +283,14 @@ public class MinusXLGUI {
 				// this part of the code add a new spreadsheet to the tabbebPane
 				// the multiple if's are used to handle the cases where the user
 				// presses cancel or closes the inputDialog
-				sheetName = JOptionPane.showInputDialog("Enter a name for spreadsheet","Spreadsheet");
+				sheetName = JOptionPane.showInputDialog("Enter a name for the spreadsheet","Spreadsheet");
 				if (sheetName != null) {
 
 					if (sheetName.length() == 0) {
 						sheetName = "sheet" + sheetNumber;
 					}
 
-					String StringsheetRows = JOptionPane.showInputDialog(null, "Enter rows for your spreadsheet",
+					String StringsheetRows = JOptionPane.showInputDialog(null, "Enter rows for the spreadsheet",
 							"100");
 
 					if (StringsheetRows != null) {
@@ -305,12 +305,12 @@ public class MinusXLGUI {
 								value=Integer.parseInt(StringsheetRows);
 								// Runs if it's a int
 							} catch (NumberFormatException e1) {
-								JOptionPane.showMessageDialog(null,"Insert a number not a string");
+								JOptionPane.showMessageDialog(null,"Insert a number - not a string");
 							}
 							sheetRows =Integer.parseInt(StringsheetRows);
 						}
 						String StringsheetColumns = JOptionPane.showInputDialog(null,
-								"Enter columns for your spreadsheet", "26");
+								"Enter columns for the spreadsheet", "26");
 
 						if (StringsheetColumns != null) {
 
@@ -325,7 +325,7 @@ public class MinusXLGUI {
 									value=Integer.parseInt(StringsheetColumns);
 									// Runs if it's a int
 							} catch (NumberFormatException e1) {
-								JOptionPane.showMessageDialog(null,"Insert a number value not a string");
+								JOptionPane.showMessageDialog(null,"Insert a number value - not a string");
 							}
 								sheetColumns=Integer.parseInt(StringsheetColumns);
 							}	
@@ -363,13 +363,13 @@ public class MinusXLGUI {
 		gbc_btnDeleteSpreadsheet.gridy = 0;
 		panel.add(btnDeleteSpreadsheet, gbc_btnDeleteSpreadsheet);
 
-		// this part implements the insertion of a spreasheet from a file
+		// this part implements the insertion of a spreadsheet from a file
 		// to the workBook
 		JButton btnImportSheet = new JButton("Import Sheet");
 		btnImportSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String choosenFile=JOptionPane.showInputDialog("Enter the file name(e.g file.csv) you want to import"
-						+"\n"+"The file must be located in the same directory with minusXL appplication");
+				String choosenFile=JOptionPane.showInputDialog("Enter the file name (e.g file.csv) that you want to import."
+						+"\n"+"The file must be located in the same directory with MinusXL appplication");
 				
 				// check if user presses cancel or close
 				if (choosenFile != null) {
@@ -407,13 +407,13 @@ public class MinusXLGUI {
 
 		// New Workbook button
 
-		JButton btnNew = new JButton("New WorkBook");// "New workbook"
+		JButton btnNew = new JButton("New Workbook");// "New workbook"
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// add a new workBook to the program
 
 				// holds workbook name
-				workBookName = JOptionPane.showInputDialog("Enter new workBook name", "Workbook");
+				workBookName = JOptionPane.showInputDialog("Enter a name for the new Workbook: ", "Workbook");
 
 				if (workBookName != null) {
 
@@ -421,7 +421,7 @@ public class MinusXLGUI {
 						workBookName = "Workbook";
 
 					// holds rows for the new sheet
-					String StringsheetRows = JOptionPane.showInputDialog("Enter rows for your spreadsheet", "100");
+					String StringsheetRows = JOptionPane.showInputDialog("Enter rows for the spreadsheet: ", "100");
 
 					if (StringsheetRows != null) {
 
@@ -435,12 +435,12 @@ public class MinusXLGUI {
 								value=Integer.parseInt(StringsheetRows);
 								// Runs if it's a int
 							} catch (NumberFormatException e1) {
-								JOptionPane.showMessageDialog(null,"Insert a number not a string");
+								JOptionPane.showMessageDialog(null,"Insert a number - not a string");
 							}
 							sheetRows =Integer.parseInt(StringsheetRows);
 						}
 						// holds columns for sheet
-						String StringsheetColumns = JOptionPane.showInputDialog("Enter columns for your spreadsheet",
+						String StringsheetColumns = JOptionPane.showInputDialog("Enter columns for the spreadsheet: ",
 								"26");
 
 						if (StringsheetColumns != null) {
@@ -456,7 +456,7 @@ public class MinusXLGUI {
 									value=Integer.parseInt(StringsheetColumns);
 									// Runs if it's a int
 								} catch (NumberFormatException e1) {
-									JOptionPane.showMessageDialog(null,"Insert a number not a string");
+									JOptionPane.showMessageDialog(null,"Insert a number - not a string");
 								}
 								sheetColumns =Integer.parseInt(StringsheetColumns);
 							}
@@ -536,7 +536,7 @@ public class MinusXLGUI {
 					}
 				}
 				else{
-					System.out.println("save canceled");
+					System.out.println("Save Canceled");
 				}
 			}
 		});
@@ -581,10 +581,10 @@ public class MinusXLGUI {
 				String outputCellColumn = null;
 				//TODO change cancel order
 				outputCellRow = JOptionPane.showInputDialog(
-						"Enter function cell row", 1);
+						"Enter row for the output: ", 1);
 				
 				if(outputCellRow!=null){
-					outputCellColumn = JOptionPane.showInputDialog("Enter function cell column", 1);
+					outputCellColumn = JOptionPane.showInputDialog("Enter column for the output: ", 1);
 					if (outputCellColumn != null) {// check
 						// if user presses cancel or closes the window
 						int outCellRow = Integer.parseInt(outputCellRow);
@@ -609,7 +609,7 @@ public class MinusXLGUI {
 						// the
 						// output cell
 						else {
-							JOptionPane.showMessageDialog(null, "Wrong dimensions have been given!!");
+							JOptionPane.showMessageDialog(null, "Wrong dimensions have been given!");
 						}
 	
 					}
@@ -719,10 +719,10 @@ public class MinusXLGUI {
 						System.out.println(selectedChartData.get(i).getCell());
 					}*/
 						//ask user to insert name for the chart
-						String chartTitle=JOptionPane.showInputDialog("Enter title for your chart");
+						String chartTitle=JOptionPane.showInputDialog("Enter a title for your chart");
 						//ask again if he just presses enter without inserting value
 						while(chartTitle.length()<=0){
-							chartTitle=JOptionPane.showInputDialog("Enter title for your chart");
+							chartTitle=JOptionPane.showInputDialog("Enter a title for your chart");
 						}
 						// create charts
 						
@@ -734,7 +734,7 @@ public class MinusXLGUI {
 						}
 					}
 				else {
-					JOptionPane.showMessageDialog(null, "Wrong dimension have been given");
+					JOptionPane.showMessageDialog(null, "Wrong dimensions have been given");
 				}
 				
 			}
@@ -757,7 +757,7 @@ public class MinusXLGUI {
 				try {
 					helpWindow = new HelpBtnGui();
 				} catch (IOException e1) {
-					JOptionPane.showMessageDialog(null,"Error displaying Help window,restart the application please");
+					JOptionPane.showMessageDialog(null,"Error while displaying the Help window. Please restart the application.");
 					e1.printStackTrace();
 				}
 				helpWindow.setVisible(true);
