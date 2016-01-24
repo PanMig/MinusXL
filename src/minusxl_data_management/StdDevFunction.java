@@ -15,18 +15,22 @@ public class StdDevFunction extends StatisticalFunction {
 			//Get the mean:
 			int size = input.length;
 			
-			double sum = 0.0;
-	        for(Cell<NumberCell> a : input){
-	            sum += a.getCell().getCell();
-	        	}
-	        double mean = sum/size;
+			Double sum = 0.0;
+			
+			for (int i = 0; i < input.length; i++) {
+				sum = sum + (double) input[i].getCell();
+			}
+	        
+	        Double mean = sum/size;
 	        
 			//Get the variance
-		    double temp = 0;
-		    for(Cell<NumberCell> a :input){
-		        temp += (mean-a.getCell().getCell())*(mean-a.getCell().getCell());
-		    	}
-		    double variance = temp/size;
+		    Double temp = 0d;
+		    
+		    for (int i = 0; i < input.length; i++) {
+				temp = temp + (mean - (Double) input[i].getCell()) * (mean - (Double) input[i].getCell());
+			}
+		    
+		    Double variance = temp/size;
 	
 		    //Get the standard deviation
 		    return Math.sqrt(variance);

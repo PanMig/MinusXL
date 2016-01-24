@@ -621,7 +621,7 @@ public class MinusXLGUI {
 		// the function chart box
 		funcBox.setModel(new DefaultComboBoxModel(
 				new String[] { "Abs", "Cos", "Sin", "Tan", "Pow", "Sum", "Mult", "Log", "Log10", "And", "Or", "Not",
-						"Xor", "Max", "Min", "Mean", "Median", "Stddev", "Concat", "Includes", "Trim", "Remove" }));
+						"Xor", "Max", "Min", "Mean", "Median", "StdDev", "Concat", "Includes", "Trim", "Remove" }));
 		menuBar.add(funcBox);
 
 		final JComboBox chartBox = new JComboBox();
